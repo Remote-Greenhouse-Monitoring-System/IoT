@@ -1,0 +1,3 @@
+H:/Semester 4/SEPIOTPROJECT/IoT/cmake-build-debug/CMakeFiles/IoT.dir
+H:/Semester 4/SEPIOTPROJECT/IoT/cmake-build-debug/CMakeFiles/edit_cache.dir
+H:/Semester 4/SEPIOTPROJECT/IoT/cmake-build-debug/CMakeFiles/rebuild_cache.dir

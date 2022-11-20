@@ -19,138 +19,14 @@
  // Needed for LoRaWAN
 #include <lora_driver.h>
 #include <status_leds.h>
+#include "Application.h"
 
 // sensors
 #include "hih8120.h"
 
-// define two Tasks
-void task1( void *pvParameters );
-void task2( void *pvParameters );
-
-// define hih8120 task
-
-void temp_sensor_task( void *pvParameters );
-
-// define semaphore handle
-SemaphoreHandle_t xTestSemaphore;
-
-// Prototype for LoRaWAN handler
-void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
 
 
-//TEMPORARY GLOBAL VARIABLES
-float humidity = 0.0;
-float temperature = 0.0;
 
-/*-----------------------------------------------------------*/
-void create_tasks_and_semaphores(void)
-{
-	// Semaphores are useful to stop a Task proceeding, where it should be paused to wait,
-	// because it is sharing a resource, such as the Serial port.
-	// Semaphores should only be used whilst the scheduler is running, but we can set it up here.
-	if ( xTestSemaphore == NULL )  // Check to confirm that the Semaphore has not already been created.
-	{
-		xTestSemaphore = xSemaphoreCreateMutex();  // Create a mutex semaphore.
-		if ( ( xTestSemaphore ) != NULL )
-		{
-			xSemaphoreGive( ( xTestSemaphore ) );  // Make the mutex available for use, by initially "Giving" the Semaphore.
-		}
-	}
-
-	xTaskCreate(
-	task1
-	,  "Task1"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
-
-	xTaskCreate(
-	task2
-	,  "Task2"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
-	
-	xTaskCreate(
-	temp_sensor_task
-	,  "HIH8120_task"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
-}
-
-/*-----------------------------------------------------------*/
-void task1( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 5000/portTICK_PERIOD_MS; // 5000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task1"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA0);
-	}
-}
-
-/*-----------------------------------------------------------*/
-void task2( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 10000/portTICK_PERIOD_MS; // 10000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task2"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA7);
-	}
-}
-
-/*-----------------------------------------------------------*/
-void temp_sensor_task( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 1000/portTICK_PERIOD_MS; // 1000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		if ( HIH8120_OK != hih8120_wakeup() )
-		{
-			// Something went wrong
-			// Investigate the return code further
-			printf("Temperature and humidity sensor HIH8120 wakeup error.\n");
-		}
-		
-		vTaskDelay(1000);
-		
-		if ( HIH8120_OK !=  hih8120_measure() )
-		{
-			// Something went wrong
-			// Investigate the return code further
-			printf("Temperature and humidity sensor HIH8120 measure error.\n");
-		}
-		vTaskDelay(100);
-		
-		humidity = hih8120_getHumidity();
-		temperature = hih8120_getTemperature();
-		printf("Temperature: %3.2f degrees\n", temperature);
-		printf("Humidity: %3.2f percent\n", humidity);
-
-	}
-}
 
 /*-----------------------------------------------------------*/
 void initialiseSystem()
@@ -161,7 +37,7 @@ void initialiseSystem()
 	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
 	stdio_initialise(ser_USART0);
 	// Let's create some tasks
-	create_tasks_and_semaphores();
+	
 
 	// vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	// Status Leds driver
@@ -170,19 +46,17 @@ void initialiseSystem()
 	lora_driver_initialise(1, NULL);
 	// Create LoRaWAN task and start it up with priority 3
 	lora_handler_initialise(3);
-	
-	// Initialize temperature and humidity sensor
-	if ( HIH8120_OK == hih8120_initialise() )
-	{
-		// Driver initialised OK
-		// Always check what hih8120_initialise() returns
-		printf("HIH8120 initialized\n");
-	}
+
+//Calling from application.h to initialize everything	
+	initialize_everything();
+	run_all_Task();
 }
+
 
 /*-----------------------------------------------------------*/
 int main(void)
 {
+		printf("Activate");
 	initialiseSystem(); // Must be done as the very first thing!!
 	printf("Program Started!!\n");
 	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.
