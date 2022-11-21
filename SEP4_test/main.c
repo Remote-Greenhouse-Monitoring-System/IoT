@@ -12,9 +12,12 @@
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
+#include <message_buffer.h>
+#include "PackageHandler.h"
 
 #include <stdio_driver.h>
 #include <serial.h>
+#include <string.h>
 
  // Needed for LoRaWAN
 #include <lora_driver.h>
@@ -24,8 +27,10 @@
 #include "hih8120.h"
 
 // define two Tasks
-void task1( void *pvParameters );
-void task2( void *pvParameters );
+// void task1( void *pvParameters );
+//void task2( void *pvParameters );
+
+void receivePayload();
 
 // define hih8120 task
 
@@ -34,13 +39,13 @@ void temp_sensor_task( void *pvParameters );
 // define semaphore handle
 SemaphoreHandle_t xTestSemaphore;
 
+//define message buffer handle 
+MessageBufferHandle_t xMessageBufferHandle; 
+
 // Prototype for LoRaWAN handler
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
 
 
-//TEMPORARY GLOBAL VARIABLES
-float humidity = 0.0;
-float temperature = 0.0;
 
 /*-----------------------------------------------------------*/
 void create_tasks_and_semaphores(void)
@@ -56,74 +61,134 @@ void create_tasks_and_semaphores(void)
 			xSemaphoreGive( ( xTestSemaphore ) );  // Make the mutex available for use, by initially "Giving" the Semaphore.
 		}
 	}
+	
+	xMessageBufferHandle = xMessageBufferCreate(100);
 
-	xTaskCreate(
-	task1
-	,  "Task1"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
+// 	xTaskCreate(
+// 	task1
+// 	,  "Task1"  // A name just for humans
+// 	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
+// 	,  NULL
+// 	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+// 	,  NULL );
 
-	xTaskCreate(
-	task2
-	,  "Task2"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
-	,  NULL
-	,  1  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
-	,  NULL );
+// 	xTaskCreate(
+// 	task2
+// 	,  "Task2"  // A name just for humans
+// 	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
+// 	,  NULL
+// 	,  3  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+// 	,  NULL );
 	
 	xTaskCreate(
 	temp_sensor_task
 	,  "HIH8120_task"  // A name just for humans
 	,  configMINIMAL_STACK_SIZE  // This stack size can be checked & adjusted by reading the Stack Highwater
 	,  NULL
-	,  2  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+	,  3  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
 	,  NULL );
 }
 
 /*-----------------------------------------------------------*/
-void task1( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 5000/portTICK_PERIOD_MS; // 5000 ms
-
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task1"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA0);
-	}
-}
+// void task1( void *pvParameters )
+// {
+// 	TickType_t xLastWakeTime;
+// 	const TickType_t xFrequency = 1000/portTICK_PERIOD_MS; 
+// 	xLastWakeTime = xTaskGetTickCount();
+// 	
+// 	uint16_t tx_buff[] = {10, 20, 30, 40};
+// 	size_t xBytesSent;
+// 	const TickType_t x100ms = pdMS_TO_TICKS(100);
+// 
+// 	for(;;)
+// 	{
+// 		xBytesSent = xMessageBufferSend(xMessageBufferHandle,
+// 										(void *)tx_buff,
+// 										sizeof(tx_buff),
+// 										x100ms);
+// 		if(xBytesSent != sizeof(tx_buff)){
+// 			printf("Timed out.");
+// 		}
+// 		else{
+// 			
+// 			printf("Bytes put in buffer: %d\n", xBytesSent);
+// 		
+// 		}								
+// 		vTaskDelay(1000);
+// 	}
+// 	
+// }
 
 /*-----------------------------------------------------------*/
-void task2( void *pvParameters )
-{
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 10000/portTICK_PERIOD_MS; // 10000 ms
+// void task2( void *pvParameters )
+// {
+// 	TickType_t xLastWakeTime;
+// 	const TickType_t xFrequency = 1000/portTICK_PERIOD_MS; // 10000 ms
+// 	xLastWakeTime = xTaskGetTickCount();
+// 	lora_driver_payload_t payload;
+// 	int16_t tem;
+// 	int16_t hum;
+// 	
+// 	size_t xReceivedBytes;
+// 	const TickType_t xWaitingTime = portMAX_DELAY;
+// 
+// 	for(;;)
+// 	{
+// 		xReceivedBytes = xMessageBufferReceive (xMessageBufferHandle,
+// 												&payload,
+// 												sizeof(payload),
+// 												xWaitingTime);
+// 		
+// 		if(xReceivedBytes > 0){
+// 				printf("Number of bytes read from the message buffer: %d\n", xReceivedBytes);
+// 				tem = (payload.bytes[0] << 8) | (payload.bytes[1]);
+// 				hum = (payload.bytes[2] << 8) | (payload.bytes[3]);
+// 				printf("Temperature read from the message buffer: %d\n", tem);
+// 				printf("Humidity read from the message buffer: %d\n", hum);
+// 		}
+// 	
+// 	
+// 		vTaskDelay(1000);
+// 	}
+// }
 
-	// Initialise the xLastWakeTime variable with the current time.
-	xLastWakeTime = xTaskGetTickCount();
-
-	for(;;)
-	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		puts("Task2"); // stdio functions are not reentrant - Should normally be protected by MUTEX
-		PORTA ^= _BV(PA7);
+void receivePayload(){
+	
+		lora_driver_payload_t payload;
+		int16_t tem;
+		int16_t hum;
+		
+		size_t xReceivedBytes;
+		const TickType_t xWaitingTime = portMAX_DELAY;
+		const TickType_t x100ms = pdMS_TO_TICKS(100);
+		xReceivedBytes = xMessageBufferReceive (xMessageBufferHandle,
+												&payload,
+												sizeof(payload),
+												x100ms);
+			
+		if(xReceivedBytes > 0){
+			printf("Bytes received: %d\n", xReceivedBytes);
+			tem = (payload.bytes[0] << 8) | (payload.bytes[1]);
+			hum = (payload.bytes[2] << 8) | (payload.bytes[3]);
+			printf("Temperature received: %d\n", tem);
+			printf("Humidity received: %d\n", hum);
+			}
 	}
-}
 
 /*-----------------------------------------------------------*/
 void temp_sensor_task( void *pvParameters )
 {
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = 1000/portTICK_PERIOD_MS; // 1000 ms
+	const TickType_t xFrequency = 5000/portTICK_PERIOD_MS; 
 
 	// Initialise the xLastWakeTime variable with the current time.
 	xLastWakeTime = xTaskGetTickCount();
+	
+
+	size_t xBytesSent = 0;
+	const TickType_t x100ms = pdMS_TO_TICKS(100);
+	int16_t tem;
+	int16_t hum;
 
 	for(;;)
 	{
@@ -134,7 +199,7 @@ void temp_sensor_task( void *pvParameters )
 			printf("Temperature and humidity sensor HIH8120 wakeup error.\n");
 		}
 		
-		vTaskDelay(1000);
+		vTaskDelay(100);
 		
 		if ( HIH8120_OK !=  hih8120_measure() )
 		{
@@ -144,10 +209,30 @@ void temp_sensor_task( void *pvParameters )
 		}
 		vTaskDelay(100);
 		
-		humidity = hih8120_getHumidity();
-		temperature = hih8120_getTemperature();
-		printf("Temperature: %3.2f degrees\n", temperature);
-		printf("Humidity: %3.2f percent\n", humidity);
+		tem = hih8120_getTemperature_x10();
+		setTemperaturePercent(tem);
+		hum = hih8120_getHumidityPercent_x10();
+		setHumidityPercent(hum);
+		
+		lora_driver_payload_t payload = getLoraPackage(2);
+		
+		xBytesSent = xMessageBufferSend(xMessageBufferHandle,
+										&payload,
+										sizeof(payload),
+										x100ms);
+		if(xBytesSent != sizeof(payload)){
+			printf("Timed out.\n");
+		}
+		else{
+			
+			printf("Bytes sent: %d\n", xBytesSent);
+			printf("Temp sent: %d\n", tem);
+			printf("Humidity sent: %d\n", hum);
+// 			printf("Size of payload: %d\n", sizeof(payload));
+			receivePayload();
+			
+		}
+		vTaskDelay(xFrequency);
 
 	}
 }
@@ -178,6 +263,8 @@ void initialiseSystem()
 		// Always check what hih8120_initialise() returns
 		printf("HIH8120 initialized\n");
 	}
+	
+	
 }
 
 /*-----------------------------------------------------------*/
