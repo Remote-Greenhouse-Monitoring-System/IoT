@@ -7,7 +7,10 @@
 
 #pragma once
 
-#include<stdint.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
+
+#include <stdint.h>
 #include <task.h>
 #include <mh_z19.h>
 
@@ -15,4 +18,6 @@
 void createCO2SensorTask();
 void CO2_measure();
 
+void MeasureCo2Task(void* pvpParameter);
 uint16_t CO2_getPPM();
+void myCo2CallBack(uint16_t ppm_parameter);

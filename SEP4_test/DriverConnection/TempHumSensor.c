@@ -7,21 +7,28 @@
 
 
 #include "TempHumSensor.h"
+#include "event_groups.h"
+#include "../Application.h"
 
 
-static uint16_t humidity = 0.0;
-static temperature = 0.0;
+uint16_t humidity = 0.0;
+uint16_t temperature = 0.0;
 
 
-void initialise_TempHumSensor(){
+void initialise_TempHumSensor()
+{
 	if ( HIH8120_OK == hih8120_initialise() )
 	{
 		printf("Initialised  tempHum sensor");
 		// Driver initialised OK
 		// Always check what hih8120_initialise() returns
 		
-	}else{printf("Something went wrong while initialising tempHum sensor");}
-}
+	}
+	else 
+	{printf("Something went wrong while initialising tempHum sensor");
+	}
+	}
+
 
 void create_TempHumSensorTask(){
 	initialise_TempHumSensor();
@@ -51,7 +58,7 @@ void measure_Temp_Hum(){
 		// Something went wrong
 		// Investigate the return code further
 	}
-	vTaskDelay(pdMS_TO_TICKS(51))
+	vTaskDelay(pdMS_TO_TICKS(51));
 	
 	
 }

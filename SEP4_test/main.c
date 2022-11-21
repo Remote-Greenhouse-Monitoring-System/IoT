@@ -50,13 +50,15 @@ void initialiseSystem()
 //Calling from application.h to initialize everything	
 	initialize_everything();
 	run_all_Task();
+	MainApplicationTask();
 }
 
 
 /*-----------------------------------------------------------*/
 int main(void)
 {
-		printf("Activate");
+		
+		puts("MAIN");
 	initialiseSystem(); // Must be done as the very first thing!!
 	printf("Program Started!!\n");
 	vTaskStartScheduler(); // Initialise and run the freeRTOS scheduler. Execution should never return from here.

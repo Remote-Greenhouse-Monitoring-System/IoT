@@ -103,7 +103,10 @@
 				45,
 				47,
 				48,
-				49
+				49,
+				50,
+				51,
+				52
 			]
 		}
 	],
@@ -154,7 +157,10 @@
 				45,
 				47,
 				48,
-				49
+				49,
+				50,
+				51,
+				52
 			]
 		},
 		{
@@ -195,7 +201,8 @@
 				40,
 				42,
 				43,
-				46
+				46,
+				53
 			]
 		}
 	],
@@ -463,8 +470,31 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "SEP4_test/Application.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "SEP4_test/DriverConnection/CO2Sensor.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "SEP4_test/DriverConnection/TempHumSensor.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "SEP4_test/main.c",
 			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "SEP4_test/Application.h",
+			"sourceGroupIndex" : 1
 		}
 	],
 	"type" : "EXECUTABLE"

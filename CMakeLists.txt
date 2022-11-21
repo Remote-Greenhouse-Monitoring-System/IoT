@@ -57,4 +57,7 @@ add_executable(IoT
         SEP4_test/FreeRTOS/src/timers.h
         SEP4_test/FreeRTOS/src/variantHooks.c
         SEP4_test/LoRaWANHandler.c
+        SEP4_test/Application.c
+        SEP4_test/DriverConnection/CO2Sensor.c
+        SEP4_test/DriverConnection/TempHumSensor.c
         SEP4_test/main.c "SEP4_test/application.h")

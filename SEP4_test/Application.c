@@ -4,32 +4,39 @@
  * Created: 11/20/2022 2:27:49 PM
  *  Author: himal
  */ 
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
 
 #include "Application.h"
 
+EventGroupHandle_t meassureEventGroup;
+EventGroupHandle_t dataReadyEventGroup;
 
-void run_all_Task(){
+void run_all_Task() 
+{
 	createCO2SensorTask();
 	create_TempHumSensorTask();
-	MainApplicationTask();
+	
 	
 	
 }
-void initialize_everything(){
+void initialize_everything() {
 	dataReadyEventGroup = xEventGroupCreate();
 	meassureEventGroup = xEventGroupCreate();
 	
 }
 
-void start_application(){
+void start_application() {
 	
 }
 
 // Main task For application to get result when every measurnment is done
 
-void MainApplicationTask(){
+void MainApplicationTask() {
 	
-	printf("Activate");
+	printf ("Activate");
+	
+	puts("Application");
 	//First trying to measure everything
 	xEventGroupSetBits(meassureEventGroup,ALL_MEASSURE_BITS);
 	
@@ -54,4 +61,5 @@ void MainApplicationTask(){
 		vTaskDelay(pdMS_TO_TICKS(6000));
 	}
 	
+
 }

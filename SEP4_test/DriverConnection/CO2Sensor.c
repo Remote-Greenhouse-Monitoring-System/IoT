@@ -6,9 +6,8 @@
  */ 
 
 #include "CO2Sensor.h"
-
-
-
+#include "event_groups.h"
+#include "../Application.h"
 
 
 uint16_t lastCO2ppm = 0;
@@ -57,7 +56,7 @@ uint16_t CO2_getPPM() {
 
 
 //To start the task and get measurement , calling it from Application and need to initialize c02 before starting task
-createCO2SensorTask(){
+void createCO2SensorTask(){
 	
 	//Initializing 
 		CO2_createSensor();
@@ -74,16 +73,16 @@ createCO2SensorTask(){
 
 //MAIN TASKKK
 
-void MeasureCo2Task(){
-	printf("Measurement of co2 task has been started ")
+void MeasureCo2Task(void* pvpParameter){
+	printf("Measurement of co2 task has been started ");
 	while(1){
 		
 		
 		//Usage of Event group Wait fun until co2 measure bit is set to 1 
 		
-		EventBits_t uxBits = xEventGroupWaitBits(meassureEventGroup,CO2_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
+		EventBits_t uxBits = xEventGroupWaitBits(meassureEventGroup,CO2_MEASSURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
 		
-			if (uxBits & (CO2_MEASSURE_BIT) == CO2_MEASSURE_BIT)
+			if ((uxBits & (CO2_MEASSURE_BIT)) == CO2_MEASSURE_BIT)
 			{
 				printf("Measure bit and event bit was successfully checked ");
 				
