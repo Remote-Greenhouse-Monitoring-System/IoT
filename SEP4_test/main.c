@@ -3,7 +3,7 @@
 * Author : IHA
 *
 * Example main file including LoRaWAN setup
-* Just for inspiration :)
+xxxxxxxxxxxxxxxxxxxxxxxx* Just for inspiration :)
 */
 
 #include <stdio.h>
@@ -45,7 +45,7 @@ void initialiseSystem()
 	// Initialise the LoRaWAN driver without down-link buffer
 	lora_driver_initialise(1, NULL);
 	// Create LoRaWAN task and start it up with priority 3
-	lora_handler_initialise(3);
+	//lora_handler_initialise(3);
 
 //Calling from application.h to initialize everything	
 	initialize_everything();
