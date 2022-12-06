@@ -17,4 +17,6 @@
 void create_TempHumSensorTask();
 int16_t TempHumSensor_getTemp();
 uint16_t TempHumSensor_getHum();
-void Temp_Hum_Main_Task();
+void measure_Temp_Hum();
+
+
