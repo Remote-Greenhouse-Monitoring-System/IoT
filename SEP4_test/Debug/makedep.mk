@@ -2,6 +2,8 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+Application.c
+
 FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c
 
 FreeRTOS\src\croutine.c
@@ -25,6 +27,10 @@ FreeRTOS\src\timers.c
 FreeRTOS\src\variantHooks.c
 
 PackageHandlerImpl.c
+
+Sensors\CO2Sensor.c
+
+Sensors\TempHumSensor.c
 
 LoRaWANHandler.c
 

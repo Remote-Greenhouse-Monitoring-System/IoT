@@ -1,4 +1,4 @@
-main.d main.o: .././main.c \
+Application.d Application.o: .././Application.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
@@ -21,15 +21,16 @@ main.d main.o: .././main.c \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/task.h ../FreeRTOS/src/semphr.h \
  ../FreeRTOS/src/queue.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h .././PackageHandler.h \
- ../drivers/lora_driver.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/serial.h .././Application.h .././Sensors/CO2Sensor.h \
- ../drivers/mh_z19.h .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
- ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
+ ../FreeRTOS/src/stream_buffer.h ../FreeRTOS/src/stream_buffer.h \
  ../drivers/stdio_driver.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
+ ../drivers/serial.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../drivers/status_leds.h
+ ../drivers/lora_driver.h ../drivers/status_leds.h .././Application.h \
+ .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
+ .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
+ ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h .././LoraUtils.h \
+ .././PackageHandler.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -91,13 +92,19 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../FreeRTOS/src/stream_buffer.h:
 
-.././PackageHandler.h:
+../FreeRTOS/src/stream_buffer.h:
 
-../drivers/lora_driver.h:
+../drivers/stdio_driver.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 ../drivers/serial.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+../drivers/lora_driver.h:
+
+../drivers/status_leds.h:
 
 .././Application.h:
 
@@ -113,8 +120,6 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../FreeRTOS/src/timers.h:
 
-../drivers/stdio_driver.h:
+.././LoraUtils.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
-
-../drivers/status_leds.h:
+.././PackageHandler.h:

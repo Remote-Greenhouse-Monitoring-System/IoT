@@ -194,6 +194,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Application.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Application.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="drivers\display_7seg.h">
       <SubType>compile</SubType>
     </Compile>
@@ -332,10 +338,25 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="LoraUtils.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="PackageHandlerImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="PackageHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\CO2Sensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\CO2Sensor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\TempHumSensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\TempHumSensor.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -346,6 +367,7 @@
     <Folder Include="FreeRTOS\Example\" />
     <Folder Include="FreeRTOS\FreeRTOSTraceDriver\" />
     <Folder Include="FreeRTOS\src\" />
+    <Folder Include="Sensors" />
   </ItemGroup>
   <ItemGroup>
     <None Include="drivers\.git">

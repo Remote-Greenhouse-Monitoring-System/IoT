@@ -11,6 +11,7 @@
 
 #include <lora_driver.h>
 #include <status_leds.h>
+#include "LoraUtils.h"
 
 // Parameters for OTAA join - You have got these in a mail from IHA
 #define LORA_appEUI "9276B3CF3B069355"
@@ -19,6 +20,11 @@
 void lora_handler_task( void *pvParameters );
 
 static lora_driver_payload_t _uplink_payload;
+static MessageBufferHandle_t uplinkBufferHandle;
+
+void setUplinkMessageBufferHandle(MessageBufferHandle_t uph){
+	uplinkBufferHandle = uph;
+}
 
 void lora_handler_initialise(UBaseType_t lora_handler_task_priority)
 {
@@ -118,7 +124,7 @@ void lora_handler_task( void *pvParameters )
 
 	_lora_setup();
 
-	_uplink_payload.len = 6;
+	_uplink_payload.len = 7;
 	_uplink_payload.portNo = 2;
 
 	TickType_t xLastWakeTime;
@@ -129,18 +135,47 @@ void lora_handler_task( void *pvParameters )
 	{
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 
-		// Some dummy payload
-		uint16_t hum = 12345; // Dummy humidity
-		int16_t temp = 675; // Dummy temp
-		uint16_t co2_ppm = 1050; // Dummy CO2
-		
+// 		// Some dummy payload
+// 		uint16_t hum = 50; // Dummy humidity
+// 		int16_t temp = 25; // Dummy temp
+// 		uint16_t co2_ppm = 1050; // Dummy CO2
+// 		uint8_t status = 0;
+// 
+// 		_uplink_payload.bytes[0] = hum >> 8;
+// 		_uplink_payload.bytes[1] = hum & 0xFF;
+// 		_uplink_payload.bytes[2] = temp >> 8;
+// 		_uplink_payload.bytes[3] = temp & 0xFF;
+// 		_uplink_payload.bytes[4] = co2_ppm >> 8;
+// 		_uplink_payload.bytes[5] = co2_ppm & 0xFF;
+// 		_uplink_payload.bytes[6] = status;
 
-		_uplink_payload.bytes[0] = hum >> 8;
-		_uplink_payload.bytes[1] = hum & 0xFF;
-		_uplink_payload.bytes[2] = temp >> 8;
-		_uplink_payload.bytes[3] = temp & 0xFF;
-		_uplink_payload.bytes[4] = co2_ppm >> 8;
-		_uplink_payload.bytes[5] = co2_ppm & 0xFF;
+
+		int16_t tem = 0;
+		uint16_t hum = 0;
+		uint16_t co2 = 0;
+		uint8_t status = 0;
+		size_t xReceivedBytes = 0;
+		const TickType_t xWaitingTime = portMAX_DELAY;
+
+		
+		xReceivedBytes = xMessageBufferReceive (uplinkBufferHandle,
+		&_uplink_payload,
+		sizeof(_uplink_payload),
+		xWaitingTime);
+
+		if(xReceivedBytes > 0){
+			// 				printf("Number of bytes read from the message buffer: %d\n", xReceivedBytes);
+			tem = (_uplink_payload.bytes[0] << 8) | (_uplink_payload.bytes[1]);
+			hum = (_uplink_payload.bytes[2] << 8) | (_uplink_payload.bytes[3]);
+			co2 = (_uplink_payload.bytes[4] << 8) | (_uplink_payload.bytes[5]);
+			status = _uplink_payload.bytes[6];
+			
+			printf("Temperature sent: %d\n", tem);
+			printf("Humidity sent: %d\n", hum);
+			printf("CO2 sent: %d\n", co2);
+			printf("Status sent: %d\n", status);
+
+		}
 
 		status_leds_shortPuls(led_ST4);  // OPTIONAL
 		printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
