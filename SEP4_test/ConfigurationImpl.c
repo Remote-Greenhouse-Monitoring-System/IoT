@@ -7,7 +7,6 @@
 
 
 #include "Configuration.h"
-#include <stdint.h>
 
 static int16_t max_temperature = 25;
 static int16_t min_temperature;

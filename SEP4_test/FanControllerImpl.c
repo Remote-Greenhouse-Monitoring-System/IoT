@@ -5,16 +5,11 @@
  *  Author: jurin
  */ 
 
-#include <stdint.h>
-#include <ATMEGA_FreeRTOS.h>
-#include "../Sensors/TempHumSensor.h"
-#include "Application.h"
-#include "Configuration.h"
 #include "FanController.h"
 
 void fan_controller_task(void *pvParameters);
 
-void initialize_fan_controller(){
+void create_fan_controller_task(UBaseType_t priority){
 	
 	DDRA = 0xFF;
 	PORTA = 0xFF;
@@ -24,7 +19,7 @@ void initialize_fan_controller(){
 	,  "FanController"
 	,  configMINIMAL_STACK_SIZE
 	,  NULL
-	,  3
+	,  tskIDLE_PRIORITY + priority
 	,  NULL );
 }
 
@@ -36,7 +31,7 @@ void fan_controller_task(void *pvParameters) {
 	uint16_t thresholdHumidity = 0;
 	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(5000); 
+	const TickType_t xFrequency = pdMS_TO_TICKS(120000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)
@@ -56,8 +51,5 @@ void fan_controller_task(void *pvParameters) {
 		else{
 			PORTA = 0xFF;
 		}
-		
-
-		
 	}
 }

@@ -194,7 +194,7 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Application.c">
+    <Compile Include="ApplicationImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Application.h">
@@ -204,6 +204,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ConfigurationImpl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="DownlinkHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="DownlinkHandlerImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\display_7seg.h">
@@ -350,9 +356,6 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="LoraUtils.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="PackageHandlerImpl.c">
       <SubType>compile</SubType>
     </Compile>
@@ -369,6 +372,18 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Sensors\TempHumSensor.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Initialize.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="InitializeImpl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UplinkHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UplinkHandlerImpl.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
@@ -427,9 +442,6 @@
     <None Include="FreeRTOS\src\LICENSE.md">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="LoRaWANHandler.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>

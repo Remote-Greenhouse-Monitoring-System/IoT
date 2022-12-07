@@ -5,60 +5,26 @@
  *  Author: himal
  
  */ 
-#include <stdio.h>
-#include <avr/io.h>
-
-#include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-#include <semphr.h>
-#include <message_buffer.h>
-#include <stream_buffer.h>
-#include <stdio_driver.h>
-#include <serial.h>
-#include <string.h>
-
-#include <lora_driver.h>
-#include <status_leds.h>
 
 #include "Application.h"
-#include "LoraUtils.h"
-#include "PackageHandler.h"
-#include "Configuration.h"
-#include "FanController.h"
 
 
 EventGroupHandle_t measureEventGroup;
 EventGroupHandle_t dataReadyEventGroup;
-
-MessageBufferHandle_t uplinkBufferHandle;
+MessageBufferHandle_t uplinkMessageBufferHandle;
 
 void main_application_task(void *pvParameters);
 
-void initialize_application(){
-	initialize_event_groups();
-	create_sensor_tasks();
-	initialize_fan_controller();
-	uplinkBufferHandle = xMessageBufferCreate(100);
-	setUplinkMessageBufferHandle(uplinkBufferHandle);
-	
+void create_main_application_task(UBaseType_t priority){
+		
 	xTaskCreate(
 	main_application_task
 	,  "MainApplication"  
 	,  configMINIMAL_STACK_SIZE  
 	,  NULL
-	,  3  
+	,  tskIDLE_PRIORITY + priority 
 	,  NULL );
 	
-}
-
-void create_sensor_tasks() {
-	createCO2SensorTask();
-	create_TempHumSensorTask();
-}
-
-void initialize_event_groups() {
-	dataReadyEventGroup = xEventGroupCreate();
-	measureEventGroup = xEventGroupCreate();
 }
 
 
@@ -67,7 +33,6 @@ void initialize_event_groups() {
 void main_application_task(void *pvParameters) {
 	
 	uint8_t xBytesSent = 0;
-	const TickType_t x100ms = pdMS_TO_TICKS(100);
 	//5 minute timer
 	TickType_t xLastWakeTime;
 	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
@@ -93,10 +58,10 @@ void main_application_task(void *pvParameters) {
 			set_CO2_ppm(CO2_getPPM());
 			lora_driver_payload_t payload = get_lora_package(2);
 			
-			xBytesSent = xMessageBufferSend(uplinkBufferHandle,
+			xBytesSent = xMessageBufferSend(uplinkMessageBufferHandle,
 			&payload,
 			sizeof(payload),
-			x100ms);
+			portMAX_DELAY);
 			if(xBytesSent != sizeof(payload)){
 				printf("Timed out.\n");
 			}

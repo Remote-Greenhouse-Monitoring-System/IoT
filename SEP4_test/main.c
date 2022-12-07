@@ -1,14 +1,10 @@
 
 #include <stdio.h>
 #include <avr/io.h>
-
 #include <ATMEGA_FreeRTOS.h>
 #include <task.h>
 #include <semphr.h>
 #include <message_buffer.h>
-#include "PackageHandler.h"
-#include "Application.h"
-
 #include <stdio_driver.h>
 #include <serial.h>
 #include <string.h>
@@ -18,31 +14,36 @@
 #include <status_leds.h>
 
 
+#include "Application.h"
+#include "Initialize.h"
+#include "FanController.h"
+#include "Sensors/CO2Sensor.h"
+#include "Sensors/TempHumSensor.h"
+#include "UplinkHandler.h"
+#include "DownlinkHandler.h"
 
+MessageBufferHandle_t downlinkMessageBufferHandle;
 
-
-// Prototype for LoRaWAN handler
-void lora_handler_initialise(UBaseType_t lora_handler_task_priority);
-
-
-/*-----------------------------------------------------------*/
+void create_all_tasks(){
+	create_lora_uplink_handler_task(4);
+	create_lora_downlink_handler_task(4);
+	create_main_application_task(3);
+	create_CO2_sensor_task(2);
+	create_TempHum_sensor_task(2);
+	create_fan_controller_task(2);
+}
 void initializeSystem()
 {	
-
 	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
 	stdio_initialise(ser_USART0);
-
-
-	// vvvvvvvvvvvvvvvvv BELOW IS LoRaWAN initialisation vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 	// Status Leds driver
 	status_leds_initialise(5); // Priority 5 for internal task
 	// Initialise the LoRaWAN driver without down-link buffer
-	lora_driver_initialise(1, NULL);
-	// Create LoRaWAN task and start it up with priority 3
-	lora_handler_initialise(3);
-	
-	initialize_application();
-		
+	lora_driver_initialise(1, downlinkMessageBufferHandle);
+	initialize_event_groups();
+	initialize_message_buffers();
+	create_all_tasks();
+			
 }
 
 /*-----------------------------------------------------------*/
