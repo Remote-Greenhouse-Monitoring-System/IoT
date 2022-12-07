@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Remote_GreenHouse_Monitoring_System",
+    "\\SEP4_test",
+    "\\SEP4_test\\FreeRTOS",
+    "\\SEP4_test\\FreeRTOS\\FreeRTOSTraceDriver"
+  ],
+  "SelectedNode": "\\SEP4_test\\Application.c",
+  "PreviewInSolutionExplorer": false
+}
