@@ -127,13 +127,13 @@ void lora_handler_task( void *pvParameters )
 	_uplink_payload.len = 7;
 	_uplink_payload.portNo = 2;
 
-	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
-	xLastWakeTime = xTaskGetTickCount();
+// 	TickType_t xLastWakeTime;
+// 	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
+// 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)
 	{
-		xTaskDelayUntil( &xLastWakeTime, xFrequency );
+// 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 
 // 		// Some dummy payload
 // 		uint16_t hum = 50; // Dummy humidity
@@ -174,10 +174,12 @@ void lora_handler_task( void *pvParameters )
 			printf("Humidity sent: %d\n", hum);
 			printf("CO2 sent: %d\n", co2);
 			printf("Status sent: %d\n", status);
+			
+			status_leds_shortPuls(led_ST4);  // OPTIONAL
+			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
 
 		}
 
-		status_leds_shortPuls(led_ST4);  // OPTIONAL
-		printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
+		
 	}
 }

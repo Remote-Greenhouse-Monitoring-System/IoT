@@ -23,6 +23,8 @@
 #include "Application.h"
 #include "LoraUtils.h"
 #include "PackageHandler.h"
+#include "Configuration.h"
+#include "FanController.h"
 
 
 EventGroupHandle_t measureEventGroup;
@@ -35,7 +37,7 @@ void main_application_task(void *pvParameters);
 void initialize_application(){
 	initialize_event_groups();
 	create_sensor_tasks();
-	
+	initialize_fan_controller();
 	uplinkBufferHandle = xMessageBufferCreate(100);
 	setUplinkMessageBufferHandle(uplinkBufferHandle);
 	

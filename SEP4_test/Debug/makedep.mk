@@ -4,6 +4,10 @@
 
 Application.c
 
+ConfigurationImpl.c
+
+FanControllerImpl.c
+
 FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c
 
 FreeRTOS\src\croutine.c

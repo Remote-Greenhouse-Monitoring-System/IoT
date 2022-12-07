@@ -28,5 +28,4 @@ extern EventGroupHandle_t dataReadyEventGroup;
 void create_sensor_tasks();
 void initialize_event_groups();
 void initialize_application();
-void MainApplicationTask();
 
