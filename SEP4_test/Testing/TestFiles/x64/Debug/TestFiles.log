@@ -1,0 +1,54 @@
+﻿Application.obj : error LNK2019: unresolved external symbol xTaskCreate referenced in function initialize_application
+CO2Sensor.obj : error LNK2001: unresolved external symbol xTaskCreate
+LoRaWANHandler.obj : error LNK2001: unresolved external symbol xTaskCreate
+TempHumSensor.obj : error LNK2001: unresolved external symbol xTaskCreate
+Application.obj : error LNK2019: unresolved external symbol xTaskDelayUntil referenced in function main_application_task
+LoRaWANHandler.obj : error LNK2001: unresolved external symbol xTaskDelayUntil
+Application.obj : error LNK2019: unresolved external symbol xTaskGetTickCount referenced in function main_application_task
+LoRaWANHandler.obj : error LNK2001: unresolved external symbol xTaskGetTickCount
+Application.obj : error LNK2019: unresolved external symbol xMessageBufferCreate referenced in function initialize_application
+Application.obj : error LNK2019: unresolved external symbol xMessageBufferSend referenced in function main_application_task
+Application.obj : error LNK2019: unresolved external symbol xEventGroupCreate referenced in function initialize_event_groups
+Application.obj : error LNK2019: unresolved external symbol xEventGroupWaitBits referenced in function main_application_task
+CO2Sensor.obj : error LNK2001: unresolved external symbol xEventGroupWaitBits
+TempHumSensor.obj : error LNK2001: unresolved external symbol xEventGroupWaitBits
+Application.obj : error LNK2019: unresolved external symbol xEventGroupSetBits referenced in function main_application_task
+CO2Sensor.obj : error LNK2001: unresolved external symbol xEventGroupSetBits
+TempHumSensor.obj : error LNK2001: unresolved external symbol xEventGroupSetBits
+CO2Sensor.obj : error LNK2019: unresolved external symbol mh_z19_initialise referenced in function CO2_createSensor
+CO2Sensor.obj : error LNK2019: unresolved external symbol mh_z19_injectCallBack referenced in function CO2_createSensor
+CO2Sensor.obj : error LNK2019: unresolved external symbol mh_z19_takeMeassuring referenced in function CO2_measure
+CO2Sensor.obj : error LNK2019: unresolved external symbol mh_z19_getCo2Ppm referenced in function CO2_measure
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol xMessageBufferReceive referenced in function lora_handler_task
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_setOtaaIdentity referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_configureToEu868 referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_mapReturnCodeToText referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_join referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_sendUploadMessage referenced in function lora_handler_task
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_setDeviceIdentifier referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_setAdaptiveDataRate referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_setReceiveDelay referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_resetRn2483 referenced in function lora_handler_task
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_flushBuffers referenced in function lora_handler_task
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_getRn2483Hweui referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_rn2483FactoryReset referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol lora_driver_saveMac referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol status_leds_longPuls referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol status_leds_shortPuls referenced in function lora_handler_task
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol status_leds_slowBlink referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol status_leds_fastBlink referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol status_leds_ledOn referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol status_leds_ledOff referenced in function _lora_setup
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol vTaskDelay referenced in function _lora_setup
+TempHumSensor.obj : error LNK2001: unresolved external symbol vTaskDelay
+LoRaWANHandler.obj : error LNK2019: unresolved external symbol taskYIELD referenced in function _lora_setup
+main.obj : error LNK2019: unresolved external symbol lora_driver_initialise referenced in function initializeSystem
+main.obj : error LNK2019: unresolved external symbol stdio_initialise referenced in function initializeSystem
+main.obj : error LNK2019: unresolved external symbol status_leds_initialise referenced in function initializeSystem
+main.obj : error LNK2019: unresolved external symbol vTaskStartScheduler referenced in function main
+TempHumSensor.obj : error LNK2019: unresolved external symbol hih8120_initialise referenced in function initialise_TempHumSensor
+TempHumSensor.obj : error LNK2019: unresolved external symbol hih8120_wakeup referenced in function measure_Temp_Hum
+TempHumSensor.obj : error LNK2019: unresolved external symbol hih8120_measure referenced in function measure_Temp_Hum
+TempHumSensor.obj : error LNK2019: unresolved external symbol hih8120_getHumidityPercent_x10 referenced in function Temp_Hum_Main_Task
+TempHumSensor.obj : error LNK2019: unresolved external symbol hih8120_getTemperature_x10 referenced in function Temp_Hum_Main_Task
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\x64\Debug\TestFiles.exe : fatal error LNK1120: 43 unresolved externals

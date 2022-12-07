@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CO2SensorTest.cpp" />
+    <ClCompile Include="..\TestFiles\CO2Sensor.c" />
+    <ClCompile Include="..\TestFiles\Initialize.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="event_groups.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeRTOS.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="message_buffer.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="portable.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="queue.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="semphr.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="task.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+    <ClInclude Include="timers.h">
+      <Filter>FreeRTOS\src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FreeRTOS">
+      <UniqueIdentifier>{aec4192c-8beb-4c57-85dd-12ced2a46a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FreeRTOS\src">
+      <UniqueIdentifier>{da8dfc4d-d16b-4c41-8b97-53381eb6b4bc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
