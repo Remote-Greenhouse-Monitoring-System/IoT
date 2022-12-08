@@ -6,12 +6,14 @@
  */ 
 
 #include "CO2Sensor.h"
-#include "event_groups.h"
-#include "../Application.h"
+
 
 
 uint16_t lastCO2ppm = 0;
 mh_z19_returnCode_t rc;
+
+void MeasureCo2Task(void *pvParameters);
+
 
 void CO2_createSensor() {
 	// The parameter is the USART port the MH-Z19 sensor is connected to - in this case USART3
@@ -56,7 +58,7 @@ uint16_t CO2_getPPM() {
 
 
 //To start the task and get measurement , calling it from Application and need to initialize c02 before starting task
-void createCO2SensorTask(){
+void create_CO2_sensor_task(UBaseType_t priority){
 	
 	//Initializing 
 		CO2_createSensor();
@@ -67,11 +69,10 @@ void createCO2SensorTask(){
 		"MeasuringCO2_Task",
 		configMINIMAL_STACK_SIZE,
 		NULL,
-		tskIDLE_PRIORITY,
+		tskIDLE_PRIORITY + priority,
 		NULL);
 }
 
-//MAIN TASKKK
 
 void MeasureCo2Task(void* pvpParameter){
 	//printf("Measurement of co2 task has been started ");
@@ -93,7 +94,6 @@ void MeasureCo2Task(void* pvpParameter){
 				xEventGroupSetBits(dataReadyEventGroup,CO2_READY_BIT);
 				
 				//vTaskDelay(pdMS_TO_TICKS(100));
-				
 				
 			}
 	}

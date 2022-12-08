@@ -5,16 +5,19 @@
  *  Author: himal
  */ 
 #pragma once
-#include "ATMEGA_FreeRTOS.h"
-#include <stdio.h>
 
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
 #include <stdint.h>
 #include <hih8120.h>
 #include <task.h>
+#include <event_groups.h>
+#include "../Initialize.h"
 
 
-
-void create_TempHumSensorTask();
+void create_TempHum_sensor_task(UBaseType_t priority);
 int16_t TempHumSensor_getTemp();
 uint16_t TempHumSensor_getHum();
-void Temp_Hum_Main_Task();
+void measure_Temp_Hum();
+
+
