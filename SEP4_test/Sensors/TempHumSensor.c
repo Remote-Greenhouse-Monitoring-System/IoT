@@ -67,8 +67,16 @@ void measure_Temp_Hum(){
 		// Investigate the return code further
 	}
 	vTaskDelay(pdMS_TO_TICKS(50));
-	humidity = hih8120_getHumidityPercent_x10();
-	temperature = hih8120_getTemperature_x10();
+	
+	int count = 0;
+	
+	while(!hih8120_isReady || count < 5)
+	{
+		vTaskDelay(pdMS_TO_TICKS(50));
+	}
+		humidity = hih8120_getHumidityPercent_x10();
+		temperature = hih8120_getTemperature_x10();
+		count = 0;
 }
 	
 int16_t TempHumSensor_getTemp(){
