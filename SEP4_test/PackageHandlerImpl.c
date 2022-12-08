@@ -6,7 +6,6 @@
  */ 
 
 #include "PackageHandler.h"
-#include "lora_driver.h"
 
 static int16_t temperaturePercent;
 static uint16_t humidityPercent;

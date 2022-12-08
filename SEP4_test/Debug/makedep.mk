@@ -2,9 +2,11 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Application.c
+ApplicationImpl.c
 
 ConfigurationImpl.c
+
+DownlinkHandlerImpl.c
 
 FanControllerImpl.c
 
@@ -36,7 +38,9 @@ Sensors\CO2Sensor.c
 
 Sensors\TempHumSensor.c
 
-LoRaWANHandler.c
+InitializeImpl.c
+
+UplinkHandlerImpl.c
 
 main.c
 

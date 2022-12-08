@@ -21,15 +21,16 @@ main.d main.o: .././main.c \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/task.h ../FreeRTOS/src/semphr.h \
  ../FreeRTOS/src/queue.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h .././PackageHandler.h \
- ../drivers/lora_driver.h \
+ ../FreeRTOS/src/stream_buffer.h ../drivers/stdio_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/serial.h .././Application.h .././Sensors/CO2Sensor.h \
- ../drivers/mh_z19.h .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
- ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
- ../drivers/stdio_driver.h \
+ ../drivers/serial.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../drivers/status_leds.h
+ ../drivers/lora_driver.h ../drivers/status_leds.h .././Application.h \
+ ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
+ .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
+ .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
+ .././Sensors/../Initialize.h .././PackageHandler.h .././FanController.h \
+ .././Configuration.h .././UplinkHandler.h .././DownlinkHandler.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -91,15 +92,23 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../FreeRTOS/src/stream_buffer.h:
 
-.././PackageHandler.h:
-
-../drivers/lora_driver.h:
+../drivers/stdio_driver.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 ../drivers/serial.h:
 
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+../drivers/lora_driver.h:
+
+../drivers/status_leds.h:
+
 .././Application.h:
+
+../FreeRTOS/src/event_groups.h:
+
+../FreeRTOS/src/timers.h:
 
 .././Sensors/CO2Sensor.h:
 
@@ -109,12 +118,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../drivers/hih8120.h:
 
-../FreeRTOS/src/event_groups.h:
+.././Sensors/../Initialize.h:
 
-../FreeRTOS/src/timers.h:
+.././PackageHandler.h:
 
-../drivers/stdio_driver.h:
+.././FanController.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+.././Configuration.h:
 
-../drivers/status_leds.h:
+.././UplinkHandler.h:
+
+.././DownlinkHandler.h:

@@ -5,12 +5,18 @@
  *  Author: jurin
  */ 
 
-
-#ifndef FANCONTROLLER_H_
-#define FANCONTROLLER_H_
-
-void initialize_fan_controller();
+#pragma once
 
 
+#include <stdint.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <avr/io.h>
+#include "../Sensors/TempHumSensor.h"
+#include "Application.h"
+#include "Configuration.h"
+#include "FanController.h"
 
-#endif /* FANCONTROLLER_H_ */
+void create_fan_controller_task(UBaseType_t priority);
+
+
+

@@ -1,36 +1,25 @@
 /*
-* loraWANHandler.c
-*
-* Created: 12/04/2019 10:09:05
-*  Author: IHA
-*/
-#include <stddef.h>
-#include <stdio.h>
+ * UplinkHandlerImpl.c
+ *
+ * Created: 07/12/2022 21.36.34
+ *  Author: jurin
+ */ 
 
-#include <ATMEGA_FreeRTOS.h>
 
-#include <lora_driver.h>
-#include <status_leds.h>
+#include "UplinkHandler.h"
 
-// Parameters for OTAA join - You have got these in a mail from IHA
-#define LORA_appEUI "9276B3CF3B069355"
-#define LORA_appKEY "84860CBA5C5116F9EC56E1B4346CA899"
-
-void lora_handler_task( void *pvParameters );
+void lora_uplink_handler_task(void *pvParameters);
 
 static lora_driver_payload_t _uplink_payload;
-MessageBufferHandle_t uplinkBufferHandle;
+MessageBufferHandle_t uplinkMessageBufferHandle;
 
-
-
-void lora_handler_initialise(UBaseType_t lora_handler_task_priority)
-{
+void create_lora_uplink_handler_task(UBaseType_t priority){
 	xTaskCreate(
-	lora_handler_task
-	,  "LRHand"  // A name just for humans
-	,  configMINIMAL_STACK_SIZE+200  // This stack size can be checked & adjusted by reading the Stack Highwater
+	lora_uplink_handler_task
+	,  "LRHandUplink"  
+	,  configMINIMAL_STACK_SIZE+200  
 	,  NULL
-	,  lora_handler_task_priority  // Priority, with 3 (configMAX_PRIORITIES - 1) being the highest, and 0 being the lowest.
+	,  tskIDLE_PRIORITY + priority  
 	,  NULL );
 }
 
@@ -107,8 +96,7 @@ static void _lora_setup(void)
 	}
 }
 
-/*-----------------------------------------------------------*/
-void lora_handler_task( void *pvParameters )
+void lora_uplink_handler_task( void *pvParameters )
 {
 	// Hardware reset of LoRaWAN transceiver
 	lora_driver_resetRn2483(1);
@@ -120,25 +108,17 @@ void lora_handler_task( void *pvParameters )
 	lora_driver_flushBuffers(); // get rid of first version string from module after reset!
 
 	_lora_setup();
-
-	_uplink_payload.len = 7;
-	_uplink_payload.portNo = 2;
-
-// 	TickType_t xLastWakeTime;
-// 	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
-// 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)
 	{
-// 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 
 		int16_t tem = 0;
 		uint16_t hum = 0;
 		uint16_t co2 = 0;
 		uint8_t status = 0;
-		size_t xReceivedBytes = 0;
+		uint8_t xReceivedBytes = 0;
 		
-		xReceivedBytes = xMessageBufferReceive (uplinkBufferHandle,
+		xReceivedBytes = xMessageBufferReceive (uplinkMessageBufferHandle,
 		&_uplink_payload,
 		sizeof(_uplink_payload),
 		portMAX_DELAY);
@@ -161,3 +141,14 @@ void lora_handler_task( void *pvParameters )
 		}
 	}
 }
+
+// lora_driver_returnCode_t rc;
+// 
+// if ((rc = lora_driver_sendUploadMessage(false, &_uplinkPayload)) == LORA_MAC_TX_OK )
+// {
+// 	// The uplink message is sent and there is no downlink message received
+// }
+// else if (rc == LORA_MAC_RX_OK)
+// {
+// 	// The uplink message is sent and a downlink message is received
+// }
