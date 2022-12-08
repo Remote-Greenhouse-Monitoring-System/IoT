@@ -22,14 +22,13 @@
 #include "UplinkHandler.h"
 #include "DownlinkHandler.h"
 
-MessageBufferHandle_t downlinkMessageBufferHandle;
 
 void create_all_tasks(){
 	create_lora_uplink_handler_task(4);
 	create_lora_downlink_handler_task(4);
 	create_main_application_task(3);
-	create_CO2_sensor_task(2);
-	create_TempHum_sensor_task(2);
+	create_CO2_sensor_task(1);
+	create_TempHum_sensor_task(1);
 	create_fan_controller_task(2);
 }
 void initializeSystem()
@@ -38,10 +37,12 @@ void initializeSystem()
 	stdio_initialise(ser_USART0);
 	// Status Leds driver
 	status_leds_initialise(5); // Priority 5 for internal task
-	// Initialise the LoRaWAN driver without down-link buffer
-	lora_driver_initialise(1, downlinkMessageBufferHandle);
+
 	initialize_event_groups();
 	initialize_message_buffers();
+	initialize_semaphore();
+	// Initialise the LoRaWAN driver with down-link buffer
+	lora_driver_initialise(ser_USART1, downlinkMessageBufferHandle);
 	create_all_tasks();
 			
 }
