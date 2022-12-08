@@ -5,9 +5,16 @@
 
 #include <../Testing/FreeRTOS.h>
 #include <../Testing/event_groups.h>
+#include "../Testing/task.h"
+
+#include "mh_z19.h"
 
 #include "Initialize.h"
 
-uint16_t CO2_getPPM();
+void CO2_createSensor();
+void myCo2CallBack(uint16_t ppm_parameter);
+void CO2_measure();
+void create_CO2_sensor_task(UBaseType_t priority);
 void MeasureCo2Task();
-void createCO2SensorTask();
+uint16_t CO2_getPPM();
+void RunMeasureCo2Task();

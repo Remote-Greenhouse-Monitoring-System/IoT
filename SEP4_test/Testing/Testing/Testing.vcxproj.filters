@@ -1,9 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CO2SensorTest.cpp" />
-    <ClCompile Include="..\TestFiles\CO2Sensor.c" />
+    <ClCompile Include="..\TestFiles\CO2Sensor.c">
+      <Filter>Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="FreeRTOS_FFF_MocksDefinitions.cpp">
+      <Filter>FFF</Filter>
+    </ClCompile>
+    <ClCompile Include="TempHumSensorTest.cpp">
+      <Filter>Sensors\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="CO2SensorTest.cpp">
+      <Filter>Sensors\Tests</Filter>
+    </ClCompile>
     <ClCompile Include="..\TestFiles\Initialize.c" />
+    <ClCompile Include="..\TestFiles\TempHumSensor.c">
+      <Filter>Sensors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="event_groups.h">
@@ -30,6 +43,10 @@
     <ClInclude Include="timers.h">
       <Filter>FreeRTOS\src</Filter>
     </ClInclude>
+    <ClInclude Include="CO2Sensor_FFF_MocksDeclaration.h" />
+    <ClInclude Include="FreeRTOS_FFF_MocksDeclaration.h">
+      <Filter>FFF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FreeRTOS">
@@ -38,5 +55,17 @@
     <Filter Include="FreeRTOS\src">
       <UniqueIdentifier>{da8dfc4d-d16b-4c41-8b97-53381eb6b4bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sensors">
+      <UniqueIdentifier>{fef2dcf3-f2b3-4b0a-9a18-07a304742edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FFF">
+      <UniqueIdentifier>{1ff7ec54-a4e6-4f59-b76b-f9c73a348665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sensors\Tests">
+      <UniqueIdentifier>{e08508c4-47cc-4804-b572-083a6c00c2e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

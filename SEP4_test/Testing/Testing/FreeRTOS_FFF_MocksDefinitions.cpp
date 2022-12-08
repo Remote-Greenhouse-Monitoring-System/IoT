@@ -1,5 +1,5 @@
 #include "FreeRTOS_FFF_MocksDeclaration.h"
-DEFINE_FFF_GLOBALS
+//DEFINE_FFF_GLOBALS
 
 // --- Define mocks for FreeRTOS functions ---
 // task.h
