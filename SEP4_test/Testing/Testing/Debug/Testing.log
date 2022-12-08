@@ -1,7 +1,2 @@
-﻿  CO2Sensor.c
-  Initialize.c
-  Generating Code...
-  CO2SensorTest.cpp
-  FreeRTOS_FFF_MocksDefinitions.cpp
-  Generating Code...
+﻿  CO2SensorTest.cpp
   Testing.vcxproj -> C:\Users\Christopher\source\IoT\SEP4_test\Testing\Debug\Testing.exe

@@ -19,6 +19,9 @@
     <Filter Include="FreeRTOS\src">
       <UniqueIdentifier>{68f6c74e-01a4-4457-90a1-50c0fc3304b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Drivers">
+      <UniqueIdentifier>{5e0ee4a9-9549-42b7-a064-e1a838b1b876}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Testing\event_groups.h">
@@ -51,12 +54,27 @@
     <ClInclude Include="Initialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TempHumSensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mh_z19.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="serial.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="hih8120.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CO2Sensor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Initialize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TempHumSensor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

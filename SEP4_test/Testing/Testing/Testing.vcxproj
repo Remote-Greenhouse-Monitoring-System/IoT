@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7b0af29f-49ad-45ec-89a7-ad29a34d162f}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -39,6 +39,7 @@
     <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
+    <ClInclude Include="CO2Sensor_FFF_MocksDeclaration.h" />
     <ClInclude Include="event_groups.h" />
     <ClInclude Include="FreeRTOS.h" />
     <ClInclude Include="FreeRTOS_FFF_MocksDeclaration.h" />
@@ -54,6 +55,7 @@
     <ClCompile Include="..\TestFiles\Initialize.c" />
     <ClCompile Include="FreeRTOS_FFF_MocksDefinitions.cpp" />
     <ClCompile Include="CO2SensorTest.cpp" />
+    <ClCompile Include="TempHumSensorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestFiles\TestFiles.vcxproj">
