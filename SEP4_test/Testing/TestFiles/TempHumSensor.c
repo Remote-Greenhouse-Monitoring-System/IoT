@@ -18,15 +18,14 @@ void initialise_TempHumSensor()
 }
 
 
-void create_TempHumSensorTask()
-{
+void create_TempHum_sensor_task(UBaseType_t priority) {
 	initialise_TempHumSensor();
 
 	xTaskCreate(Temp_Hum_Main_Task,
 		"TempHumTask",
 		configMINIMAL_STACK_SIZE,
 		NULL,
-		1,
+		0 + priority,
 		NULL);
 
 }
@@ -47,6 +46,7 @@ void measure_Temp_Hum()
 		// Investigate the return code further
 	}
 	vTaskDelay(pdMS_TO_TICKS(51));
+	
 }
 
 int16_t TempHumSensor_getTemp()
@@ -60,10 +60,8 @@ uint16_t TempHumSensor_getHum()
 }
 
 
-void Temp_Hum_Main_Task()
+void RunTemp_Hum_Main_Task()
 {
-	while (1)
-	{
 		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup, TEMP_HUM_MEASURE_BIT, pdTRUE, pdTRUE, portMAX_DELAY);
 
 		if (uxBits & (TEMP_HUM_MEASURE_BIT))
@@ -77,5 +75,12 @@ void Temp_Hum_Main_Task()
 
 			//vTaskDelay(pdMS_TO_TICKS(51));
 		}
+}
+
+void Temp_Hum_Main_Task()
+{
+	while (1)
+	{
+		RunTemp_Hum_Main_Task();
 	}
 }

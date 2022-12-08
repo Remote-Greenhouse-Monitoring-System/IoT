@@ -53,6 +53,7 @@
   <ItemGroup>
     <ClCompile Include="..\TestFiles\CO2Sensor.c" />
     <ClCompile Include="..\TestFiles\Initialize.c" />
+    <ClCompile Include="..\TestFiles\TempHumSensor.c" />
     <ClCompile Include="FreeRTOS_FFF_MocksDefinitions.cpp" />
     <ClCompile Include="CO2SensorTest.cpp" />
     <ClCompile Include="TempHumSensorTest.cpp" />

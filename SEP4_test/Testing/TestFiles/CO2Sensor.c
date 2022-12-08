@@ -17,15 +17,14 @@ void CO2_createSensor()
 	mh_z19_initialise(ser_USART3);
 
 	//If it is wanted to inject a call-back function, then it must be done like this
-	//mh_z19_injectCallBack(myCo2CallBack);
+	mh_z19_injectCallBack(myCo2CallBack);
 }
 
 
 void myCo2CallBack(uint16_t ppm_parameter)
 {
-	// Here you can use the CO2 ppm value
+	// Here you can use the CO2 ppm value	
 	lastCO2ppm = ppm_parameter;
-
 }
 
 void CO2_measure()
@@ -39,8 +38,9 @@ void CO2_measure()
 		printf("  Something went wrong while measuring CO2!!!  ");
 
 	}
-	lastCO2ppm = mh_z19_getCo2Ppm(&lastCO2ppm);
+	//lastCO2ppm = mh_z19_getCo2Ppm(&lastCO2ppm);
 }
+
 
 uint16_t CO2_getPPM()
 {
@@ -50,8 +50,7 @@ uint16_t CO2_getPPM()
 
 
 //To start the task and get measurement , calling it from Application and need to initialize c02 before starting task
-void createCO2SensorTask()
-{
+void create_CO2_sensor_task(UBaseType_t priority) {
 
 	//Initializing 
 	CO2_createSensor();
@@ -62,18 +61,16 @@ void createCO2SensorTask()
 		"MeasuringCO2_Task",
 		configMINIMAL_STACK_SIZE,
 		NULL,
-		1,
+		0 + priority,
 		NULL);
 }
 
 //MAIN TASKKK
 
-void MeasureCo2Task(void* pvpParameter)
+inline void RunMeasureCo2Task()
 {
 	//printf("Measurement of co2 task has been started ");
-	while (1)
-	{
-
+	
 
 		//Usage of Event group Wait fun until co2 measure bit is set to 1 
 
@@ -93,6 +90,14 @@ void MeasureCo2Task(void* pvpParameter)
 
 
 		}
+	
+}
+
+ void MeasureCo2Task()
+{
+	while (1)
+	{
+		RunMeasureCo2Task();
 	}
 }
 

@@ -1,2 +1,4 @@
-﻿  CO2SensorTest.cpp
+﻿  TempHumSensor.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\TempHumSensor.c(24,32): warning C4113: 'void (__cdecl *)()' differs in parameter lists from 'TaskFunction_t'
+  TempHumSensorTest.cpp
   Testing.vcxproj -> C:\Users\Christopher\source\IoT\SEP4_test\Testing\Debug\Testing.exe

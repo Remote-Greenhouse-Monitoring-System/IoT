@@ -17,10 +17,10 @@ void initialize_event_groups(){
 }
 
 void initialize_message_buffers(){
-	uplinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
+	//uplinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
 	if(uplinkMessageBufferHandle == NULL)
 		printf("Failed to create uplink message buffer.\n");
-	downlinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
+	//downlinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
 	if(downlinkMessageBufferHandle == NULL)
 		printf("Failed to create downlink message buffer.\n");
 

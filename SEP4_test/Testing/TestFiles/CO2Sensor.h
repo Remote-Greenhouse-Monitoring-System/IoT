@@ -11,9 +11,10 @@
 
 #include "Initialize.h"
 
-void createCO2SensorTask();
-void CO2_measure();
 void CO2_createSensor();
-void MeasureCo2Task(void* pvpParameter);
-uint16_t CO2_getPPM();
 void myCo2CallBack(uint16_t ppm_parameter);
+void CO2_measure();
+void create_CO2_sensor_task(UBaseType_t priority);
+void MeasureCo2Task();
+uint16_t CO2_getPPM();
+void RunMeasureCo2Task();

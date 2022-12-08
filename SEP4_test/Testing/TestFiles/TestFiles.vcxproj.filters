@@ -54,9 +54,6 @@
     <ClInclude Include="Initialize.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TempHumSensor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="mh_z19.h">
       <Filter>Header Files\Drivers</Filter>
     </ClInclude>
@@ -66,15 +63,18 @@
     <ClInclude Include="hih8120.h">
       <Filter>Header Files\Drivers</Filter>
     </ClInclude>
+    <ClInclude Include="TempHumSensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CO2Sensor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Initialize.c">
+    <ClCompile Include="TempHumSensor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TempHumSensor.c">
+    <ClCompile Include="Initialize.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
