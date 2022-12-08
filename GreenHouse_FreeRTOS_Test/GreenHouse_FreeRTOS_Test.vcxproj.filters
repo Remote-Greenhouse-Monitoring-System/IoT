@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="FreeRTOS\FreeRTOS_FFF_MocksDefinitions.cpp" />
+    <ClCompile Include="..\SEP4_test\Sensors\CO2Sensor.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FreeRTOS\event_groups.h" />
+    <ClInclude Include="FreeRTOS\FreeRTOS.h" />
+    <ClInclude Include="FreeRTOS\FreeRTOS_FFF_MocksDeclaration.h" />
+    <ClInclude Include="FreeRTOS\io.h" />
+    <ClInclude Include="FreeRTOS\message_buffer.h" />
+    <ClInclude Include="FreeRTOS\portable.h" />
+    <ClInclude Include="FreeRTOS\queue.h" />
+    <ClInclude Include="FreeRTOS\semphr.h" />
+    <ClInclude Include="FreeRTOS\task.h" />
+    <ClInclude Include="FreeRTOS\timers.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

@@ -5,14 +5,24 @@
  *  Author: Himal
  */ 
 
+
+
+#include "../../GreenHouse_FreeRTOS_Test/FreeRTOS/FreeRTOS.h"
+
 #include "CO2Sensor.h"
-#include "event_groups.h"
-#include "../Application.h"
+#include "../../GreenHouse_FreeRTOS_Test/FreeRTOS/event_groups.h"
+
+
+#include <../../GreenHouse_FreeRTOS_Test/FreeRTOS/task.h>
+#include "../drivers/mh_z19.h"
+
+
+//#include "../Application.h"
+
 
 
 uint16_t lastCO2ppm = 0;
 mh_z19_returnCode_t rc;
-
 void CO2_createSensor() {
 	// The parameter is the USART port the MH-Z19 sensor is connected to - in this case USART3
 	
@@ -22,10 +32,10 @@ void CO2_createSensor() {
 	//	vTaskStartScheduler()
 	//is called.
 
-	mh_z19_initialise(ser_USART3);
+	mh_z19_initialise(3);
 
 	//If it is wanted to inject a call-back function, then it must be done like this
-	mh_z19_injectCallBack(myCo2CallBack);
+	//mh_z19_injectCallBack(myCo2CallBack);
 }
 
 
@@ -55,6 +65,7 @@ uint16_t CO2_getPPM() {
 
 
 
+/*
 //To start the task and get measurement , calling it from Application and need to initialize c02 before starting task
 void createCO2SensorTask(){
 	
@@ -67,20 +78,25 @@ void createCO2SensorTask(){
 		"MeasuringCO2_Task",
 		configMINIMAL_STACK_SIZE,
 		NULL,
-		tskIDLE_PRIORITY,
+		1,
 		NULL);
 }
 
+*/
+
 //MAIN TASKKK
+/*
 
 void MeasureCo2Task(void* pvpParameter){
+
+	(void) pvpParameter;
 	//printf("Measurement of co2 task has been started ");
 	while(1){
 		
 		
 		//Usage of Event group Wait fun until co2 measure bit is set to 1 
 		
-		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,CO2_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
+	EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup, CO2_MEASURE_BIT, pdTRUE, pdTRUE, portMAX_DELAY);
 		
 			if ((uxBits & (CO2_MEASURE_BIT)) == CO2_MEASURE_BIT)
 			{
@@ -96,5 +112,8 @@ void MeasureCo2Task(void* pvpParameter){
 				
 				
 			}
+		
 	}
 }
+
+*/

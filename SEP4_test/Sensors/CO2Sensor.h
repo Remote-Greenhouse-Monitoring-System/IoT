@@ -7,14 +7,11 @@
 
 #pragma once
 
-#include <ATMEGA_FreeRTOS.h>
 #include <stdio.h>
-
 #include <stdint.h>
-#include <task.h>
-#include <mh_z19.h>
 
 
+void CO2_createSensor();
 void createCO2SensorTask();
 void CO2_measure();
 

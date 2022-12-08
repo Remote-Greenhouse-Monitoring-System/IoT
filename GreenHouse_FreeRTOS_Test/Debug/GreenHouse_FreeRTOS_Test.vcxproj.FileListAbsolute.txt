@@ -1,0 +1,4 @@
+C:\Users\himal\Desktop\a\IoT\GreenHouse_FreeRTOS_Test\Debug\GreenHouse_FreeRTOS_Test.vcxproj.CopyComplete
+C:\Users\himal\Desktop\a\IoT\GreenHouse_FreeRTOS_Test\Debug\GreenHouse_FreeRTOS_Test.exe
+C:\Users\himal\Desktop\a\IoT\GreenHouse_FreeRTOS_Test\Debug\gtest.pdb
+C:\Users\himal\Desktop\a\IoT\GreenHouse_FreeRTOS_Test\Debug\gtest_main.pdb

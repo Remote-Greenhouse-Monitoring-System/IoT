@@ -1,11 +1,11 @@
 #pragma once
-#include <ATMEGA_FreeRTOS.h>
+#include "../GreenHouse_FreeRTOS_Test/FreeRTOS/FreeRTOS.h"
 #include <stdio.h>
 
-#include "task.h"
+#include "../../GreenHouse_FreeRTOS_Test/FreeRTOS/task.h"
 #include "Sensors/CO2Sensor.h"
 #include "Sensors/TempHumSensor.h"
-#include "event_groups.h"
+#include "../../GreenHouse_FreeRTOS_Test/FreeRTOS/event_groups.h"
 
 
 
@@ -19,7 +19,7 @@
 #define ALL_READY_BITS (CO2_READY_BIT | TEMP_HUM_READY_BIT)
 #define ALL_MEASURE_BITS ( CO2_MEASURE_BIT | TEMP_HUM_MEASURE_BIT  )
 
-extern  EventGroupHandle_t measureEventGroup;
+ extern  EventGroupHandle_t measureEventGroup;
 extern EventGroupHandle_t dataReadyEventGroup;
 
 

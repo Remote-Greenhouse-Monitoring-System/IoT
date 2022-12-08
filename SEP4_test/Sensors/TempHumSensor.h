@@ -5,12 +5,12 @@
  *  Author: himal
  */ 
 #pragma once
-#include "ATMEGA_FreeRTOS.h"
+#include "../../GreenHouse_FreeRTOS_Test/FreeRTOS/FreeRTOS.h"
 #include <stdio.h>
 
 #include <stdint.h>
-#include <hih8120.h>
-#include <task.h>
+#include <../drivers/hih8120.h>
+#include <../../GreenHouse_FreeRTOS_Test/FreeRTOS/task.h>
 
 
 
