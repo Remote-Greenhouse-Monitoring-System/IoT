@@ -9,9 +9,7 @@
 #include "Application.h"
 
 
-EventGroupHandle_t measureEventGroup;
-EventGroupHandle_t dataReadyEventGroup;
-MessageBufferHandle_t uplinkMessageBufferHandle;
+
 
 void main_application_task(void *pvParameters);
 

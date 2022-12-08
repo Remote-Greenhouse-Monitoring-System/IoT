@@ -28,8 +28,8 @@ main.d main.o: .././main.c \
  ../drivers/lora_driver.h ../drivers/status_leds.h .././Application.h \
  ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
  .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
- .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
- .././Sensors/../Initialize.h .././PackageHandler.h .././FanController.h \
+ .././Sensors/../Initialize.h .././Sensors/TempHumSensor.h \
+ ../drivers/hih8120.h .././PackageHandler.h .././FanController.h \
  .././Configuration.h .././UplinkHandler.h .././DownlinkHandler.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
@@ -114,11 +114,11 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../drivers/mh_z19.h:
 
+.././Sensors/../Initialize.h:
+
 .././Sensors/TempHumSensor.h:
 
 ../drivers/hih8120.h:
-
-.././Sensors/../Initialize.h:
 
 .././PackageHandler.h:
 

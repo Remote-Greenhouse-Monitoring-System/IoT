@@ -25,9 +25,11 @@ Sensors/TempHumSensor.d Sensors/TempHumSensor.o: \
  ../drivers/hih8120.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../FreeRTOS/src/task.h ../FreeRTOS/src/event_groups.h \
- ../FreeRTOS/src/timers.h ../Sensors/../Initialize.h \
- ../drivers/lora_driver.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h ../drivers/serial.h
+ ../FreeRTOS/src/timers.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ ../Sensors/../Initialize.h ../drivers/lora_driver.h \
+ ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
+ ../drivers/serial.h ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h
 
 ../Sensors/TempHumSensor.h:
 
@@ -91,6 +93,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../FreeRTOS/src/timers.h:
 
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
 ../Sensors/../Initialize.h:
 
 ../drivers/lora_driver.h:
@@ -100,3 +104,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../FreeRTOS/src/stream_buffer.h:
 
 ../drivers/serial.h:
+
+../FreeRTOS/src/semphr.h:
+
+../FreeRTOS/src/queue.h:

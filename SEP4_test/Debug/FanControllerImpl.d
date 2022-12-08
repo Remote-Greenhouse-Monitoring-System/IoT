@@ -25,11 +25,13 @@ FanControllerImpl.d FanControllerImpl.o: .././FanControllerImpl.c \
  ../drivers/hih8120.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../FreeRTOS/src/task.h ../FreeRTOS/src/event_groups.h \
- ../FreeRTOS/src/timers.h ../drivers/../Sensors/../Initialize.h \
- ../drivers/lora_driver.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h ../drivers/serial.h .././Application.h \
- .././Sensors/CO2Sensor.h ../drivers/mh_z19.h .././PackageHandler.h \
- .././Configuration.h
+ ../FreeRTOS/src/timers.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ ../drivers/../Sensors/../Initialize.h ../drivers/lora_driver.h \
+ ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
+ ../drivers/serial.h ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h \
+ .././Application.h .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
+ .././PackageHandler.h .././Configuration.h
 
 .././FanController.h:
 
@@ -95,6 +97,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../FreeRTOS/src/timers.h:
 
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
 ../drivers/../Sensors/../Initialize.h:
 
 ../drivers/lora_driver.h:
@@ -104,6 +108,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../FreeRTOS/src/stream_buffer.h:
 
 ../drivers/serial.h:
+
+../FreeRTOS/src/semphr.h:
+
+../FreeRTOS/src/queue.h:
 
 .././Application.h:
 

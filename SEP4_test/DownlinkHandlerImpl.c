@@ -10,7 +10,6 @@
 void lora_downlink_handler_task(void *pvParameters);
 
 static lora_driver_payload_t _downlink_payload;
-MessageBufferHandle_t downlinkMessageBufferHandle;
 
 void create_lora_downlink_handler_task(UBaseType_t priority){
 		xTaskCreate(
@@ -28,6 +27,7 @@ void lora_downlink_handler_task(void *pvParameters){
 	
 	for(;;){
 		
+		
 		xReceivedBytes =  xMessageBufferReceive(downlinkMessageBufferHandle, 
 		&_downlink_payload, 
 		sizeof(lora_driver_payload_t), 
@@ -35,6 +35,16 @@ void lora_downlink_handler_task(void *pvParameters){
 		
 		if(xReceivedBytes > 0){
 			printf("DOWN LINK: from port: %d with %d bytes received!", _downlink_payload.portNo, _downlink_payload.len); // Just for Debug
+			
+			if(configSemaphore != NULL){
+				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
+					setConfiguration(_downlink_payload);
+					xSemaphoreGive(configSemaphore);
+				}
+				else{
+					printf("Couldn't obtain semaphore.\n");
+				}
+			}
 		}
 	}
 }
