@@ -12,6 +12,7 @@
 #include <hih8120.h>
 #include <task.h>
 #include <event_groups.h>
+#include <string.h>
 #include "../Initialize.h"
 
 

@@ -12,6 +12,7 @@
 #include <ATMEGA_FreeRTOS.h>
 #include <event_groups.h>
 #include <message_buffer.h>
+#include <semphr.h>
 #include <stdio.h>
 
 #define CO2_MEASURE_BIT (1<<0)
@@ -26,8 +27,10 @@ extern EventGroupHandle_t measureEventGroup;
 extern EventGroupHandle_t dataReadyEventGroup;
 extern MessageBufferHandle_t uplinkMessageBufferHandle;
 extern MessageBufferHandle_t downlinkMessageBufferHandle;
+extern SemaphoreHandle_t configSemaphore;
 
 void initialize_event_groups();
 void initialize_message_buffers();
+void initialize_semaphore();
 
 

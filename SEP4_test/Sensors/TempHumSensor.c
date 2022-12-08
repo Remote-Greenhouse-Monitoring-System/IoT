@@ -7,8 +7,7 @@
 
 #include "TempHumSensor.h"
 
-EventGroupHandle_t measureEventGroup;
-EventGroupHandle_t dataReadyEventGroup;
+
 uint16_t humidity = 0;
 int16_t temperature = 0;
 
@@ -52,9 +51,18 @@ void measure_Temp_Hum(){
 		// Investigate the return code further
 	}
 	vTaskDelay(pdMS_TO_TICKS(60));
-	if ( HIH8120_OK !=  hih8120_measure() )
+	int16_t returnCode = hih8120_measure();
+	char* returnCodeString;
+	switch(returnCode){
+		case HIH8120_OK: returnCodeString = "HIH8120_OK";												/**< Everything went well */
+		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP";								/**< Not enough heap to initialise the driver */
+		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED";		/**< Driver must be initialise before use */
+		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY";									/**< The two wire/I2C interface is busy */
+	}
+	
+	if ( returnCode != HIH8120_OK  )
 	{
-		printf("Could not measure temp hum sensor \n");
+		printf("Could not measure temp hum sensor, code: %s \n", returnCodeString);
 		// Something went wrong
 		// Investigate the return code further
 	}

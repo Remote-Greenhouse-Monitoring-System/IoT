@@ -11,7 +11,6 @@
 void lora_uplink_handler_task(void *pvParameters);
 
 static lora_driver_payload_t _uplink_payload;
-MessageBufferHandle_t uplinkMessageBufferHandle;
 
 void create_lora_uplink_handler_task(UBaseType_t priority){
 	xTaskCreate(
@@ -136,6 +135,7 @@ void lora_uplink_handler_task( void *pvParameters )
 			printf("Status sent: %d\n", status);
 			
 			status_leds_shortPuls(led_ST4);  // OPTIONAL
+			//WHAT THE HELL DOES THE FALSE DO 
 			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
 
 		}
