@@ -26,8 +26,11 @@ Application.d Application.o: .././Application.c .././Application.h \
  ../FreeRTOS/src/stream_buffer.h ../drivers/lora_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../drivers/serial.h .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
- .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
- .././Sensors/../SystemSetup.h .././PackageHandler.h .././SystemSetup.h
+ .././Sensors/../Initialize.h ../FreeRTOS/src/semphr.h \
+ ../FreeRTOS/src/queue.h .././Sensors/TempHumSensor.h \
+ ../drivers/hih8120.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ .././PackageHandler.h
 
 .././Application.h:
 
@@ -101,12 +104,16 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../drivers/mh_z19.h:
 
+.././Sensors/../Initialize.h:
+
+../FreeRTOS/src/semphr.h:
+
+../FreeRTOS/src/queue.h:
+
 .././Sensors/TempHumSensor.h:
 
 ../drivers/hih8120.h:
 
-.././Sensors/../SystemSetup.h:
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
 
 .././PackageHandler.h:
-
-.././SystemSetup.h:

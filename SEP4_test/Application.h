@@ -13,5 +13,5 @@
 #include "Initialize.h"
 
 
-void create_main_application_task(UBaseType_t priority);
+void application_create(UBaseType_t priority);
 

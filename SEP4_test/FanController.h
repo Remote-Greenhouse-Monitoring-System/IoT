@@ -2,7 +2,7 @@
  * FanController.h
  *
  * Created: 06/12/2022 22.55.32
- *  Author: jurin
+ *  Author: jurin, Christopher
  */ 
 
 #pragma once
@@ -16,7 +16,7 @@
 #include "Configuration.h"
 #include "FanController.h"
 
-void create_fan_controller_task(UBaseType_t priority);
+void fanController_create(UBaseType_t priority);
 
 
 

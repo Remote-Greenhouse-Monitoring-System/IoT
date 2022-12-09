@@ -2,7 +2,7 @@
  * UplinkHandler.h
  *
  * Created: 07/12/2022 21.36.18
- *  Author: jurin
+ *  Author: jurin, Christopher
  */ 
 
 #pragma once
@@ -18,7 +18,7 @@
 #define LORA_appEUI "9276B3CF3B069355"
 #define LORA_appKEY "84860CBA5C5116F9EC56E1B4346CA899"
 
-void create_lora_uplink_handler_task(UBaseType_t priority);
+void uplinkHandler_create(UBaseType_t priority);
 
 
 

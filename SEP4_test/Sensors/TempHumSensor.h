@@ -2,7 +2,7 @@
  * TempHumSensor.h
  *
  * Created: 11/20/2022 3:18:53 PM
- *  Author: himal
+ *  Author: himal, Christopher
  */ 
 #pragma once
 
@@ -16,9 +16,9 @@
 #include "../Initialize.h"
 
 
-void create_TempHum_sensor_task(UBaseType_t priority);
-int16_t TempHumSensor_getTemp();
-uint16_t TempHumSensor_getHum();
-void measure_Temp_Hum();
+void tempHumSensor_create(UBaseType_t priority);
+int16_t tempHumSensor_getTemp();
+uint16_t tempHumSensor_getHum();
+void tempHumSensor_measure();
 
 

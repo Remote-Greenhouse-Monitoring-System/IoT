@@ -1,107 +1,131 @@
 /*
- * TempHumSensor.c
- *
- * Created: 11/20/2022 3:19:03 PM
- *  Author: himal
- */ 
+* TempHumSensor.c
+*
+* Created: 11/20/2022 3:19:03 PM
+*  Author: himal, Christopher
+*/
 
 #include "TempHumSensor.h"
 
-
+//Initializing temperature and humidity as 0. 
 uint16_t humidity = 0;
 int16_t temperature = 0;
 
-void Temp_Hum_Main_Task(void *pvParameters);
+void tempHumSensor_task(void* pvpParameter);
 
-
-void initialise_TempHumSensor()
+//Initializes the temperature and humidity sensor driver and creates the temperature and humidity task.
+void tempHumSensor_create(UBaseType_t priority)
 {
-	if ( HIH8120_OK == hih8120_initialise() )
+	tempHumSensor_initialise();
+	tempHumSensor_createTask(priority);
+}
+//Getter for temperature.
+int16_t tempHumSensor_getTemp(){
+	return temperature;
+}
+//Getter for humidity.
+uint16_t tempHumSensor_getHum(){
+	return humidity;
+}
+
+//Initializes the temperature and humidity sensor driver and prints the return code.
+void tempHumSensor_initialise()
+{
+	hih8120_driverReturnCode_t rc = hih8120_initialise();
+	
+	if (rc != HIH8120_OK)
 	{
-	//	printf("Initialised  tempHum sensor");
-		// Driver initialised OK
-		// Always check what hih8120_initialise() returns
-		
+		printf("ERROR: Initializing temperature & Humidity Sensor, ");
+		tempHumSensor_printReturnCode(rc);
 	}
-	else 
+	else
 	{
-		printf("Something went wrong while initialising tempHum sensor");
+		printf("--->Initialized, Temperature & Humidity Sensor<---");
 	}
 }
 
 
-void create_TempHum_sensor_task(UBaseType_t priority){
-	initialise_TempHumSensor();
+//Measures the temperature and humidity.
+void tempHumSensor_measure(){
+	//waking up the sensor and getting return code.
+	hih8120_driverReturnCode_t wakeup_rc = hih8120_wakeup();
 	
-	xTaskCreate(Temp_Hum_Main_Task,
+	//checking return code and printing result.
+	if (wakeup_rc != HIH8120_OK)
+	{
+		printf("ERROR: Waking temperature & Humidity Sensor up, ");
+		tempHumSensor_printReturnCode(wakeup_rc);
+	}
+	else
+	{
+		printf("--->Woke Temperature & Humidity Sensor up<---");
+	}
+	
+	//note: After the hih8120_wakeup() call the sensor will need minimum 50 ms to be ready! 
+	vTaskDelay(pdMS_TO_TICKS(100));
+	
+	//waking up the sensor and getting return code.
+	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
+	
+	//checking return code and printing result.
+	if (measure_rc != HIH8120_OK)
+	{
+		printf("ERROR: Temperature & Humidity Sensor could not measure, ");
+		tempHumSensor_printReturnCode(measure_rc);
+	}
+	else
+	{
+		printf("--->Temperature & Humidity Sensor done measuring<---");
+	}
+	
+	//note: After the hih8120_measure() call the two wire inteface (TWI) will need minimum 1 ms to fetch the results from the sensor!  
+	vTaskDelay(pdMS_TO_TICKS(50));
+	
+	//Checking if sensor is ready to return measurements.
+	if (hih8120_isReady())
+	{
+		printf("--->HIH8120 is Ready.<---");
+			humidity = hih8120_getHumidityPercent_x10();
+			printf("--->Humidity Set.<---");
+			temperature = hih8120_getTemperature_x10();
+			printf("--->Temperature Set.<---");
+	}
+}
+
+// Creates the temperature and humidity task.
+void tempHumSensor_createTask(UBaseType_t priority){
+	xTaskCreate(tempHumSensor_task,
 	"TempHumTask",
 	configMINIMAL_STACK_SIZE,
 	NULL,
 	tskIDLE_PRIORITY + priority,
 	NULL);
-	
 }
 
-void measure_Temp_Hum(){
-	
-	if ( HIH8120_OK != hih8120_wakeup() )
+//The temperature and humidity task.
+void tempHumSensor_task(void* pvpParameter){
+	while (1)
 	{
-		printf("Could not wake up temp hum sensor \n");
-		// Something went wrong
-		// Investigate the return code further
-	}
-	vTaskDelay(pdMS_TO_TICKS(60));
-	int16_t returnCode = hih8120_measure();
+	EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,TEMP_HUM_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
+	if (uxBits &(TEMP_HUM_MEASURE_BIT))
+	{
+		tempHumSensor_measure();
+		//After everything is done just setting 1 to ready bit so its now unblocked
+		xEventGroupSetBits(dataReadyEventGroup,TEMP_HUM_READY_BIT);
+		//vTaskDelay(pdMS_TO_TICKS(51));
+	}}
+}
+
+
+//Prints a formatted return code.
+void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc)
+{
 	char* returnCodeString;
-	switch(returnCode){
-		case HIH8120_OK: returnCodeString = "HIH8120_OK";												/**< Everything went well */
-		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP";								/**< Not enough heap to initialise the driver */
-		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED";		/**< Driver must be initialise before use */
-		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY";									/**< The two wire/I2C interface is busy */
+	switch(rc){
+		case HIH8120_OK: returnCodeString = "HIH8120_OK - Everything went well ";												
+		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP - Not enough heap to initialize the driver";								
+		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED - Driver must be initialize before use";		
+		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY - The two wire/I2C interface is busy";									
 	}
-	
-	if ( returnCode != HIH8120_OK  )
-	{
-		printf("Could not measure temp hum sensor, code: %s \n", returnCodeString);
-		// Something went wrong
-		// Investigate the return code further
-	}
-	vTaskDelay(pdMS_TO_TICKS(50));
-	
-	int count = 0;
-	
-	while(!hih8120_isReady || count < 5)
-	{
-		vTaskDelay(pdMS_TO_TICKS(50));
-	}
-		humidity = hih8120_getHumidityPercent_x10();
-		temperature = hih8120_getTemperature_x10();
-		count = 0;
-}
-	
-int16_t TempHumSensor_getTemp(){
-	return temperature;
-}
-	
-uint16_t TempHumSensor_getHum(){
-	return humidity;
-}
-
-
-
-void Temp_Hum_Main_Task(void *pvParameters){
-	
-	while(1){
-		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,TEMP_HUM_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
-		
-		if (uxBits &(TEMP_HUM_MEASURE_BIT))
-		{
-			measure_Temp_Hum();			
-			//After everything is done just setting 1 to ready bit so its now unblocked 
-			xEventGroupSetBits(dataReadyEventGroup,TEMP_HUM_READY_BIT);
-			
-			//vTaskDelay(pdMS_TO_TICKS(51));
-			
-		}
-	}
+	printf("RETURNCODE: %s \n", returnCodeString);
 }

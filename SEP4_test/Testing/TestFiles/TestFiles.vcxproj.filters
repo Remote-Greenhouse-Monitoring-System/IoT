@@ -66,6 +66,9 @@
     <ClInclude Include="TempHumSensor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lora_driver.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CO2Sensor.c">

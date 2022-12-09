@@ -20,8 +20,4 @@
 void create_TempHum_sensor_task(UBaseType_t priority);
 int16_t TempHumSensor_getTemp();
 uint16_t TempHumSensor_getHum();
-void Temp_Hum_Main_Task();
 void measure_Temp_Hum();
-void initialise_TempHumSensor();
-int16_t TempHumSensor_getTemp();
-uint16_t TempHumSensor_getHum();

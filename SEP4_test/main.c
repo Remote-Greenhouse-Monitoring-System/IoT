@@ -23,13 +23,13 @@
 #include "DownlinkHandler.h"
 
 
-void create_all_tasks(){
-	create_lora_uplink_handler_task(4);
-	create_lora_downlink_handler_task(4);
-	create_main_application_task(3);
-	create_CO2_sensor_task(1);
-	create_TempHum_sensor_task(1);
-	create_fan_controller_task(2);
+void main_create(){
+	uplinkHandler_create(4);
+	downlinkHandler_create(4);
+	application_create(3);
+	CO2Sensor_create(1);
+	tempHumSensor_create(1);
+	fanController_create(2);
 }
 void initializeSystem()
 {	
@@ -43,7 +43,7 @@ void initializeSystem()
 	initialize_semaphore();
 	// Initialise the LoRaWAN driver with down-link buffer
 	lora_driver_initialise(ser_USART1, downlinkMessageBufferHandle);
-	create_all_tasks();
+	main_create();
 			
 }
 
