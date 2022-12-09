@@ -55,8 +55,8 @@ void windowController_task(void *pvParameters) {
 		currentTemperature = tempHumSensor_getTemp();
 		currentHumidity = tempHumSensor_getHum;
 		
-		printf("--->Fan Controller checked temp: %d threshold: %d<---\n", currentTemperature/10, thresholdTemperature);
-		printf("--->Fan Controller checked hum: %d threshold: %d<---\n", currentHumidity/10, thresholdHumidity);
+		printf("windowController.c ---> Checked temp: %d threshold: %d \n", currentTemperature/10, thresholdTemperature);
+		printf("windowController.c ---> Checked hum: %d threshold: %d \n", currentHumidity/10, thresholdHumidity);
 	if(currentTemperature/10 > thresholdTemperature){
 		// 			PORTA = 0x00;
 		servoController_setPosition(0, 100);

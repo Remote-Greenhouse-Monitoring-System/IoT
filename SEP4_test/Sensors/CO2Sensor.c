@@ -46,12 +46,12 @@ void co2Sensor_measure() {
 	mh_z19_returnCode_t measure_rc = mh_z19_takeMeassuring();
 	if (measure_rc != MHZ19_OK)
 	{
-		printf("ERROR: CO2 Sensor could not measure, ");
+		printf("co2Sensor.c ---> ERROR: CO2 Sensor could not measure, ");
 		co2Sensor_printReturnCode(measure_rc);
 	}
 	else
 	{
-		printf("--->Initialized, CO2 Sensor<---");
+		printf("co2Sensor.c ---> Initialized, CO2 Sensor.\n");
 	}
 	lastCO2ppm = mh_z19_getCo2Ppm(&lastCO2ppm);
 }

@@ -46,7 +46,7 @@ void downlinkHandler_task(void *pvParameters){
 		portMAX_DELAY);
 		
 		if(xReceivedBytes > 0){
-			printf("--->DOWN LINK: from port: %d with %d bytes received.<---", _downlink_payload.portNo, _downlink_payload.len); // Just for Debug
+			printf("downlinkHandler ---> DOWN LINK: from port: %d with %d bytes received.\n", _downlink_payload.portNo, _downlink_payload.len); // Just for Debug
 			
 			if(configSemaphore != NULL){
 				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
@@ -54,7 +54,7 @@ void downlinkHandler_task(void *pvParameters){
 					xSemaphoreGive(configSemaphore);
 				}
 				else{
-					printf("ERROR: DownlinkHandler Couldn't obtain semaphore.\n");
+					printf("downlinkHandler ---> ERROR: DownlinkHandler Couldn't obtain semaphore.\n");
 				}
 			}
 		}

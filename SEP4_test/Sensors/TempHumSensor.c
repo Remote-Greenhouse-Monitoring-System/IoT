@@ -44,12 +44,12 @@ void tempHumSensor_initialise()
 	
 	if (rc != HIH8120_OK)
 	{
-		printf("ERROR: Initializing temperature & Humidity Sensor, ");
+		printf("temHumSenor.c ---> ERROR: Initializing temperature & Humidity Sensor, ");
 		tempHumSensor_printReturnCode(rc);
 	}
 	else
 	{
-		printf("--->Initialized, Temperature & Humidity Sensor<---");
+		printf("temHumSenor.c ---> Initialized, Temperature & Humidity Sensor.\n");
 	}
 }
 
@@ -62,12 +62,12 @@ void tempHumSensor_measure(){
 	//checking return code and printing result.
 	if (wakeup_rc != HIH8120_OK)
 	{
-		printf("ERROR: Waking temperature & Humidity Sensor up, ");
+		printf("temHumSenor.c ---> ERROR: Waking temperature & Humidity Sensor up, ");
 		tempHumSensor_printReturnCode(wakeup_rc);
 	}
 	else
 	{
-		printf("--->Woke Temperature & Humidity Sensor up<---");
+		printf("temHumSenor.c ---> Woke Temperature & Humidity Sensor up.\n");
 	}
 	
 	//note: After the hih8120_wakeup() call the sensor will need minimum 50 ms to be ready!
@@ -79,12 +79,12 @@ void tempHumSensor_measure(){
 	//checking return code and printing result.
 	if (measure_rc != HIH8120_OK)
 	{
-		printf("ERROR: Temperature & Humidity Sensor could not measure, ");
+		printf("temHumSenor.c ---> ERROR: Temperature & Humidity Sensor could not measure, ");
 		tempHumSensor_printReturnCode(measure_rc);
 	}
 	else
 	{
-		printf("--->Temperature & Humidity Sensor done measuring<---");
+		printf("temHumSenor.c ---> Temperature & Humidity Sensor done measuring.\n");
 	}
 	
 	//note: After the hih8120_measure() call the two wire inteface (TWI) will need minimum 1 ms to fetch the results from the sensor!
@@ -93,11 +93,11 @@ void tempHumSensor_measure(){
 	//Checking if sensor is ready to return measurements.
 	if (hih8120_isReady())
 	{
-		printf("--->HIH8120 is Ready.<---");
+		printf("temHumSenor.c ---> HIH8120 is Ready.");
 		humidity = hih8120_getHumidityPercent_x10();
-		printf("--->Humidity Set.<---");
+		printf("temHumSenor.c ---> Humidity Set.");
 		temperature = hih8120_getTemperature_x10();
-		printf("--->Temperature Set.<---");
+		printf("temHumSenor.c ---> Temperature Set.");
 	}
 }
 

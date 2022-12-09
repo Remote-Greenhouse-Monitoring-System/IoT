@@ -38,5 +38,5 @@ void configuration_setConfiguration(lora_driver_payload_t payload){
 	newMaxHum = (payload.bytes[2] << 8 | payload.bytes[3]);
 	configuration_setMaxTemperature(newMaxTemp);
 	configuration_setMaxHumidity(newMaxHum);
-	printf("--->New config, max temp: %d, max hum: %d<---\n", newMaxTemp, newMaxHum);
+	printf("configuration.c ---> New config, max temp: %d, max hum: %d<---\n", newMaxTemp, newMaxHum);
 }

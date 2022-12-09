@@ -69,7 +69,7 @@ void application_task(void *pvParameters) {
 			sizeof(payload),
 			portMAX_DELAY);
 			if(xBytesSent != sizeof(payload)){
-				printf("Timed out.\n");
+				printf("application.c ---> Timed out.\n");
 			}
 			else{
 				
@@ -78,7 +78,7 @@ void application_task(void *pvParameters) {
 				// 			printf("Humidity sent: %d\n", hum);
 				// 			printf("Size of payload: %d\n", sizeof(payload));
 				//			receivePayload();
-				printf("Bytes put in buffer: %d\n", xBytesSent);
+				printf("application.c ---> Bytes put in buffer: %d\n", xBytesSent);
 				
 			}
 		}
