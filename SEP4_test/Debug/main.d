@@ -25,13 +25,11 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../drivers/serial.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../drivers/lora_driver.h ../drivers/status_leds.h .././Application.h \
- ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
- .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
- .././Sensors/../Initialize.h .././Sensors/TempHumSensor.h \
- ../drivers/hih8120.h .././PackageHandler.h .././FanController.h \
- .././Configuration.h .././ServoController.h ../drivers/rc_servo.h \
- .././UplinkHandler.h .././DownlinkHandler.h
+ ../drivers/lora_driver.h ../drivers/status_leds.h .././application.h \
+ .././initialize.h ../FreeRTOS/src/event_groups.h \
+ ../FreeRTOS/src/timers.h .././windowController.h \
+ .././Sensors/co2Sensor.h .././Sensors/tempHumSensor.h \
+ .././uplinkHandler.h .././downlinkHandler.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
 
@@ -105,32 +103,20 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../drivers/status_leds.h:
 
-.././Application.h:
+.././application.h:
+
+.././initialize.h:
 
 ../FreeRTOS/src/event_groups.h:
 
 ../FreeRTOS/src/timers.h:
 
-.././Sensors/CO2Sensor.h:
+.././windowController.h:
 
-../drivers/mh_z19.h:
+.././Sensors/co2Sensor.h:
 
-.././Sensors/../Initialize.h:
+.././Sensors/tempHumSensor.h:
 
-.././Sensors/TempHumSensor.h:
+.././uplinkHandler.h:
 
-../drivers/hih8120.h:
-
-.././PackageHandler.h:
-
-.././FanController.h:
-
-.././Configuration.h:
-
-.././ServoController.h:
-
-../drivers/rc_servo.h:
-
-.././UplinkHandler.h:
-
-.././DownlinkHandler.h:
+.././downlinkHandler.h:

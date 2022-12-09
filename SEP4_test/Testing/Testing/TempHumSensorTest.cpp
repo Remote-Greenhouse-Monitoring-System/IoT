@@ -47,12 +47,14 @@ protected:
 	}
 };
 
-TEST_F(TempHumSensorTest, test_hih8120_initialise_OK)
+TEST_F(TempHumSensorTest, test_create_TempHum_sensor_task_with_OK)
 {
 	//Arange
 	hih8120_initialise_fake.return_val = HIH8120_OK;
+
+
 	//Act
-	initialise_TempHumSensor();
+
 	//ASSERT/EXPECT
 	ASSERT_EQ(hih8120_initialise_fake.call_count,1);
 	ASSERT_EQ(hih8120_initialise_fake.return_val, HIH8120_OK);

@@ -1,19 +1,13 @@
 /*
- * SystemSetup.h
- *
- * Created: 07/12/2022 19.18.36
- *  Author: jurin
- */ 
-
-#pragma once
-
-
-#include <lora_driver.h>
-#include <ATMEGA_FreeRTOS.h>
+* initialize.h
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 #include <event_groups.h>
 #include <message_buffer.h>
 #include <semphr.h>
-#include <stdio.h>
+
+#pragma once
 
 #define CO2_MEASURE_BIT (1<<0)
 #define CO2_READY_BIT (1<<1)

@@ -145,6 +145,7 @@
     <ClInclude Include="CO2Sensor.h" />
     <ClInclude Include="hih8120.h" />
     <ClInclude Include="Initialize.h" />
+    <ClInclude Include="lora_driver.h" />
     <ClInclude Include="mh_z19.h" />
     <ClInclude Include="serial.h" />
     <ClInclude Include="TempHumSensor.h" />
