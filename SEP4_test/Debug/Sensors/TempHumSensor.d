@@ -1,6 +1,5 @@
-Sensors/TempHumSensor.d Sensors/TempHumSensor.o: \
- ../Sensors/TempHumSensor.c ../Sensors/TempHumSensor.h \
- ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
+Sensors/tempHumSensor.d Sensors/tempHumSensor.o: \
+ ../Sensors/tempHumSensor.c ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
@@ -27,11 +26,9 @@ Sensors/TempHumSensor.d Sensors/TempHumSensor.o: \
  ../FreeRTOS/src/task.h ../FreeRTOS/src/event_groups.h \
  ../FreeRTOS/src/timers.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../Sensors/../Initialize.h ../drivers/lora_driver.h \
- ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
- ../drivers/serial.h ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h
-
-../Sensors/TempHumSensor.h:
+ ../Sensors/../initialize.h ../FreeRTOS/src/message_buffer.h \
+ ../FreeRTOS/src/stream_buffer.h ../FreeRTOS/src/semphr.h \
+ ../FreeRTOS/src/queue.h ../Sensors/tempHumSensor.h
 
 ../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
@@ -95,16 +92,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
 
-../Sensors/../Initialize.h:
-
-../drivers/lora_driver.h:
+../Sensors/../initialize.h:
 
 ../FreeRTOS/src/message_buffer.h:
 
 ../FreeRTOS/src/stream_buffer.h:
 
-../drivers/serial.h:
-
 ../FreeRTOS/src/semphr.h:
 
 ../FreeRTOS/src/queue.h:
+
+../Sensors/tempHumSensor.h:

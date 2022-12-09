@@ -1,5 +1,5 @@
-PackageHandler.d PackageHandler.o: .././PackageHandler.c \
- .././PackageHandler.h ../drivers/lora_driver.h \
+packageHandler.d packageHandler.o: .././packageHandler.c \
+ ../drivers/lora_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
@@ -21,9 +21,8 @@ PackageHandler.d PackageHandler.o: .././PackageHandler.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\wdt.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/message_buffer.h \
- ../FreeRTOS/src/stream_buffer.h ../drivers/serial.h
-
-.././PackageHandler.h:
+ ../FreeRTOS/src/stream_buffer.h ../drivers/serial.h \
+ .././packageHandler.h
 
 ../drivers/lora_driver.h:
 
@@ -80,3 +79,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../FreeRTOS/src/stream_buffer.h:
 
 ../drivers/serial.h:
+
+.././packageHandler.h:

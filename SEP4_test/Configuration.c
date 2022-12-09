@@ -1,12 +1,14 @@
 /*
- * ConfigurationImpl.c
- *
- * Created: 06/12/2022 18.45.41
- *  Author: jurin, Christopher
- */ 
+* configuration.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
+#include <stdint.h>
+#include <lora_driver.h>
+#include <semphr.h>
 
-#include "Configuration.h"
+#include "configuration.h"
 
 static int16_t max_temperature = 0;
 static int16_t min_temperature = 0;
@@ -36,5 +38,5 @@ void configuration_setConfiguration(lora_driver_payload_t payload){
 	newMaxHum = (payload.bytes[2] << 8 | payload.bytes[3]);
 	configuration_setMaxTemperature(newMaxTemp);
 	configuration_setMaxHumidity(newMaxHum);
-	printf("--->New config, max temp: %d, max hum: %d\n<---", newMaxTemp, newMaxHum);
+	printf("--->New config, max temp: %d, max hum: %d<---\n", newMaxTemp, newMaxHum);
 }

@@ -1,27 +1,36 @@
 /*
- * DownlinkHandlerImpl.c
- *
- * Created: 07/12/2022 22.49.01
- *  Author: jurin, Christopher
- */ 
+* downlinkHandler.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
-#include "DownlinkHandler.h"
+#include <ATMEGA_FreeRTOS.h>
+#include <lora_driver.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <message_buffer.h>
+#include <task.h>
+
+#include "configuration.h"
+#include "initialize.h"
+
+#include "downlinkHandler.h"
 
 static lora_driver_payload_t _downlink_payload;
 
 void downlinkHandler_create(UBaseType_t priority)
 {
-	downlinkHandler_create(priority);
+	downlinkHandler_createTask(priority);
 }
 
 void downlinkHandler_createTask(UBaseType_t priority){
-		xTaskCreate(
-		downlinkHandler_task()
-		,  "LRHandDownlink"
-		,  configMINIMAL_STACK_SIZE+200
-		,  NULL
-		,  tskIDLE_PRIORITY + priority
-		,  NULL );
+	xTaskCreate(
+	downlinkHandler_task()
+	,  "LRHandDownlink"
+	,  configMINIMAL_STACK_SIZE+200
+	,  NULL
+	,  tskIDLE_PRIORITY + priority
+	,  NULL );
 }
 
 void downlinkHandler_task(void *pvParameters){
@@ -31,9 +40,9 @@ void downlinkHandler_task(void *pvParameters){
 	for(;;){
 		
 		
-		xReceivedBytes =  xMessageBufferReceive(downlinkMessageBufferHandle, 
-		&_downlink_payload, 
-		sizeof(lora_driver_payload_t), 
+		xReceivedBytes =  xMessageBufferReceive(downlinkMessageBufferHandle,
+		&_downlink_payload,
+		sizeof(lora_driver_payload_t),
 		portMAX_DELAY);
 		
 		if(xReceivedBytes > 0){
@@ -86,9 +95,9 @@ xMessageBufferReceive(downLinkMessageBufferHandle, &downlinkPayload, sizeof(lora
 printf("DOWN LINK: from port: %d with %d bytes received!", downlinkPayload.port_no, downlinkPayload.len); // Just for Debug
 if (4 == downlinkPayload.len) // Check that we have got the expected 4 bytes
 {
-	// decode the payload into our variales
-	maxHumSetting = (downlinkPayload.bytes[0] << 8) + downlinkPayload.bytes[1];
-	maxTempSetting = (downlinkPayload.bytes[2] << 8) + downlinkPayload.bytes[3];
+// decode the payload into our variales
+maxHumSetting = (downlinkPayload.bytes[0] << 8) + downlinkPayload.bytes[1];
+maxTempSetting = (downlinkPayload.bytes[2] << 8) + downlinkPayload.bytes[3];
 }
 \endcode
 */

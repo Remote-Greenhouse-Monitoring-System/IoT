@@ -2,13 +2,15 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-Application.c
+application.c
 
-Configuration.c
+configuration.c
 
-DownlinkHandler.c
+downlinkHandler.c
 
-FanController.c
+servoController.c
+
+windowController.c
 
 FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c
 
@@ -32,15 +34,15 @@ FreeRTOS\src\timers.c
 
 FreeRTOS\src\variantHooks.c
 
-PackageHandler.c
+packageHandler.c
 
-Sensors\CO2Sensor.c
+Sensors\co2Sensor.c
 
-Sensors\TempHumSensor.c
+Sensors\tempHumSensor.c
 
-Initialize.c
+initialize.c
 
-UplinkHandler.c
+uplinkHandler.c
 
 main.c
 

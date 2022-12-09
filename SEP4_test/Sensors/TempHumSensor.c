@@ -1,13 +1,22 @@
 /*
-* TempHumSensor.c
-*
-* Created: 11/20/2022 3:19:03 PM
-*  Author: himal, Christopher
+*  tempHumSensor.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
 */
 
-#include "TempHumSensor.h"
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <hih8120.h>
+#include <task.h>
+#include <event_groups.h>
+#include <string.h>
 
-//Initializing temperature and humidity as 0. 
+#include "../initialize.h"
+
+#include "tempHumSensor.h"
+
+//Initializing temperature and humidity as 0.
 uint16_t humidity = 0;
 int16_t temperature = 0;
 
@@ -61,7 +70,7 @@ void tempHumSensor_measure(){
 		printf("--->Woke Temperature & Humidity Sensor up<---");
 	}
 	
-	//note: After the hih8120_wakeup() call the sensor will need minimum 50 ms to be ready! 
+	//note: After the hih8120_wakeup() call the sensor will need minimum 50 ms to be ready!
 	vTaskDelay(pdMS_TO_TICKS(100));
 	
 	//waking up the sensor and getting return code.
@@ -78,17 +87,17 @@ void tempHumSensor_measure(){
 		printf("--->Temperature & Humidity Sensor done measuring<---");
 	}
 	
-	//note: After the hih8120_measure() call the two wire inteface (TWI) will need minimum 1 ms to fetch the results from the sensor!  
+	//note: After the hih8120_measure() call the two wire inteface (TWI) will need minimum 1 ms to fetch the results from the sensor!
 	vTaskDelay(pdMS_TO_TICKS(50));
 	
 	//Checking if sensor is ready to return measurements.
 	if (hih8120_isReady())
 	{
 		printf("--->HIH8120 is Ready.<---");
-			humidity = hih8120_getHumidityPercent_x10();
-			printf("--->Humidity Set.<---");
-			temperature = hih8120_getTemperature_x10();
-			printf("--->Temperature Set.<---");
+		humidity = hih8120_getHumidityPercent_x10();
+		printf("--->Humidity Set.<---");
+		temperature = hih8120_getTemperature_x10();
+		printf("--->Temperature Set.<---");
 	}
 }
 
@@ -106,26 +115,26 @@ void tempHumSensor_createTask(UBaseType_t priority){
 void tempHumSensor_task(void* pvpParameter){
 	while (1)
 	{
-	EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,TEMP_HUM_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
-	if (uxBits &(TEMP_HUM_MEASURE_BIT))
-	{
-		tempHumSensor_measure();
-		//After everything is done just setting 1 to ready bit so its now unblocked
-		xEventGroupSetBits(dataReadyEventGroup,TEMP_HUM_READY_BIT);
-		//vTaskDelay(pdMS_TO_TICKS(51));
-	}}
-}
-
-
-//Prints a formatted return code.
-void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc)
-{
-	char* returnCodeString;
-	switch(rc){
-		case HIH8120_OK: returnCodeString = "HIH8120_OK - Everything went well ";												
-		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP - Not enough heap to initialize the driver";								
-		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED - Driver must be initialize before use";		
-		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY - The two wire/I2C interface is busy";									
+		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,TEMP_HUM_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
+		if (uxBits &(TEMP_HUM_MEASURE_BIT))
+		{
+			tempHumSensor_measure();
+			//After everything is done just setting 1 to ready bit so its now unblocked
+			xEventGroupSetBits(dataReadyEventGroup,TEMP_HUM_READY_BIT);
+			//vTaskDelay(pdMS_TO_TICKS(51));
+		}}
 	}
-	printf("RETURNCODE: %s \n", returnCodeString);
-}
+
+
+	//Prints a formatted return code.
+	void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc)
+	{
+		char* returnCodeString;
+		switch(rc){
+			case HIH8120_OK: returnCodeString = "HIH8120_OK - Everything went well ";
+			case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP - Not enough heap to initialize the driver";
+			case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED - Driver must be initialize before use";
+			case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY - The two wire/I2C interface is busy";
+		}
+		printf("RETURNCODE: %s \n", returnCodeString);
+	}

@@ -1,11 +1,12 @@
 /*
- * PackageHandler.c
- *
- * Created: 16/11/2022 09.49.13
- *  Author: jurin, Christopher
- */ 
+* packageHandler.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
-#include "PackageHandler.h"
+#include "lora_driver.h"
+
+#include "packageHandler.h"
 
 static int16_t temperaturePercent;
 static uint16_t humidityPercent;

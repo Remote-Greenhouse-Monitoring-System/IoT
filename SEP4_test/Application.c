@@ -1,11 +1,22 @@
 /*
- * Application.c
- *
- * Created: 11/20/2022 2:27:49 PM
- *  Author: himal, Christopher
- */ 
+* application.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
-#include "Application.h"
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
+#include <event_groups.h>
+#include <task.h>
+#include <message_buffer.h>
+#include <lora_driver.h>
+
+#include "Sensors/co2Sensor.h"
+#include "Sensors/tempHumSensor.h"
+#include "packageHandler.h"
+#include "initialize.h"
+
+#include "application.h"
 
 void application_task(void *pvParameters);
 
@@ -14,19 +25,17 @@ void application_create(UBaseType_t priority)
 	application_craeteTask(priority);
 }
 
-void application_craeteTask(UBaseType_t priority){		
+void application_craeteTask(UBaseType_t priority){
 	xTaskCreate(
 	application_task
-	,  "MainApplication"  
-	,  configMINIMAL_STACK_SIZE  
+	,  "MainApplication"
+	,  configMINIMAL_STACK_SIZE
 	,  NULL
-	,  tskIDLE_PRIORITY + priority 
-	,  NULL );	
+	,  tskIDLE_PRIORITY + priority
+	,  NULL );
 }
 
-
-// Main task For application to get result when every measurnment is done
-
+// Main task For application to get result when every measurement is done
 void application_task(void *pvParameters) {
 	
 	uint8_t xBytesSent = 0;
@@ -52,7 +61,7 @@ void application_task(void *pvParameters) {
 		{
 			packageHandler_setTemperaturePercent(tempHumSensor_getTemp());
 			packageHandler_setHumidityPercent(tempHumSensor_getHum());
-			packageHandler_setCO2ppm(CO2Sensor_getPPM());
+			packageHandler_setCO2ppm(co2Sensor_getPPM());
 			lora_driver_payload_t payload = packageHandler_getLoraPackage(2);
 			
 			xBytesSent = xMessageBufferSend(uplinkMessageBufferHandle,
@@ -72,7 +81,7 @@ void application_task(void *pvParameters) {
 				printf("Bytes put in buffer: %d\n", xBytesSent);
 				
 			}
-		}	
+		}
 	}
 }
 

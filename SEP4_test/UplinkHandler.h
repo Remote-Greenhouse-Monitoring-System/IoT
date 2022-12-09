@@ -1,19 +1,10 @@
 /*
- * UplinkHandler.h
- *
- * Created: 07/12/2022 21.36.18
- *  Author: jurin, Christopher
- */ 
+* uplinkHandler.h
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
 #pragma once
-
-
-#include <stddef.h>
-#include <stdio.h>
-#include <ATMEGA_FreeRTOS.h>
-#include <lora_driver.h>
-#include <status_leds.h>
-#include "Initialize.h"
 
 #define LORA_appEUI "9276B3CF3B069355"
 #define LORA_appKEY "84860CBA5C5116F9EC56E1B4346CA899"

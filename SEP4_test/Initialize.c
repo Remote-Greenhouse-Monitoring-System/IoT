@@ -1,11 +1,14 @@
 /*
- * SystemSetupImpl.c
- *
- * Created: 07/12/2022 19.26.39
- *  Author: jurin
- */ 
+* initialize.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
-#include "Initialize.h"
+#include <lora_driver.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
+
+#include "initialize.h"
 
 EventGroupHandle_t measureEventGroup;
 EventGroupHandle_t dataReadyEventGroup;
@@ -22,20 +25,20 @@ void initialize_event_groups(){
 void initialize_message_buffers(){
 	uplinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
 	if(uplinkMessageBufferHandle == NULL){
-		printf("Failed to create uplink message buffer.\n");
+		printf("initialize.c ---> Failed to create uplink message buffer.\n");
 	}
 	downlinkMessageBufferHandle = xMessageBufferCreate(sizeof(lora_driver_payload_t)*2);
 	if(downlinkMessageBufferHandle == NULL){
-		printf("Failed to create downlink message buffer.\n");
+		printf("initialize.c ---> Failed to create downlink message buffer.\n");
 	}
 }
 
- void initialize_semaphore(){
- 	configSemaphore = xSemaphoreCreateMutex();
-	 if(configSemaphore != NULL){
-		 xSemaphoreGive(configSemaphore);
-	 }
-	 else{
-		 printf("Failed to create config semaphore");
-	 }
- }
+void initialize_semaphore(){
+	configSemaphore = xSemaphoreCreateMutex();
+	if(configSemaphore != NULL){
+		xSemaphoreGive(configSemaphore);
+	}
+	else{
+		printf("initialize.c ---> Failed to create config semaphore.\n");
+	}
+}

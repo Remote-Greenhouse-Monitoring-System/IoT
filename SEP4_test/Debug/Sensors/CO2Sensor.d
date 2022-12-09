@@ -1,5 +1,5 @@
-Sensors/CO2Sensor.d Sensors/CO2Sensor.o: ../Sensors/CO2Sensor.c \
- ../Sensors/CO2Sensor.h ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
+Sensors/co2Sensor.d Sensors/co2Sensor.o: ../Sensors/co2Sensor.c \
+ ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdint.h \
@@ -24,15 +24,10 @@ Sensors/CO2Sensor.d Sensors/CO2Sensor.o: ../Sensors/CO2Sensor.c \
  ../FreeRTOS/src/task.h ../drivers/mh_z19.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../drivers/serial.h ../FreeRTOS/src/event_groups.h \
- ../FreeRTOS/src/timers.h ../Sensors/../Application.h \
- ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
- ../drivers/lora_driver.h ../Sensors/../Sensors/TempHumSensor.h \
- ../drivers/hih8120.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../Sensors/../Sensors/../Initialize.h ../FreeRTOS/src/semphr.h \
- ../FreeRTOS/src/queue.h ../Sensors/../PackageHandler.h
-
-../Sensors/CO2Sensor.h:
+ ../FreeRTOS/src/timers.h ../Sensors/../application.h \
+ ../Sensors/../initialize.h ../FreeRTOS/src/message_buffer.h \
+ ../FreeRTOS/src/stream_buffer.h ../FreeRTOS/src/semphr.h \
+ ../FreeRTOS/src/queue.h ../Sensors/co2Sensor.h
 
 ../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
@@ -96,24 +91,16 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../FreeRTOS/src/timers.h:
 
-../Sensors/../Application.h:
+../Sensors/../application.h:
+
+../Sensors/../initialize.h:
 
 ../FreeRTOS/src/message_buffer.h:
 
 ../FreeRTOS/src/stream_buffer.h:
 
-../drivers/lora_driver.h:
-
-../Sensors/../Sensors/TempHumSensor.h:
-
-../drivers/hih8120.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
-
-../Sensors/../Sensors/../Initialize.h:
-
 ../FreeRTOS/src/semphr.h:
 
 ../FreeRTOS/src/queue.h:
 
-../Sensors/../PackageHandler.h:
+../Sensors/co2Sensor.h:

@@ -1,4 +1,8 @@
-
+/*
+*  main.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 #include <stdio.h>
 #include <avr/io.h>
 #include <ATMEGA_FreeRTOS.h>
@@ -9,30 +13,31 @@
 #include <serial.h>
 #include <string.h>
 
- // Needed for LoRaWAN
+// Needed for LoRaWAN
 #include <lora_driver.h>
 #include <status_leds.h>
 
 
-#include "Application.h"
-#include "Initialize.h"
-#include "FanController.h"
-#include "Sensors/CO2Sensor.h"
-#include "Sensors/TempHumSensor.h"
-#include "UplinkHandler.h"
-#include "DownlinkHandler.h"
+#include "application.h"
+#include "initialize.h"
+#include "windowController.h"
+#include "Sensors/co2Sensor.h"
+#include "Sensors/tempHumSensor.h"
+#include "uplinkHandler.h"
+#include "downlinkHandler.h"
 
 
 void main_create(){
 	uplinkHandler_create(4);
 	downlinkHandler_create(4);
 	application_create(3);
-	CO2Sensor_create(1);
+	co2Sensor_create(1);
 	tempHumSensor_create(1);
-	fanController_create(2);
+	windowController_create(2);
+	servoController_craete();
 }
 void initializeSystem()
-{	
+{
 	// Make it possible to use stdio on COM port 0 (USB) on Arduino board - Setting 57600,8,N,1
 	stdio_initialise(ser_USART0);
 	// Status Leds driver
@@ -44,7 +49,7 @@ void initializeSystem()
 	// Initialise the LoRaWAN driver with down-link buffer
 	lora_driver_initialise(ser_USART1, downlinkMessageBufferHandle);
 	main_create();
-			
+	
 }
 
 /*-----------------------------------------------------------*/

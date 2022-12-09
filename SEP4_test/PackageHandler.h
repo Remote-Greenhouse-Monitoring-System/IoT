@@ -1,15 +1,10 @@
 /*
- * PackageHandler.h
- *
- * Created: 16/11/2022 09.48.46
- *  Author: jurin, Christopher
- */ 
-
+* packageHandler.h
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
 #pragma once
-
-
-#include "lora_driver.h"
 
 #define PAYLOAD_SIZE 7
 

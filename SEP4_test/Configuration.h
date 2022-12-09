@@ -1,16 +1,11 @@
 /*
- * Configuration.h
- *
- * Created: 06/12/2022 18.42.11
- *  Author: jurin, Christopher
- */ 
+* configuration.h
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
-#pragma once
-
-
-#include <stdint.h>
 #include <lora_driver.h>
-#include <semphr.h>
+#pragma once
 
 int16_t configuration_getMaxTemperature();
 uint16_t configuration_getMaxHumidity();

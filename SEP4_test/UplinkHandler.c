@@ -1,14 +1,22 @@
 /*
- * UplinkHandlerImpl.c
- *
- * Created: 07/12/2022 21.36.34
- *  Author: jurin, Christopher
- */ 
+* uplinkHandler.c
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
 
+#include <stddef.h>
+#include <stdio.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <lora_driver.h>
+#include <status_leds.h>
 
-#include "UplinkHandler.h"
+#include "initialize.h"
+
+#include "uplinkHandler.h"
 
 static lora_driver_payload_t _uplink_payload;
+
+void uplinkHandler_task( void *pvParameters);
 
 void uplinkHandler_create(UBaseType_t priority)
 {
@@ -17,11 +25,11 @@ void uplinkHandler_create(UBaseType_t priority)
 
 void uplinkHandler_createTask(UBaseType_t priority){
 	xTaskCreate(
-	uplinkHandler_task()
-	,  "LRHandUplink"  
-	,  configMINIMAL_STACK_SIZE+200  
+	uplinkHandler_task
+	,  "LRHandUplink"
+	,  configMINIMAL_STACK_SIZE+200
 	,  NULL
-	,  tskIDLE_PRIORITY + priority  
+	,  tskIDLE_PRIORITY + priority
 	,  NULL );
 }
 
@@ -138,7 +146,7 @@ void uplinkHandler_task( void *pvParameters )
 			printf("Status sent: %d\n", status);
 			
 			status_leds_shortPuls(led_ST4);  // OPTIONAL
-			//WHAT THE HELL DOES THE FALSE DO 
+			//WHAT THE HELL DOES THE FALSE DO
 			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
 
 		}
@@ -146,7 +154,7 @@ void uplinkHandler_task( void *pvParameters )
 }
 
 // lora_driver_returnCode_t rc;
-// 
+//
 // if ((rc = lora_driver_sendUploadMessage(false, &_uplinkPayload)) == LORA_MAC_TX_OK )
 // {
 // 	// The uplink message is sent and there is no downlink message received

@@ -194,22 +194,22 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Application.c">
+    <Compile Include="application.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Application.h">
+    <Compile Include="application.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Configuration.h">
+    <Compile Include="configuration.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Configuration.c">
+    <Compile Include="configuration.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="DownlinkHandler.h">
+    <Compile Include="downlinkHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="DownlinkHandler.c">
+    <Compile Include="downlinkHandler.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\display_7seg.h">
@@ -260,10 +260,16 @@
     <Compile Include="drivers\twi.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="FanController.h">
+    <Compile Include="servoController.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="FanController.c">
+    <Compile Include="servoController.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="windowController.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="windowController.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c">
@@ -356,34 +362,34 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="PackageHandler.c">
+    <Compile Include="packageHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="PackageHandler.h">
+    <Compile Include="packageHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\CO2Sensor.c">
+    <Compile Include="Sensors\co2Sensor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\CO2Sensor.h">
+    <Compile Include="Sensors\co2Sensor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\TempHumSensor.c">
+    <Compile Include="Sensors\tempHumSensor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\TempHumSensor.h">
+    <Compile Include="Sensors\tempHumSensor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Initialize.h">
+    <Compile Include="initialize.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Initialize.c">
+    <Compile Include="initialize.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="UplinkHandler.h">
+    <Compile Include="uplinkHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="UplinkHandler.c">
+    <Compile Include="uplinkHandler.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
