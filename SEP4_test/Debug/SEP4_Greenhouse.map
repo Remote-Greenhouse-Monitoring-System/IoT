@@ -2191,68 +2191,68 @@ END GROUP
  .debug_frame   0x00002838      0x12c ../drivers\libIotLibrary.a(twi.o)
  .debug_frame   0x00002964       0x24 ../drivers\libIotLibrary.a(fifo.o)
 
-.debug_str      0x00000000     0x4613
+.debug_str      0x00000000     0x463e
  *(.debug_str)
  .debug_str     0x00000000      0x3e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega2560/avr6/crtatmega2560.o
- .debug_str     0x000003e6      0x3e3 application.o
-                                0x448 (size before relaxing)
- .debug_str     0x000007c9      0x115 configuration.o
-                                0x2c3 (size before relaxing)
- .debug_str     0x000008de      0x111 downlinkHandler.o
-                                0x367 (size before relaxing)
- .debug_str     0x000009ef       0x83 servoController.o
-                                0x1dc (size before relaxing)
- .debug_str     0x00000a72       0xc2 windowController.o
-                                0x326 (size before relaxing)
- .debug_str     0x00000b34      0x36f FreeRTOS/src/event_groups.o
+ .debug_str     0x000003e6      0x3de application.o
+                                0x443 (size before relaxing)
+ .debug_str     0x000007c4      0x115 configuration.o
+                                0x2be (size before relaxing)
+ .debug_str     0x000008d9      0x111 downlinkHandler.o
+                                0x362 (size before relaxing)
+ .debug_str     0x000009ea       0x83 servoController.o
+                                0x1d7 (size before relaxing)
+ .debug_str     0x00000a6d       0xc2 windowController.o
+                                0x321 (size before relaxing)
+ .debug_str     0x00000b2f      0x39f FreeRTOS/src/event_groups.o
                                 0x58d (size before relaxing)
- .debug_str     0x00000ea3      0x2ce FreeRTOS/src/heap_4.o
+ .debug_str     0x00000ece      0x2ce FreeRTOS/src/heap_4.o
                                 0x483 (size before relaxing)
- .debug_str     0x00001171       0x89 FreeRTOS/src/list.o
+ .debug_str     0x0000119c       0x89 FreeRTOS/src/list.o
                                 0x2bf (size before relaxing)
- .debug_str     0x000011fa      0x147 FreeRTOS/src/port.o
+ .debug_str     0x00001225      0x147 FreeRTOS/src/port.o
                                 0x2f4 (size before relaxing)
- .debug_str     0x00001341      0x613 FreeRTOS/src/queue.o
+ .debug_str     0x0000136c      0x613 FreeRTOS/src/queue.o
                                 0x933 (size before relaxing)
- .debug_str     0x00001954      0x49f FreeRTOS/src/stream_buffer.o
+ .debug_str     0x0000197f      0x49f FreeRTOS/src/stream_buffer.o
                                 0x7bc (size before relaxing)
- .debug_str     0x00001df3      0x89a FreeRTOS/src/tasks.o
+ .debug_str     0x00001e1e      0x89a FreeRTOS/src/tasks.o
                                 0xf54 (size before relaxing)
- .debug_str     0x0000268d      0x414 FreeRTOS/src/timers.o
+ .debug_str     0x000026b8      0x414 FreeRTOS/src/timers.o
                                 0x82a (size before relaxing)
- .debug_str     0x00002aa1       0x81 FreeRTOS/src/variantHooks.o
+ .debug_str     0x00002acc       0x81 FreeRTOS/src/variantHooks.o
                                 0x26b (size before relaxing)
- .debug_str     0x00002b22       0x48 packageHandler.o
+ .debug_str     0x00002b4d       0x48 packageHandler.o
                                 0x297 (size before relaxing)
- .debug_str     0x00002b6a      0x1a7 Sensors/co2Sensor.o
-                                0x406 (size before relaxing)
- .debug_str     0x00002d11      0x19d Sensors/tempHumSensor.o
-                                0x47d (size before relaxing)
- .debug_str     0x00002eae       0x5a initialize.o
-                                0x31c (size before relaxing)
- .debug_str     0x00002f08      0x3be uplinkHandler.o
-                                0x632 (size before relaxing)
- .debug_str     0x000032c6       0x6d main.o
-                                0x327 (size before relaxing)
- .debug_str     0x00003333      0x2c9 ../drivers\libIotLibrary.a(hih8120.o)
+ .debug_str     0x00002b95      0x1a7 Sensors/co2Sensor.o
+                                0x401 (size before relaxing)
+ .debug_str     0x00002d3c      0x19d Sensors/tempHumSensor.o
+                                0x478 (size before relaxing)
+ .debug_str     0x00002ed9       0x5a initialize.o
+                                0x317 (size before relaxing)
+ .debug_str     0x00002f33      0x3be uplinkHandler.o
+                                0x62d (size before relaxing)
+ .debug_str     0x000032f1       0x6d main.o
+                                0x322 (size before relaxing)
+ .debug_str     0x0000335e      0x2c9 ../drivers\libIotLibrary.a(hih8120.o)
                                 0x45c (size before relaxing)
- .debug_str     0x000035fc      0x6de ../drivers\libIotLibrary.a(lora_driver.o)
+ .debug_str     0x00003627      0x6de ../drivers\libIotLibrary.a(lora_driver.o)
                                 0xcdb (size before relaxing)
- .debug_str     0x00003cda       0x4f ../drivers\libIotLibrary.a(lora_driver_utils.o)
+ .debug_str     0x00003d05       0x4f ../drivers\libIotLibrary.a(lora_driver_utils.o)
                                 0x206 (size before relaxing)
- .debug_str     0x00003d29      0x106 ../drivers\libIotLibrary.a(mh_z19.o)
+ .debug_str     0x00003d54      0x106 ../drivers\libIotLibrary.a(mh_z19.o)
                                 0x489 (size before relaxing)
- .debug_str     0x00003e2f       0x2c ../drivers\libIotLibrary.a(rc_servo.o)
+ .debug_str     0x00003e5a       0x2c ../drivers\libIotLibrary.a(rc_servo.o)
                                 0x1e2 (size before relaxing)
- .debug_str     0x00003e5b      0x2e7 ../drivers\libIotLibrary.a(serial.o)
+ .debug_str     0x00003e86      0x2e7 ../drivers\libIotLibrary.a(serial.o)
                                 0x628 (size before relaxing)
- .debug_str     0x00004142       0xa6 ../drivers\libIotLibrary.a(stdio_driver.o)
+ .debug_str     0x0000416d       0xa6 ../drivers\libIotLibrary.a(stdio_driver.o)
                                 0x37d (size before relaxing)
- .debug_str     0x000041e8      0x11a ../drivers\libIotLibrary.a(status_leds.o)
+ .debug_str     0x00004213      0x11a ../drivers\libIotLibrary.a(status_leds.o)
                                 0x381 (size before relaxing)
- .debug_str     0x00004302      0x2ef ../drivers\libIotLibrary.a(twi.o)
+ .debug_str     0x0000432d      0x2ef ../drivers\libIotLibrary.a(twi.o)
                                 0x5b4 (size before relaxing)
- .debug_str     0x000045f1       0x22 ../drivers\libIotLibrary.a(fifo.o)
+ .debug_str     0x0000461c       0x22 ../drivers\libIotLibrary.a(fifo.o)
                                 0x239 (size before relaxing)
 
 .debug_loc      0x00000000     0xc88a

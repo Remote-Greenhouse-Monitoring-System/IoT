@@ -4,12 +4,12 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include <ATMEGA_FreeRTOS.h>
-#include <lora_driver.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <message_buffer.h>
-#include <task.h>
+#include "ATMEGA_FreeRTOS.h"
+#include "lora_driver.h"
+#include "stdio.h"
+#include "stdint.h"
+#include "message_buffer.h"
+#include "task.h"
 
 #include "configuration.h"
 #include "initialize.h"

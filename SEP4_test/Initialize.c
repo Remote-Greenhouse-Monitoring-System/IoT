@@ -4,9 +4,9 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include <lora_driver.h>
-#include <ATMEGA_FreeRTOS.h>
-#include <stdio.h>
+#include "lora_driver.h"
+#include "ATMEGA_FreeRTOS.h"
+#include "stdio.h"
 
 #include "initialize.h"
 

@@ -4,12 +4,12 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include <ATMEGA_FreeRTOS.h>
-#include <stdio.h>
-#include <event_groups.h>
-#include <task.h>
-#include <message_buffer.h>
-#include <lora_driver.h>
+#include "ATMEGA_FreeRTOS.h"
+#include "stdio.h"
+#include "event_groups.h"
+#include "task.h"
+#include "message_buffer.h"
+#include "lora_driver.h"
 
 #include "Sensors/co2Sensor.h"
 #include "Sensors/tempHumSensor.h"

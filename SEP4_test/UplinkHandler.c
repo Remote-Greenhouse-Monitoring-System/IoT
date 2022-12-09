@@ -4,11 +4,11 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include <stddef.h>
-#include <stdio.h>
-#include <ATMEGA_FreeRTOS.h>
-#include <lora_driver.h>
-#include <status_leds.h>
+#include "stddef.h"
+#include "stdio.h"
+#include "ATMEGA_FreeRTOS.h"
+#include "lora_driver.h"
+#include "status_leds.h"
 
 #include "initialize.h"
 

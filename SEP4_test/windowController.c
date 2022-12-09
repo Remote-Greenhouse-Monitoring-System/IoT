@@ -4,10 +4,10 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include <stdint.h>
-#include <ATMEGA_FreeRTOS.h>
-#include <avr/io.h>
-#include <stdio.h>
+#include "stdint.h"
+#include "ATMEGA_FreeRTOS.h"
+#include "avr/io.h"
+#include "stdio.h"
 #include "../Sensors/tempHumSensor.h"
 #include "application.h"
 #include "configuration.h"

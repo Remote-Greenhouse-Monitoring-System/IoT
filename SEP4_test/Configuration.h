@@ -4,7 +4,7 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include <lora_driver.h>
+#include "lora_driver.h"
 #pragma once
 
 int16_t configuration_getMaxTemperature();

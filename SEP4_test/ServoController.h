@@ -1,13 +1,13 @@
 /*
- * ServoController.h
- *
- * Created: 08/12/2022 22.33.05
- *  Author: jurin
- */ 
+ * servoController.h
+*  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+*  Authors: Christopher, Himal, Jurin
+*/
+
 
 #pragma once
 
-#include <rc_servo.h>
+#include "stdint.h"
 
-void initialise_rc_servo();
-void servo_set_position(uint8_t servoNo, int8_t percent);
+void servoController_craete();
+void servoController_setPosition(uint8_t servoNo, int8_t percent);

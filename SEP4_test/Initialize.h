@@ -3,9 +3,9 @@
 *  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
 *  Authors: Christopher, Himal, Jurin
 */
-#include <event_groups.h>
-#include <message_buffer.h>
-#include <semphr.h>
+#include "event_groups.h"
+#include "message_buffer.h"
+#include "semphr.h"
 
 #pragma once
 

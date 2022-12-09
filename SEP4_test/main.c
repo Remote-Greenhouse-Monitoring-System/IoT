@@ -3,19 +3,19 @@
 *  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
 *  Authors: Christopher, Himal, Jurin
 */
-#include <stdio.h>
-#include <avr/io.h>
-#include <ATMEGA_FreeRTOS.h>
-#include <task.h>
-#include <semphr.h>
-#include <message_buffer.h>
-#include <stdio_driver.h>
-#include <serial.h>
-#include <string.h>
+#include "stdio.h"
+#include "avr/io.h"
+#include "ATMEGA_FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
+#include "message_buffer.h"
+#include "stdio_driver.h"
+#include "serial.h"
+#include "string.h"
 
 // Needed for LoRaWAN
-#include <lora_driver.h>
-#include <status_leds.h>
+#include "lora_driver.h"
+#include "status_leds.h"
 
 
 #include "application.h"
