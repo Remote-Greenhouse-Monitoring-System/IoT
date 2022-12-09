@@ -63,6 +63,7 @@ C_SRCS +=  \
 ../Sensors/CO2Sensor.c \
 ../Sensors/TempHumSensor.c \
 ../InitializeImpl.c \
+../ServoControllerImpl.c \
 ../UplinkHandlerImpl.c \
 ../main.c
 
@@ -93,6 +94,7 @@ PackageHandlerImpl.o \
 Sensors/CO2Sensor.o \
 Sensors/TempHumSensor.o \
 InitializeImpl.o \
+ServoControllerImpl.o \
 UplinkHandlerImpl.o \
 main.o
 
@@ -116,6 +118,7 @@ PackageHandlerImpl.o \
 Sensors/CO2Sensor.o \
 Sensors/TempHumSensor.o \
 InitializeImpl.o \
+ServoControllerImpl.o \
 UplinkHandlerImpl.o \
 main.o
 
@@ -139,6 +142,7 @@ PackageHandlerImpl.d \
 Sensors/CO2Sensor.d \
 Sensors/TempHumSensor.d \
 InitializeImpl.d \
+ServoControllerImpl.d \
 UplinkHandlerImpl.d \
 main.d
 
@@ -162,6 +166,7 @@ PackageHandlerImpl.d \
 Sensors/CO2Sensor.d \
 Sensors/TempHumSensor.d \
 InitializeImpl.d \
+ServoControllerImpl.d \
 UplinkHandlerImpl.d \
 main.d
 
@@ -306,6 +311,13 @@ Sensors/TempHumSensor.o: ../Sensors/TempHumSensor.c
 	
 
 ./InitializeImpl.o: .././InitializeImpl.c
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../drivers" -I"../FreeRTOS/src"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+./ServoControllerImpl.o: .././ServoControllerImpl.c
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../drivers" -I"../FreeRTOS/src"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

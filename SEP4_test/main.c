@@ -21,6 +21,7 @@
 #include "Sensors/TempHumSensor.h"
 #include "UplinkHandler.h"
 #include "DownlinkHandler.h"
+#include "ServoController.h"
 
 
 void create_all_tasks(){
@@ -41,6 +42,7 @@ void initializeSystem()
 	initialize_event_groups();
 	initialize_message_buffers();
 	initialize_semaphore();
+	initialise_rc_servo();
 	// Initialise the LoRaWAN driver with down-link buffer
 	lora_driver_initialise(ser_USART1, downlinkMessageBufferHandle);
 	create_all_tasks();

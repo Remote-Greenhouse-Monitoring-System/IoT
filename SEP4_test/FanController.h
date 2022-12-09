@@ -14,7 +14,7 @@
 #include "../Sensors/TempHumSensor.h"
 #include "Application.h"
 #include "Configuration.h"
-#include "FanController.h"
+#include "ServoController.h"
 
 void create_fan_controller_task(UBaseType_t priority);
 
