@@ -40,6 +40,8 @@ Sensors\TempHumSensor.c
 
 InitializeImpl.c
 
+ServoControllerImpl.c
+
 UplinkHandlerImpl.c
 
 main.c

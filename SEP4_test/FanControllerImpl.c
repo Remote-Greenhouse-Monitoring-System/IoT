@@ -31,7 +31,7 @@ void fan_controller_task(void *pvParameters) {
 	uint16_t thresholdHumidity = 0;
 	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(120000); 
+	const TickType_t xFrequency = pdMS_TO_TICKS(5000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)
@@ -46,10 +46,12 @@ void fan_controller_task(void *pvParameters) {
 		printf("Current temp: %d\n", currentTemperature/10);
 		printf("Threshold temp: %d\n", thresholdTemperature);
 		if(currentTemperature/10 > thresholdTemperature){
-			PORTA = 0x00;
+// 			PORTA = 0x00;
+			servo_set_position(0, 100);
 		}
 		else{
-			PORTA = 0xFF;
+// 			PORTA = 0xFF;
+			servo_set_position(0, -100);
 		}
 	}
 }

@@ -36,7 +36,7 @@
   <documentation help="" />
   <offline-documentation help="" />
   <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.42.0" />
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
   </dependencies>
 </framework-data>
     </AsfFrameworkConfig>
@@ -378,6 +378,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="InitializeImpl.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ServoController.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="ServoControllerImpl.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UplinkHandler.h">
