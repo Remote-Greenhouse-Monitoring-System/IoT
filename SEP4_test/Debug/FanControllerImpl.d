@@ -31,7 +31,8 @@ FanControllerImpl.d FanControllerImpl.o: .././FanControllerImpl.c \
  ../FreeRTOS/src/message_buffer.h ../FreeRTOS/src/stream_buffer.h \
  ../drivers/serial.h ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h \
  .././Application.h .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
- .././PackageHandler.h .././Configuration.h
+ .././PackageHandler.h .././Configuration.h .././ServoController.h \
+ ../drivers/rc_servo.h
 
 .././FanController.h:
 
@@ -122,3 +123,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././PackageHandler.h:
 
 .././Configuration.h:
+
+.././ServoController.h:
+
+../drivers/rc_servo.h:
