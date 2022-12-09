@@ -1616,7 +1616,7 @@ END GROUP
  *(.fini0)
                 0x00006eae                _etext = .
 
-.data           0x00800200      0x73c load address 0x00006eae
+.data           0x00800200      0x73a load address 0x00006eae
                 0x00800200                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00800200        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr6\libc.a(malloc.o)
@@ -1624,68 +1624,68 @@ END GROUP
                 0x00800202                __malloc_heap_start
                 0x00800204                __malloc_margin
  *(.data*)
- .data.max_temperature
-                0x00800206        0x2 ConfigurationImpl.o
  .data.uxTopUsedPriority
-                0x00800208        0x1 FreeRTOS/src/tasks.o
-                0x00800208                uxTopUsedPriority
- .data._temp    0x00800209        0x2 ../drivers\libIotLibrary.a(hih8120.o)
- .data._hum     0x0080020b        0x2 ../drivers\libIotLibrary.a(hih8120.o)
+                0x00800206        0x1 FreeRTOS/src/tasks.o
+                0x00800206                uxTopUsedPriority
+ .data._temp    0x00800207        0x2 ../drivers\libIotLibrary.a(hih8120.o)
+ .data._hum     0x00800209        0x2 ../drivers\libIotLibrary.a(hih8120.o)
  .data._com_port_2_udr
-                0x0080020d        0x8 ../drivers\libIotLibrary.a(serial.o)
-                0x0080020d                _com_port_2_udr
+                0x0080020b        0x8 ../drivers\libIotLibrary.a(serial.o)
+                0x0080020b                _com_port_2_udr
  .data.mystdout.1882
-                0x00800215        0xe ../drivers\libIotLibrary.a(stdio_driver.o)
+                0x00800213        0xe ../drivers\libIotLibrary.a(stdio_driver.o)
  .data._twiCurrentState
-                0x00800223        0x1 ../drivers\libIotLibrary.a(twi.o)
+                0x00800221        0x1 ../drivers\libIotLibrary.a(twi.o)
  *(.gnu.linkonce.d*)
  *(.rodata)
- .rodata        0x00800224       0x20 ../drivers\libIotLibrary.a(lora_driver.o)
- .rodata        0x00800244       0x2d ../drivers\libIotLibrary.a(mh_z19.o)
+ .rodata        0x00800222       0x20 ../drivers\libIotLibrary.a(lora_driver.o)
+ .rodata        0x00800242       0x2d ../drivers\libIotLibrary.a(mh_z19.o)
  *(.rodata*)
  .rodata.str1.1
-                0x00800271       0x34 ApplicationImpl.o
+                0x0080026f       0x34 ApplicationImpl.o
  .rodata.str1.1
-                0x008002a5       0x27 ConfigurationImpl.o
+                0x008002a3       0x27 ConfigurationImpl.o
  .rodata.str1.1
-                0x008002cc       0x5b DownlinkHandlerImpl.o
+                0x008002ca       0x5b DownlinkHandlerImpl.o
  .rodata.str1.1
-                0x00800327       0x34 FanControllerImpl.o
+                0x00800325       0x34 FanControllerImpl.o
  .rodata.str1.1
-                0x0080035b        0x5 FreeRTOS/src/tasks.o
+                0x00800359        0x5 FreeRTOS/src/tasks.o
  .rodata.str1.1
-                0x00800360        0x8 FreeRTOS/src/timers.o
+                0x0080035e        0x8 FreeRTOS/src/timers.o
  .rodata.str1.1
-                0x00800368       0x42 Sensors/CO2Sensor.o
+                0x00800366       0x42 Sensors/CO2Sensor.o
  .rodata.str1.1
-                0x008003aa       0xa5 Sensors/TempHumSensor.o
+                0x008003a8       0xa5 Sensors/TempHumSensor.o
  .rodata.str1.1
-                0x0080044f       0x74 InitializeImpl.o
+                0x0080044d       0x74 InitializeImpl.o
  .rodata.str1.1
-                0x008004c3      0x197 UplinkHandlerImpl.o
+                0x008004c1      0x197 UplinkHandlerImpl.o
  .rodata.str1.1
-                0x0080065a       0x12 main.o
+                0x00800658       0x12 main.o
  .rodata.str1.1
-                0x0080066c      0x290 ../drivers\libIotLibrary.a(lora_driver.o)
+                0x0080066a      0x290 ../drivers\libIotLibrary.a(lora_driver.o)
                                 0x2a5 (size before relaxing)
  .rodata._joinMode
-                0x008008fc        0x4 ../drivers\libIotLibrary.a(lora_driver.o)
+                0x008008fa        0x4 ../drivers\libIotLibrary.a(lora_driver.o)
  .rodata._returnCode
-                0x00800900       0x33 ../drivers\libIotLibrary.a(lora_driver.o)
-                0x00800900                _returnCode
+                0x008008fe       0x33 ../drivers\libIotLibrary.a(lora_driver.o)
+                0x008008fe                _returnCode
  .rodata.str1.1
-                0x00800933        0x8 ../drivers\libIotLibrary.a(status_leds.o)
+                0x00800931        0x8 ../drivers\libIotLibrary.a(status_leds.o)
  *(.gnu.linkonce.r*)
-                0x0080093c                . = ALIGN (0x2)
- *fill*         0x0080093b        0x1 
-                0x0080093c                _edata = .
-                0x0080093c                PROVIDE (__data_end, .)
+                0x0080093a                . = ALIGN (0x2)
+ *fill*         0x00800939        0x1 
+                0x0080093a                _edata = .
+                0x0080093a                PROVIDE (__data_end, .)
 
-.bss            0x0080093c     0x101d
-                0x0080093c                PROVIDE (__bss_start, .)
+.bss            0x0080093a     0x101f
+                0x0080093a                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.max_humidity
+                0x0080093a        0x2 ConfigurationImpl.o
+ .bss.max_temperature
                 0x0080093c        0x2 ConfigurationImpl.o
  .bss._downlink_payload
                 0x0080093e       0x16 DownlinkHandlerImpl.o
@@ -1843,7 +1843,7 @@ END GROUP
                 0x00801953                __iob
                 0x00801959                PROVIDE (__bss_end, .)
                 0x00006eae                __data_load_start = LOADADDR (.data)
-                0x000075ea                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x000075e8                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00801959        0x0
                 [!provide]                PROVIDE (__noinit_start, .)

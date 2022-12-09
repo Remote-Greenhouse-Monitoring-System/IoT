@@ -31,7 +31,7 @@ void fan_controller_task(void *pvParameters) {
 	uint16_t thresholdHumidity = 0;
 	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(5000); 
+	const TickType_t xFrequency = pdMS_TO_TICKS(120000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)

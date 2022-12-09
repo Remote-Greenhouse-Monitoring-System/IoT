@@ -8,7 +8,7 @@
 
 #include "Configuration.h"
 
-static int16_t max_temperature = 23;
+static int16_t max_temperature = 0;
 static int16_t min_temperature = 0;
 static uint16_t max_humidity = 0;
 static uint16_t min_humidity = 0;

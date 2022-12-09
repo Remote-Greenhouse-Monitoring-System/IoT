@@ -3,31 +3,31 @@ SEP4_Greenhouse.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000073c  00800200  00006eae  00006f42  2**0
+  0 .data         0000073a  00800200  00006eae  00006f42  2**0
                   CONTENTS, ALLOC, LOAD, DATA
   1 .text         00006eae  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          0000101d  0080093c  0080093c  0000767e  2**0
+  2 .bss          0000101f  0080093a  0080093a  0000767c  2**0
                   ALLOC
-  3 .comment      0000005c  00000000  00000000  0000767e  2**0
+  3 .comment      0000005c  00000000  00000000  0000767c  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000076dc  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000076d8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000c08  00000000  00000000  0000771c  2**0
+  5 .debug_aranges 00000c08  00000000  00000000  00007718  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   0000e4e5  00000000  00000000  00008324  2**0
+  6 .debug_info   0000e4e5  00000000  00000000  00008320  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00003d15  00000000  00000000  00016809  2**0
+  7 .debug_abbrev 00003d15  00000000  00000000  00016805  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00007383  00000000  00000000  0001a51e  2**0
+  8 .debug_line   00007383  00000000  00000000  0001a51a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000028dc  00000000  00000000  000218a4  2**2
+  9 .debug_frame  000028dc  00000000  00000000  000218a0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    000044dd  00000000  00000000  00024180  2**0
+ 10 .debug_str    000044dd  00000000  00000000  0002417c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000c57f  00000000  00000000  0002865d  2**0
+ 11 .debug_loc    0000c57f  00000000  00000000  00028659  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000af8  00000000  00000000  00034bdc  2**0
+ 12 .debug_ranges 00000af8  00000000  00000000  00034bd8  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -308,13 +308,13 @@ Disassembly of section .text:
      2ec:	02 c0       	rjmp	.+4      	; 0x2f2 <__do_copy_data+0x14>
      2ee:	07 90       	elpm	r0, Z+
      2f0:	0d 92       	st	X+, r0
-     2f2:	ac 33       	cpi	r26, 0x3C	; 60
+     2f2:	aa 33       	cpi	r26, 0x3A	; 58
      2f4:	b1 07       	cpc	r27, r17
      2f6:	d9 f7       	brne	.-10     	; 0x2ee <__do_copy_data+0x10>
 
 000002f8 <__do_clear_bss>:
      2f8:	29 e1       	ldi	r18, 0x19	; 25
-     2fa:	ac e3       	ldi	r26, 0x3C	; 60
+     2fa:	aa e3       	ldi	r26, 0x3A	; 58
      2fc:	b9 e0       	ldi	r27, 0x09	; 9
      2fe:	01 c0       	rjmp	.+2      	; 0x302 <.do_clear_bss_start>
 
@@ -446,7 +446,7 @@ void main_application_task(void *pvParameters) {
      3c4:	86 31       	cpi	r24, 0x16	; 22
      3c6:	29 f0       	breq	.+10     	; 0x3d2 <main_application_task+0xc0>
 				printf("Timed out.\n");
-     3c8:	81 e7       	ldi	r24, 0x71	; 113
+     3c8:	8f e6       	ldi	r24, 0x6F	; 111
      3ca:	92 e0       	ldi	r25, 0x02	; 2
      3cc:	0e 94 98 36 	call	0x6d30	; 0x6d30 <puts>
      3d0:	b0 cf       	rjmp	.-160    	; 0x332 <main_application_task+0x20>
@@ -459,7 +459,7 @@ void main_application_task(void *pvParameters) {
      3d2:	99 27       	eor	r25, r25
      3d4:	9f 93       	push	r25
      3d6:	8f 93       	push	r24
-     3d8:	8c e7       	ldi	r24, 0x7C	; 124
+     3d8:	8a e7       	ldi	r24, 0x7A	; 122
      3da:	92 e0       	ldi	r25, 0x02	; 2
      3dc:	9f 93       	push	r25
      3de:	8f 93       	push	r24
@@ -489,7 +489,7 @@ void create_main_application_task(UBaseType_t priority){
      3fc:	30 e0       	ldi	r19, 0x00	; 0
      3fe:	40 ec       	ldi	r20, 0xC0	; 192
      400:	50 e0       	ldi	r21, 0x00	; 0
-     402:	65 e9       	ldi	r22, 0x95	; 149
+     402:	63 e9       	ldi	r22, 0x93	; 147
      404:	72 e0       	ldi	r23, 0x02	; 2
      406:	89 e8       	ldi	r24, 0x89	; 137
      408:	91 e0       	ldi	r25, 0x01	; 1
@@ -512,24 +512,24 @@ void create_main_application_task(UBaseType_t priority){
 uint16_t get_max_humidity(){
 	return max_humidity;
 }
-     416:	80 91 06 02 	lds	r24, 0x0206	; 0x800206 <max_temperature>
-     41a:	90 91 07 02 	lds	r25, 0x0207	; 0x800207 <max_temperature+0x1>
+     416:	80 91 3c 09 	lds	r24, 0x093C	; 0x80093c <max_temperature>
+     41a:	90 91 3d 09 	lds	r25, 0x093D	; 0x80093d <max_temperature+0x1>
      41e:	08 95       	ret
 
 00000420 <set_max_temperature>:
 
 void set_max_temperature(int16_t maxTemp){
 	max_temperature = maxTemp;
-     420:	90 93 07 02 	sts	0x0207, r25	; 0x800207 <max_temperature+0x1>
-     424:	80 93 06 02 	sts	0x0206, r24	; 0x800206 <max_temperature>
+     420:	90 93 3d 09 	sts	0x093D, r25	; 0x80093d <max_temperature+0x1>
+     424:	80 93 3c 09 	sts	0x093C, r24	; 0x80093c <max_temperature>
      428:	08 95       	ret
 
 0000042a <set_max_humidity>:
 }
 void set_max_humidity(uint16_t maxHum){
 	max_humidity = maxHum;
-     42a:	90 93 3d 09 	sts	0x093D, r25	; 0x80093d <__data_end+0x1>
-     42e:	80 93 3c 09 	sts	0x093C, r24	; 0x80093c <__data_end>
+     42a:	90 93 3b 09 	sts	0x093B, r25	; 0x80093b <__data_end+0x1>
+     42e:	80 93 3a 09 	sts	0x093A, r24	; 0x80093a <__data_end>
      432:	08 95       	ret
 
 00000434 <setConfiguration>:
@@ -573,7 +573,7 @@ void setConfiguration(lora_driver_payload_t payload){
      468:	0f 93       	push	r16
      46a:	ff 92       	push	r15
      46c:	ef 92       	push	r14
-     46e:	85 ea       	ldi	r24, 0xA5	; 165
+     46e:	83 ea       	ldi	r24, 0xA3	; 163
      470:	92 e0       	ldi	r25, 0x02	; 2
      472:	9f 93       	push	r25
      474:	8f 93       	push	r24
@@ -625,7 +625,7 @@ void setConfiguration(lora_driver_payload_t payload){
      4bc:	9f 93       	push	r25
      4be:	1f 92       	push	r1
      4c0:	8f 93       	push	r24
-     4c2:	8c ec       	ldi	r24, 0xCC	; 204
+     4c2:	8a ec       	ldi	r24, 0xCA	; 202
      4c4:	92 e0       	ldi	r25, 0x02	; 2
      4c6:	9f 93       	push	r25
      4c8:	8f 93       	push	r24
@@ -692,7 +692,7 @@ void setConfiguration(lora_driver_payload_t payload){
 				}
 				else{
 					printf("Couldn't obtain semaphore.\n");
-     542:	8d ef       	ldi	r24, 0xFD	; 253
+     542:	8b ef       	ldi	r24, 0xFB	; 251
      544:	92 e0       	ldi	r25, 0x02	; 2
      546:	0e 94 98 36 	call	0x6d30	; 0x6d30 <puts>
      54a:	a4 cf       	rjmp	.-184    	; 0x494 <lora_downlink_handler_task>
@@ -715,7 +715,7 @@ void create_lora_downlink_handler_task(UBaseType_t priority){
      55a:	30 e0       	ldi	r19, 0x00	; 0
      55c:	48 e8       	ldi	r20, 0x88	; 136
      55e:	51 e0       	ldi	r21, 0x01	; 1
-     560:	68 e1       	ldi	r22, 0x18	; 24
+     560:	66 e1       	ldi	r22, 0x16	; 22
      562:	73 e0       	ldi	r23, 0x03	; 3
      564:	8a e4       	ldi	r24, 0x4A	; 74
      566:	92 e0       	ldi	r25, 0x02	; 2
@@ -748,7 +748,7 @@ void fan_controller_task(void *pvParameters) {
 	uint16_t thresholdHumidity = 0;
 	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(5000); 
+	const TickType_t xFrequency = pdMS_TO_TICKS(120000); 
 	xLastWakeTime = xTaskGetTickCount();
      580:	0e 94 d1 10 	call	0x21a2	; 0x21a2 <xTaskGetTickCount>
      584:	69 83       	std	Y+1, r22	; 0x01
@@ -759,8 +759,8 @@ void fan_controller_task(void *pvParameters) {
 	for(;;)
 	{
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-     58c:	46 e3       	ldi	r20, 0x36	; 54
-     58e:	51 e0       	ldi	r21, 0x01	; 1
+     58c:	40 e1       	ldi	r20, 0x10	; 16
+     58e:	5d e1       	ldi	r21, 0x1D	; 29
      590:	60 e0       	ldi	r22, 0x00	; 0
      592:	70 e0       	ldi	r23, 0x00	; 0
      594:	ce 01       	movw	r24, r28
@@ -786,7 +786,7 @@ void fan_controller_task(void *pvParameters) {
      5b8:	8b 01       	movw	r16, r22
      5ba:	1f 93       	push	r17
      5bc:	6f 93       	push	r22
-     5be:	87 e2       	ldi	r24, 0x27	; 39
+     5be:	85 e2       	ldi	r24, 0x25	; 37
      5c0:	93 e0       	ldi	r25, 0x03	; 3
      5c2:	9f 93       	push	r25
      5c4:	8f 93       	push	r24
@@ -794,7 +794,7 @@ void fan_controller_task(void *pvParameters) {
 		printf("Threshold temp: %d\n", thresholdTemperature);
      5ca:	ff 92       	push	r15
      5cc:	ef 92       	push	r14
-     5ce:	89 e3       	ldi	r24, 0x39	; 57
+     5ce:	87 e3       	ldi	r24, 0x37	; 55
      5d0:	93 e0       	ldi	r25, 0x03	; 3
      5d2:	9f 93       	push	r25
      5d4:	8f 93       	push	r24
@@ -848,7 +848,7 @@ void create_fan_controller_task(UBaseType_t priority){
      612:	30 e0       	ldi	r19, 0x00	; 0
      614:	40 ec       	ldi	r20, 0xC0	; 192
      616:	50 e0       	ldi	r21, 0x00	; 0
-     618:	6d e4       	ldi	r22, 0x4D	; 77
+     618:	6b e4       	ldi	r22, 0x4B	; 75
      61a:	73 e0       	ldi	r23, 0x03	; 3
      61c:	8a eb       	ldi	r24, 0xBA	; 186
      61e:	92 e0       	ldi	r25, 0x02	; 2
@@ -5011,7 +5011,7 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     213c:	30 e0       	ldi	r19, 0x00	; 0
     213e:	40 ec       	ldi	r20, 0xC0	; 192
     2140:	50 e0       	ldi	r21, 0x00	; 0
-    2142:	6b e5       	ldi	r22, 0x5B	; 91
+    2142:	69 e5       	ldi	r22, 0x59	; 89
     2144:	73 e0       	ldi	r23, 0x03	; 3
     2146:	8e e4       	ldi	r24, 0x4E	; 78
     2148:	91 e0       	ldi	r25, 0x01	; 1
@@ -5036,7 +5036,7 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     217e:	10 92 22 17 	sts	0x1722, r1	; 0x801722 <xTickCount+0x2>
     2182:	10 92 23 17 	sts	0x1723, r1	; 0x801723 <xTickCount+0x3>
     2186:	0e 94 6d 06 	call	0xcda	; 0xcda <xPortStartScheduler>
-    218a:	80 91 08 02 	lds	r24, 0x0208	; 0x800208 <uxTopUsedPriority>
+    218a:	80 91 06 02 	lds	r24, 0x0206	; 0x800206 <uxTopUsedPriority>
     218e:	0f 91       	pop	r16
     2190:	ff 90       	pop	r15
     2192:	ef 90       	pop	r14
@@ -7592,7 +7592,7 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     36b0:	30 e0       	ldi	r19, 0x00	; 0
     36b2:	40 ec       	ldi	r20, 0xC0	; 192
     36b4:	50 e0       	ldi	r21, 0x00	; 0
-    36b6:	60 e6       	ldi	r22, 0x60	; 96
+    36b6:	6e e5       	ldi	r22, 0x5E	; 94
     36b8:	73 e0       	ldi	r23, 0x03	; 3
     36ba:	88 e5       	ldi	r24, 0x58	; 88
     36bc:	91 e0       	ldi	r25, 0x01	; 1
@@ -8679,7 +8679,7 @@ void CO2_measure() {
 	{
 		// Something went wrong
 		printf("  SOmething went wrong while measuring CO2!!!  ");
-    3c38:	88 e6       	ldi	r24, 0x68	; 104
+    3c38:	86 e6       	ldi	r24, 0x66	; 102
     3c3a:	93 e0       	ldi	r25, 0x03	; 3
     3c3c:	9f 93       	push	r25
     3c3e:	8f 93       	push	r24
@@ -8773,7 +8773,7 @@ void create_CO2_sensor_task(UBaseType_t priority){
     3cb2:	30 e0       	ldi	r19, 0x00	; 0
     3cb4:	40 ec       	ldi	r20, 0xC0	; 192
     3cb6:	50 e0       	ldi	r21, 0x00	; 0
-    3cb8:	68 e9       	ldi	r22, 0x98	; 152
+    3cb8:	66 e9       	ldi	r22, 0x96	; 150
     3cba:	73 e0       	ldi	r23, 0x03	; 3
     3cbc:	8e e2       	ldi	r24, 0x2E	; 46
     3cbe:	9e e1       	ldi	r25, 0x1E	; 30
@@ -8805,7 +8805,7 @@ void initialise_TempHumSensor()
 	else 
 	{
 		printf("Something went wrong while initialising tempHum sensor");
-    3cd2:	8a ea       	ldi	r24, 0xAA	; 170
+    3cd2:	88 ea       	ldi	r24, 0xA8	; 168
     3cd4:	93 e0       	ldi	r25, 0x03	; 3
     3cd6:	9f 93       	push	r25
     3cd8:	8f 93       	push	r24
@@ -8834,7 +8834,7 @@ void create_TempHum_sensor_task(UBaseType_t priority){
     3cf4:	30 e0       	ldi	r19, 0x00	; 0
     3cf6:	40 ec       	ldi	r20, 0xC0	; 192
     3cf8:	50 e0       	ldi	r21, 0x00	; 0
-    3cfa:	61 ee       	ldi	r22, 0xE1	; 225
+    3cfa:	6f ed       	ldi	r22, 0xDF	; 223
     3cfc:	73 e0       	ldi	r23, 0x03	; 3
     3cfe:	8c eb       	ldi	r24, 0xBC	; 188
     3d00:	9e e1       	ldi	r25, 0x1E	; 30
@@ -8860,7 +8860,7 @@ void measure_Temp_Hum(){
     3d12:	21 f0       	breq	.+8      	; 0x3d1c <measure_Temp_Hum+0xe>
 	{
 		printf("Could not wake up temp hum sensor \n");
-    3d14:	8d ee       	ldi	r24, 0xED	; 237
+    3d14:	8b ee       	ldi	r24, 0xEB	; 235
     3d16:	93 e0       	ldi	r25, 0x03	; 3
     3d18:	0e 94 98 36 	call	0x6d30	; 0x6d30 <puts>
 		// Something went wrong
@@ -8890,11 +8890,11 @@ void measure_Temp_Hum(){
     3d2c:	71 f0       	breq	.+28     	; 0x3d4a <measure_Temp_Hum+0x3c>
 	{
 		printf("Could not measure temp hum sensor, code: %s \n", returnCodeString);
-    3d2e:	80 e1       	ldi	r24, 0x10	; 16
+    3d2e:	8e e0       	ldi	r24, 0x0E	; 14
     3d30:	94 e0       	ldi	r25, 0x04	; 4
     3d32:	9f 93       	push	r25
     3d34:	8f 93       	push	r24
-    3d36:	81 e2       	ldi	r24, 0x21	; 33
+    3d36:	8f e1       	ldi	r24, 0x1F	; 31
     3d38:	94 e0       	ldi	r25, 0x04	; 4
     3d3a:	9f 93       	push	r25
     3d3c:	8f 93       	push	r24
@@ -9020,7 +9020,7 @@ void initialize_message_buffers(){
     3df8:	89 2b       	or	r24, r25
     3dfa:	21 f4       	brne	.+8      	; 0x3e04 <initialize_message_buffers+0x22>
 		printf("Failed to create uplink message buffer.\n");
-    3dfc:	8f e4       	ldi	r24, 0x4F	; 79
+    3dfc:	8d e4       	ldi	r24, 0x4D	; 77
     3dfe:	94 e0       	ldi	r25, 0x04	; 4
     3e00:	0e 94 98 36 	call	0x6d30	; 0x6d30 <puts>
 	}
@@ -9037,7 +9037,7 @@ void initialize_message_buffers(){
     3e1a:	89 2b       	or	r24, r25
     3e1c:	21 f4       	brne	.+8      	; 0x3e26 <initialize_message_buffers+0x44>
 		printf("Failed to create downlink message buffer.\n");
-    3e1e:	87 e7       	ldi	r24, 0x77	; 119
+    3e1e:	85 e7       	ldi	r24, 0x75	; 117
     3e20:	94 e0       	ldi	r25, 0x04	; 4
     3e22:	0c 94 98 36 	jmp	0x6d30	; 0x6d30 <puts>
     3e26:	08 95       	ret
@@ -9068,7 +9068,7 @@ void initialize_message_buffers(){
 	 }
 	 else{
 		 printf("Failed to create config semaphore");
-    3e4e:	81 ea       	ldi	r24, 0xA1	; 161
+    3e4e:	8f e9       	ldi	r24, 0x9F	; 159
     3e50:	94 e0       	ldi	r25, 0x04	; 4
     3e52:	9f 93       	push	r25
     3e54:	8f 93       	push	r24
@@ -9128,7 +9128,7 @@ static void _lora_setup(void)
     3e8a:	fb d5       	rcall	.+3062   	; 0x4a82 <lora_driver_mapReturnCodeToText>
     3e8c:	9f 93       	push	r25
     3e8e:	8f 93       	push	r24
-    3e90:	83 ec       	ldi	r24, 0xC3	; 195
+    3e90:	81 ec       	ldi	r24, 0xC1	; 193
     3e92:	94 e0       	ldi	r25, 0x04	; 4
     3e94:	9f 93       	push	r25
     3e96:	8f 93       	push	r24
@@ -9140,7 +9140,7 @@ static void _lora_setup(void)
     3e9e:	f1 d5       	rcall	.+3042   	; 0x4a82 <lora_driver_mapReturnCodeToText>
     3ea0:	9f 93       	push	r25
     3ea2:	8f 93       	push	r24
-    3ea4:	86 ed       	ldi	r24, 0xD6	; 214
+    3ea4:	84 ed       	ldi	r24, 0xD4	; 212
     3ea6:	94 e0       	ldi	r25, 0x04	; 4
     3ea8:	9f 93       	push	r25
     3eaa:	8f 93       	push	r24
@@ -9159,7 +9159,7 @@ static void _lora_setup(void)
     3ebe:	0f 93       	push	r16
     3ec0:	9f 93       	push	r25
     3ec2:	8f 93       	push	r24
-    3ec4:	8f ee       	ldi	r24, 0xEF	; 239
+    3ec4:	8d ee       	ldi	r24, 0xED	; 237
     3ec6:	94 e0       	ldi	r25, 0x04	; 4
     3ec8:	9f 93       	push	r25
     3eca:	8f 93       	push	r24
@@ -9174,7 +9174,7 @@ static void _lora_setup(void)
     3ed8:	8f 93       	push	r24
     3eda:	1f 93       	push	r17
     3edc:	0f 93       	push	r16
-    3ede:	83 e0       	ldi	r24, 0x03	; 3
+    3ede:	81 e0       	ldi	r24, 0x01	; 1
     3ee0:	95 e0       	ldi	r25, 0x05	; 5
     3ee2:	9f 93       	push	r25
     3ee4:	8f 93       	push	r24
@@ -9183,9 +9183,9 @@ static void _lora_setup(void)
 	// Set Over The Air Activation parameters to be ready to join the LoRaWAN
 	printf("Set OTAA Identity appEUI:%s appKEY:%s devEUI:%s >%s<\n", LORA_appEUI, LORA_appKEY, _out_buf, lora_driver_mapReturnCodeToText(lora_driver_setOtaaIdentity(LORA_appEUI,LORA_appKEY,_out_buf)));
     3eea:	a8 01       	movw	r20, r16
-    3eec:	68 e1       	ldi	r22, 0x18	; 24
+    3eec:	66 e1       	ldi	r22, 0x16	; 22
     3eee:	75 e0       	ldi	r23, 0x05	; 5
-    3ef0:	89 e3       	ldi	r24, 0x39	; 57
+    3ef0:	87 e3       	ldi	r24, 0x37	; 55
     3ef2:	95 e0       	ldi	r25, 0x05	; 5
     3ef4:	a5 d5       	rcall	.+2890   	; 0x4a40 <lora_driver_setOtaaIdentity>
     3ef6:	c5 d5       	rcall	.+2954   	; 0x4a82 <lora_driver_mapReturnCodeToText>
@@ -9193,15 +9193,15 @@ static void _lora_setup(void)
     3efa:	8f 93       	push	r24
     3efc:	1f 93       	push	r17
     3efe:	0f 93       	push	r16
-    3f00:	88 e1       	ldi	r24, 0x18	; 24
+    3f00:	86 e1       	ldi	r24, 0x16	; 22
     3f02:	95 e0       	ldi	r25, 0x05	; 5
     3f04:	9f 93       	push	r25
     3f06:	8f 93       	push	r24
-    3f08:	89 e3       	ldi	r24, 0x39	; 57
+    3f08:	87 e3       	ldi	r24, 0x37	; 55
     3f0a:	95 e0       	ldi	r25, 0x05	; 5
     3f0c:	9f 93       	push	r25
     3f0e:	8f 93       	push	r24
-    3f10:	8a e4       	ldi	r24, 0x4A	; 74
+    3f10:	88 e4       	ldi	r24, 0x48	; 72
     3f12:	95 e0       	ldi	r25, 0x05	; 5
     3f14:	9f 93       	push	r25
     3f16:	8f 93       	push	r24
@@ -9213,7 +9213,7 @@ static void _lora_setup(void)
     3f1e:	b1 d5       	rcall	.+2914   	; 0x4a82 <lora_driver_mapReturnCodeToText>
     3f20:	9f 93       	push	r25
     3f22:	8f 93       	push	r24
-    3f24:	80 e8       	ldi	r24, 0x80	; 128
+    3f24:	8e e7       	ldi	r24, 0x7E	; 126
     3f26:	95 e0       	ldi	r25, 0x05	; 5
     3f28:	9f 93       	push	r25
     3f2a:	8f 93       	push	r24
@@ -9231,7 +9231,7 @@ static void _lora_setup(void)
     3f3e:	a1 d5       	rcall	.+2882   	; 0x4a82 <lora_driver_mapReturnCodeToText>
     3f40:	9f 93       	push	r25
     3f42:	8f 93       	push	r24
-    3f44:	8f e8       	ldi	r24, 0x8F	; 143
+    3f44:	8d e8       	ldi	r24, 0x8D	; 141
     3f46:	95 e0       	ldi	r25, 0x05	; 5
     3f48:	9f 93       	push	r25
     3f4a:	8f 93       	push	r24
@@ -9249,7 +9249,7 @@ static void _lora_setup(void)
     3f5e:	8f 93       	push	r24
     3f60:	84 ef       	ldi	r24, 0xF4	; 244
     3f62:	8f 93       	push	r24
-    3f64:	80 eb       	ldi	r24, 0xB0	; 176
+    3f64:	8e ea       	ldi	r24, 0xAE	; 174
     3f66:	95 e0       	ldi	r25, 0x05	; 5
     3f68:	9f 93       	push	r25
     3f6a:	8f 93       	push	r24
@@ -9275,7 +9275,7 @@ static void _lora_setup(void)
     3f86:	8f 93       	push	r24
     3f88:	1f 92       	push	r1
     3f8a:	1f 93       	push	r17
-    3f8c:	80 ed       	ldi	r24, 0xD0	; 208
+    3f8c:	8e ec       	ldi	r24, 0xCE	; 206
     3f8e:	95 e0       	ldi	r25, 0x05	; 5
     3f90:	9f 93       	push	r25
     3f92:	8f 93       	push	r24
@@ -9444,7 +9444,7 @@ void lora_uplink_handler_task( void *pvParameters )
 			
 			printf("Temperature sent: %d\n", tem);
     4060:	8f 93       	push	r24
-    4062:	80 ef       	ldi	r24, 0xF0	; 240
+    4062:	8e ee       	ldi	r24, 0xEE	; 238
     4064:	95 e0       	ldi	r25, 0x05	; 5
     4066:	9f 93       	push	r25
     4068:	8f 93       	push	r24
@@ -9452,7 +9452,7 @@ void lora_uplink_handler_task( void *pvParameters )
     406e:	1f 93       	push	r17
 			printf("Humidity sent: %d\n", hum);
     4070:	0f 93       	push	r16
-    4072:	86 e0       	ldi	r24, 0x06	; 6
+    4072:	84 e0       	ldi	r24, 0x04	; 4
     4074:	96 e0       	ldi	r25, 0x06	; 6
     4076:	9f 93       	push	r25
     4078:	8f 93       	push	r24
@@ -9460,7 +9460,7 @@ void lora_uplink_handler_task( void *pvParameters )
     407e:	df 93       	push	r29
 			printf("CO2 sent: %d\n", co2);
     4080:	cf 93       	push	r28
-    4082:	89 e1       	ldi	r24, 0x19	; 25
+    4082:	87 e1       	ldi	r24, 0x17	; 23
     4084:	96 e0       	ldi	r25, 0x06	; 6
     4086:	9f 93       	push	r25
     4088:	8f 93       	push	r24
@@ -9468,7 +9468,7 @@ void lora_uplink_handler_task( void *pvParameters )
     408e:	1f 92       	push	r1
 			printf("Status sent: %d\n", status);
     4090:	ff 92       	push	r15
-    4092:	87 e2       	ldi	r24, 0x27	; 39
+    4092:	85 e2       	ldi	r24, 0x25	; 37
     4094:	96 e0       	ldi	r25, 0x06	; 6
     4096:	9f 93       	push	r25
     4098:	8f 93       	push	r24
@@ -9486,7 +9486,7 @@ void lora_uplink_handler_task( void *pvParameters )
     40ac:	ea d4       	rcall	.+2516   	; 0x4a82 <lora_driver_mapReturnCodeToText>
     40ae:	9f 93       	push	r25
     40b0:	8f 93       	push	r24
-    40b2:	88 e3       	ldi	r24, 0x38	; 56
+    40b2:	86 e3       	ldi	r24, 0x36	; 54
     40b4:	96 e0       	ldi	r25, 0x06	; 6
     40b6:	9f 93       	push	r25
     40b8:	8f 93       	push	r24
@@ -9519,7 +9519,7 @@ void create_lora_uplink_handler_task(UBaseType_t priority){
     40de:	30 e0       	ldi	r19, 0x00	; 0
     40e0:	48 e8       	ldi	r20, 0x88	; 136
     40e2:	51 e0       	ldi	r21, 0x01	; 1
-    40e4:	6d e4       	ldi	r22, 0x4D	; 77
+    40e4:	6b e4       	ldi	r22, 0x4B	; 75
     40e6:	76 e0       	ldi	r23, 0x06	; 6
     40e8:	89 ef       	ldi	r24, 0xF9	; 249
     40ea:	9f e1       	ldi	r25, 0x1F	; 31
@@ -9594,7 +9594,7 @@ void initializeSystem()
 
 0000413c <main>:
     413c:	ed df       	rcall	.-38     	; 0x4118 <initializeSystem>
-    413e:	8a e5       	ldi	r24, 0x5A	; 90
+    413e:	88 e5       	ldi	r24, 0x58	; 88
 
 /*-----------------------------------------------------------*/
 int main(void)
@@ -9618,8 +9618,8 @@ int main(void)
     415a:	88 27       	eor	r24, r24
     415c:	21 81       	ldd	r18, Z+1	; 0x01
     415e:	82 2b       	or	r24, r18
-    4160:	90 93 0c 02 	sts	0x020C, r25	; 0x80020c <_hum+0x1>
-    4164:	80 93 0b 02 	sts	0x020B, r24	; 0x80020b <_hum>
+    4160:	90 93 0a 02 	sts	0x020A, r25	; 0x80020a <_hum+0x1>
+    4164:	80 93 09 02 	sts	0x0209, r24	; 0x800209 <_hum>
     4168:	82 81       	ldd	r24, Z+2	; 0x02
     416a:	f0 e4       	ldi	r31, 0x40	; 64
     416c:	8f 9f       	mul	r24, r31
@@ -9630,8 +9630,8 @@ int main(void)
     4176:	26 95       	lsr	r18
     4178:	26 95       	lsr	r18
     417a:	82 2b       	or	r24, r18
-    417c:	90 93 0a 02 	sts	0x020A, r25	; 0x80020a <_temp+0x1>
-    4180:	80 93 09 02 	sts	0x0209, r24	; 0x800209 <_temp>
+    417c:	90 93 08 02 	sts	0x0208, r25	; 0x800208 <_temp+0x1>
+    4180:	80 93 07 02 	sts	0x0207, r24	; 0x800207 <_temp>
     4184:	81 e0       	ldi	r24, 0x01	; 1
     4186:	80 93 15 18 	sts	0x1815, r24	; 0x801815 <_measuringIsReady>
     418a:	08 95       	ret
@@ -9639,10 +9639,10 @@ int main(void)
     418e:	51 f0       	breq	.+20     	; 0x41a4 <_hihTwiCallback+0x58>
     4190:	80 e0       	ldi	r24, 0x00	; 0
     4192:	90 e4       	ldi	r25, 0x40	; 64
-    4194:	90 93 0a 02 	sts	0x020A, r25	; 0x80020a <_temp+0x1>
-    4198:	80 93 09 02 	sts	0x0209, r24	; 0x800209 <_temp>
-    419c:	90 93 0c 02 	sts	0x020C, r25	; 0x80020c <_hum+0x1>
-    41a0:	80 93 0b 02 	sts	0x020B, r24	; 0x80020b <_hum>
+    4194:	90 93 08 02 	sts	0x0208, r25	; 0x800208 <_temp+0x1>
+    4198:	80 93 07 02 	sts	0x0207, r24	; 0x800207 <_temp>
+    419c:	90 93 0a 02 	sts	0x020A, r25	; 0x80020a <_hum+0x1>
+    41a0:	80 93 09 02 	sts	0x0209, r24	; 0x800209 <_hum>
     41a4:	08 95       	ret
 
 000041a6 <hih8120_initialise>:
@@ -9704,8 +9704,8 @@ int main(void)
     4220:	08 95       	ret
 
 00004222 <hih8120_getHumidity>:
-    4222:	60 91 0b 02 	lds	r22, 0x020B	; 0x80020b <_hum>
-    4226:	70 91 0c 02 	lds	r23, 0x020C	; 0x80020c <_hum+0x1>
+    4222:	60 91 09 02 	lds	r22, 0x0209	; 0x800209 <_hum>
+    4226:	70 91 0a 02 	lds	r23, 0x020A	; 0x80020a <_hum+0x1>
     422a:	80 e0       	ldi	r24, 0x00	; 0
     422c:	90 e0       	ldi	r25, 0x00	; 0
     422e:	0e 94 94 32 	call	0x6528	; 0x6528 <__floatunsisf>
@@ -9733,8 +9733,8 @@ int main(void)
     4260:	08 95       	ret
 
 00004262 <hih8120_getTemperature>:
-    4262:	60 91 09 02 	lds	r22, 0x0209	; 0x800209 <_temp>
-    4266:	70 91 0a 02 	lds	r23, 0x020A	; 0x80020a <_temp+0x1>
+    4262:	60 91 07 02 	lds	r22, 0x0207	; 0x800207 <_temp>
+    4266:	70 91 08 02 	lds	r23, 0x0208	; 0x800208 <_temp+0x1>
     426a:	80 e0       	ldi	r24, 0x00	; 0
     426c:	90 e0       	ldi	r25, 0x00	; 0
     426e:	0e 94 94 32 	call	0x6528	; 0x6528 <__floatunsisf>
@@ -9941,9 +9941,9 @@ int main(void)
     4422:	d9 0a       	sbc	r13, r25
     4424:	5c 2c       	mov	r5, r12
     4426:	0f 2e       	mov	r0, r31
-    4428:	f0 e0       	ldi	r31, 0x00	; 0
+    4428:	fe ef       	ldi	r31, 0xFE	; 254
     442a:	8f 2e       	mov	r8, r31
-    442c:	f9 e0       	ldi	r31, 0x09	; 9
+    442c:	f8 e0       	ldi	r31, 0x08	; 8
     442e:	9f 2e       	mov	r9, r31
     4430:	f0 2d       	mov	r31, r0
     4432:	e1 2c       	mov	r14, r1
@@ -9990,7 +9990,7 @@ int main(void)
     4488:	ff 1f       	adc	r31, r31
     448a:	e6 0d       	add	r30, r6
     448c:	f7 1d       	adc	r31, r7
-    448e:	e0 50       	subi	r30, 0x00	; 0
+    448e:	e2 50       	subi	r30, 0x02	; 2
     4490:	f7 4f       	sbci	r31, 0xF7	; 247
     4492:	20 80       	ld	r2, Z
     4494:	0d c0       	rjmp	.+26     	; 0x44b0 <_reply2ReturnCode+0xc2>
@@ -10117,7 +10117,7 @@ int main(void)
 00004588 <lora_driver_rn2483FactoryReset>:
     4588:	60 e0       	ldi	r22, 0x00	; 0
     458a:	70 e0       	ldi	r23, 0x00	; 0
-    458c:	8b e8       	ldi	r24, 0x8B	; 139
+    458c:	89 e8       	ldi	r24, 0x89	; 137
     458e:	96 e0       	ldi	r25, 0x06	; 6
     4590:	d4 de       	rcall	.-600    	; 0x433a <_uploadMessage>
     4592:	eb ed       	ldi	r30, 0xDB	; 219
@@ -10140,7 +10140,7 @@ int main(void)
     45b0:	ec 01       	movw	r28, r24
     45b2:	60 e0       	ldi	r22, 0x00	; 0
     45b4:	70 e0       	ldi	r23, 0x00	; 0
-    45b6:	8c e9       	ldi	r24, 0x9C	; 156
+    45b6:	8a e9       	ldi	r24, 0x9A	; 154
     45b8:	96 e0       	ldi	r25, 0x06	; 6
     45ba:	bf de       	rcall	.-642    	; 0x433a <_uploadMessage>
     45bc:	eb ed       	ldi	r30, 0xDB	; 219
@@ -10175,7 +10175,7 @@ int main(void)
     45f4:	39 07       	cpc	r19, r25
     45f6:	29 f4       	brne	.+10     	; 0x4602 <lora_driver_setDeviceIdentifier+0x1e>
     45f8:	bc 01       	movw	r22, r24
-    45fa:	8a ec       	ldi	r24, 0xCA	; 202
+    45fa:	88 ec       	ldi	r24, 0xC8	; 200
     45fc:	96 e0       	ldi	r25, 0x06	; 6
     45fe:	6c cf       	rjmp	.-296    	; 0x44d8 <_uploadMessageRc>
     4600:	08 95       	ret
@@ -10194,7 +10194,7 @@ int main(void)
     4616:	39 07       	cpc	r19, r25
     4618:	29 f4       	brne	.+10     	; 0x4624 <lora_driver_setApplicationIdentifier+0x1e>
     461a:	bc 01       	movw	r22, r24
-    461c:	89 ed       	ldi	r24, 0xD9	; 217
+    461c:	87 ed       	ldi	r24, 0xD7	; 215
     461e:	96 e0       	ldi	r25, 0x06	; 6
     4620:	5b cf       	rjmp	.-330    	; 0x44d8 <_uploadMessageRc>
     4622:	08 95       	ret
@@ -10213,7 +10213,7 @@ int main(void)
     4638:	39 07       	cpc	r19, r25
     463a:	29 f4       	brne	.+10     	; 0x4646 <lora_driver_setApplicationKey+0x1e>
     463c:	bc 01       	movw	r22, r24
-    463e:	88 ee       	ldi	r24, 0xE8	; 232
+    463e:	86 ee       	ldi	r24, 0xE6	; 230
     4640:	96 e0       	ldi	r25, 0x06	; 6
     4642:	4a cf       	rjmp	.-364    	; 0x44d8 <_uploadMessageRc>
     4644:	08 95       	ret
@@ -10223,7 +10223,7 @@ int main(void)
 0000464a <lora_driver_saveMac>:
     464a:	60 e0       	ldi	r22, 0x00	; 0
     464c:	70 e0       	ldi	r23, 0x00	; 0
-    464e:	87 e2       	ldi	r24, 0x27	; 39
+    464e:	85 e2       	ldi	r24, 0x25	; 37
     4650:	97 e0       	ldi	r25, 0x07	; 7
     4652:	42 cf       	rjmp	.-380    	; 0x44d8 <_uploadMessageRc>
     4654:	08 95       	ret
@@ -10235,11 +10235,11 @@ int main(void)
     465c:	f0 e0       	ldi	r31, 0x00	; 0
     465e:	ee 0f       	add	r30, r30
     4660:	ff 1f       	adc	r31, r31
-    4662:	e4 50       	subi	r30, 0x04	; 4
+    4662:	e6 50       	subi	r30, 0x06	; 6
     4664:	f7 4f       	sbci	r31, 0xF7	; 247
     4666:	60 81       	ld	r22, Z
     4668:	71 81       	ldd	r23, Z+1	; 0x01
-    466a:	80 e3       	ldi	r24, 0x30	; 48
+    466a:	8e e2       	ldi	r24, 0x2E	; 46
     466c:	97 e0       	ldi	r25, 0x07	; 7
     466e:	34 df       	rcall	.-408    	; 0x44d8 <_uploadMessageRc>
     4670:	81 11       	cpse	r24, r1
@@ -10342,10 +10342,10 @@ int main(void)
     4734:	4c 91       	ld	r20, X
     4736:	81 11       	cpse	r24, r1
     4738:	03 c0       	rjmp	.+6      	; 0x4740 <lora_driver_sendUploadMessage+0x98>
-    473a:	89 e3       	ldi	r24, 0x39	; 57
+    473a:	87 e3       	ldi	r24, 0x37	; 55
     473c:	97 e0       	ldi	r25, 0x07	; 7
     473e:	02 c0       	rjmp	.+4      	; 0x4744 <lora_driver_sendUploadMessage+0x9c>
-    4740:	8b e3       	ldi	r24, 0x3B	; 59
+    4740:	89 e3       	ldi	r24, 0x39	; 57
     4742:	97 e0       	ldi	r25, 0x07	; 7
     4744:	2c e6       	ldi	r18, 0x6C	; 108
     4746:	38 e1       	ldi	r19, 0x18	; 24
@@ -10355,7 +10355,7 @@ int main(void)
     474e:	4f 93       	push	r20
     4750:	9f 93       	push	r25
     4752:	8f 93       	push	r24
-    4754:	8f e3       	ldi	r24, 0x3F	; 63
+    4754:	8d e3       	ldi	r24, 0x3D	; 61
     4756:	97 e0       	ldi	r25, 0x07	; 7
     4758:	9f 93       	push	r25
     475a:	8f 93       	push	r24
@@ -10465,12 +10465,12 @@ int main(void)
 0000483e <lora_driver_setAdaptiveDataRate>:
     483e:	81 30       	cpi	r24, 0x01	; 1
     4840:	19 f0       	breq	.+6      	; 0x4848 <lora_driver_setAdaptiveDataRate+0xa>
-    4842:	6f e4       	ldi	r22, 0x4F	; 79
+    4842:	6d e4       	ldi	r22, 0x4D	; 77
     4844:	77 e0       	ldi	r23, 0x07	; 7
     4846:	02 c0       	rjmp	.+4      	; 0x484c <lora_driver_setAdaptiveDataRate+0xe>
-    4848:	68 e2       	ldi	r22, 0x28	; 40
+    4848:	66 e2       	ldi	r22, 0x26	; 38
     484a:	78 e0       	ldi	r23, 0x08	; 8
-    484c:	83 e5       	ldi	r24, 0x53	; 83
+    484c:	81 e5       	ldi	r24, 0x51	; 81
     484e:	97 e0       	ldi	r25, 0x07	; 7
     4850:	43 ce       	rjmp	.-890    	; 0x44d8 <_uploadMessageRc>
     4852:	08 95       	ret
@@ -10478,7 +10478,7 @@ int main(void)
 00004854 <lora_driver_setReceiveDelay>:
     4854:	9f 93       	push	r25
     4856:	8f 93       	push	r24
-    4858:	84 e8       	ldi	r24, 0x84	; 132
+    4858:	82 e8       	ldi	r24, 0x82	; 130
     485a:	97 e0       	ldi	r25, 0x07	; 7
     485c:	9f 93       	push	r25
     485e:	8f 93       	push	r24
@@ -10527,16 +10527,16 @@ int main(void)
     48b2:	de bf       	out	0x3e, r29	; 62
     48b4:	0f be       	out	0x3f, r0	; 63
     48b6:	cd bf       	out	0x3d, r28	; 61
-    48b8:	61 eb       	ldi	r22, 0xB1	; 177
+    48b8:	6f ea       	ldi	r22, 0xAF	; 175
     48ba:	77 e0       	ldi	r23, 0x07	; 7
-    48bc:	8d eb       	ldi	r24, 0xBD	; 189
+    48bc:	8b eb       	ldi	r24, 0xBB	; 187
     48be:	97 e0       	ldi	r25, 0x07	; 7
     48c0:	3c dd       	rcall	.-1416   	; 0x433a <_uploadMessage>
     48c2:	95 dd       	rcall	.-1238   	; 0x43ee <_reply2ReturnCode>
     48c4:	81 11       	cpse	r24, r1
     48c6:	a3 c0       	rjmp	.+326    	; 0x4a0e <lora_driver_configureToEu868+0x18a>
     48c8:	80 e2       	ldi	r24, 0x20	; 32
-    48ca:	e4 e2       	ldi	r30, 0x24	; 36
+    48ca:	e2 e2       	ldi	r30, 0x22	; 34
     48cc:	f2 e0       	ldi	r31, 0x02	; 2
     48ce:	de 01       	movw	r26, r28
     48d0:	11 96       	adiw	r26, 0x01	; 1
@@ -10551,7 +10551,7 @@ int main(void)
     48e2:	e1 2c       	mov	r14, r1
     48e4:	f1 2c       	mov	r15, r1
     48e6:	0f 2e       	mov	r0, r31
-    48e8:	f9 ec       	ldi	r31, 0xC9	; 201
+    48e8:	f7 ec       	ldi	r31, 0xC7	; 199
     48ea:	af 2e       	mov	r10, r31
     48ec:	f7 e0       	ldi	r31, 0x07	; 7
     48ee:	bf 2e       	mov	r11, r31
@@ -10559,19 +10559,19 @@ int main(void)
     48f2:	0e ea       	ldi	r16, 0xAE	; 174
     48f4:	18 e1       	ldi	r17, 0x18	; 24
     48f6:	0f 2e       	mov	r0, r31
-    48f8:	f2 ee       	ldi	r31, 0xE2	; 226
+    48f8:	f0 ee       	ldi	r31, 0xE0	; 224
     48fa:	4f 2e       	mov	r4, r31
     48fc:	f7 e0       	ldi	r31, 0x07	; 7
     48fe:	5f 2e       	mov	r5, r31
     4900:	f0 2d       	mov	r31, r0
     4902:	0f 2e       	mov	r0, r31
-    4904:	f9 ef       	ldi	r31, 0xF9	; 249
+    4904:	f7 ef       	ldi	r31, 0xF7	; 247
     4906:	8f 2e       	mov	r8, r31
     4908:	f7 e0       	ldi	r31, 0x07	; 7
     490a:	9f 2e       	mov	r9, r31
     490c:	f0 2d       	mov	r31, r0
     490e:	0f 2e       	mov	r0, r31
-    4910:	f3 e1       	ldi	r31, 0x13	; 19
+    4910:	f1 e1       	ldi	r31, 0x11	; 17
     4912:	6f 2e       	mov	r6, r31
     4914:	f8 e0       	ldi	r31, 0x08	; 8
     4916:	7f 2e       	mov	r7, r31
@@ -10682,7 +10682,7 @@ int main(void)
     49f0:	94 cf       	rjmp	.-216    	; 0x491a <lora_driver_configureToEu868+0x96>
     49f2:	60 e0       	ldi	r22, 0x00	; 0
     49f4:	70 e0       	ldi	r23, 0x00	; 0
-    49f6:	8b e2       	ldi	r24, 0x2B	; 43
+    49f6:	89 e2       	ldi	r24, 0x29	; 41
     49f8:	98 e0       	ldi	r25, 0x08	; 8
     49fa:	9f dc       	rcall	.-1730   	; 0x433a <_uploadMessage>
     49fc:	f8 dc       	rcall	.-1552   	; 0x43ee <_reply2ReturnCode>
@@ -10690,7 +10690,7 @@ int main(void)
     4a00:	06 c0       	rjmp	.+12     	; 0x4a0e <lora_driver_configureToEu868+0x18a>
     4a02:	60 e0       	ldi	r22, 0x00	; 0
     4a04:	70 e0       	ldi	r23, 0x00	; 0
-    4a06:	8c e3       	ldi	r24, 0x3C	; 60
+    4a06:	8a e3       	ldi	r24, 0x3A	; 58
     4a08:	98 e0       	ldi	r25, 0x08	; 8
     4a0a:	97 dc       	rcall	.-1746   	; 0x433a <_uploadMessage>
     4a0c:	f0 dc       	rcall	.-1568   	; 0x43ee <_reply2ReturnCode>
@@ -10763,7 +10763,7 @@ int main(void)
     4a8a:	8e 0f       	add	r24, r30
     4a8c:	9f 1f       	adc	r25, r31
     4a8e:	fc 01       	movw	r30, r24
-    4a90:	e0 50       	subi	r30, 0x00	; 0
+    4a90:	e2 50       	subi	r30, 0x02	; 2
     4a92:	f7 4f       	sbci	r31, 0xF7	; 247
     4a94:	81 81       	ldd	r24, Z+1	; 0x01
     4a96:	92 81       	ldd	r25, Z+2	; 0x02
@@ -11016,7 +11016,7 @@ int main(void)
     4c9e:	0f be       	out	0x3f, r0	; 63
     4ca0:	cd bf       	out	0x3d, r28	; 61
     4ca2:	89 e0       	ldi	r24, 0x09	; 9
-    4ca4:	e4 e4       	ldi	r30, 0x44	; 68
+    4ca4:	e2 e4       	ldi	r30, 0x42	; 66
     4ca6:	f2 e0       	ldi	r31, 0x02	; 2
     4ca8:	9e 01       	movw	r18, r28
     4caa:	2f 5f       	subi	r18, 0xFF	; 255
@@ -11158,7 +11158,7 @@ int main(void)
     4dc4:	88 0f       	add	r24, r24
     4dc6:	99 1f       	adc	r25, r25
     4dc8:	fc 01       	movw	r30, r24
-    4dca:	e3 5f       	subi	r30, 0xF3	; 243
+    4dca:	e5 5f       	subi	r30, 0xF5	; 245
     4dcc:	fd 4f       	sbci	r31, 0xFD	; 253
     4dce:	80 81       	ld	r24, Z
     4dd0:	91 81       	ldd	r25, Z+1	; 0x01
@@ -12089,7 +12089,7 @@ int main(void)
     551e:	80 93 1b 19 	sts	0x191B, r24	; 0x80191b <_com_serial_instance>
     5522:	e3 e5       	ldi	r30, 0x53	; 83
     5524:	f9 e1       	ldi	r31, 0x19	; 25
-    5526:	85 e1       	ldi	r24, 0x15	; 21
+    5526:	83 e1       	ldi	r24, 0x13	; 19
     5528:	92 e0       	ldi	r25, 0x02	; 2
     552a:	91 83       	std	Z+1, r25	; 0x01
     552c:	80 83       	st	Z, r24
@@ -12395,7 +12395,7 @@ int main(void)
     5778:	30 e0       	ldi	r19, 0x00	; 0
     577a:	40 ec       	ldi	r20, 0xC0	; 192
     577c:	50 e0       	ldi	r21, 0x00	; 0
-    577e:	63 e3       	ldi	r22, 0x33	; 51
+    577e:	61 e3       	ldi	r22, 0x31	; 49
     5780:	79 e0       	ldi	r23, 0x09	; 9
     5782:	88 e3       	ldi	r24, 0x38	; 56
     5784:	9b e2       	ldi	r25, 0x2B	; 43
@@ -12705,7 +12705,7 @@ int main(void)
     59d8:	f7 07       	cpc	r31, r23
     59da:	d9 f7       	brne	.-10     	; 0x59d2 <twiTransmit+0x68>
     59dc:	88 ef       	ldi	r24, 0xF8	; 248
-    59de:	80 93 23 02 	sts	0x0223, r24	; 0x800223 <_twiCurrentState>
+    59de:	80 93 21 02 	sts	0x0221, r24	; 0x800221 <_twiCurrentState>
     59e2:	85 ea       	ldi	r24, 0xA5	; 165
     59e4:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7c00bc>
     59e8:	84 e0       	ldi	r24, 0x04	; 4
@@ -12751,7 +12751,7 @@ int main(void)
     5a40:	81 60       	ori	r24, 0x01	; 1
     5a42:	80 93 39 19 	sts	0x1939, r24	; 0x801939 <_twiMessageBuffer>
     5a46:	88 ef       	ldi	r24, 0xF8	; 248
-    5a48:	80 93 23 02 	sts	0x0223, r24	; 0x800223 <_twiCurrentState>
+    5a48:	80 93 21 02 	sts	0x0221, r24	; 0x800221 <_twiCurrentState>
     5a4c:	85 ea       	ldi	r24, 0xA5	; 165
     5a4e:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7c00bc>
     5a52:	85 e0       	ldi	r24, 0x05	; 5
@@ -12888,7 +12888,7 @@ int main(void)
     5b86:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7c00bc>
     5b8a:	18 c0       	rjmp	.+48     	; 0x5bbc <__vector_39+0x154>
     5b8c:	80 91 b9 00 	lds	r24, 0x00B9	; 0x8000b9 <__TEXT_REGION_LENGTH__+0x7c00b9>
-    5b90:	80 93 23 02 	sts	0x0223, r24	; 0x800223 <_twiCurrentState>
+    5b90:	80 93 21 02 	sts	0x0221, r24	; 0x800221 <_twiCurrentState>
     5b94:	84 e0       	ldi	r24, 0x04	; 4
     5b96:	80 93 bc 00 	sts	0x00BC, r24	; 0x8000bc <__TEXT_REGION_LENGTH__+0x7c00bc>
     5b9a:	80 91 36 19 	lds	r24, 0x1936	; 0x801936 <_twiCurrentHandler>
@@ -12903,7 +12903,7 @@ int main(void)
     5bb0:	20 e0       	ldi	r18, 0x00	; 0
     5bb2:	40 e0       	ldi	r20, 0x00	; 0
     5bb4:	50 e0       	ldi	r21, 0x00	; 0
-    5bb6:	60 91 23 02 	lds	r22, 0x0223	; 0x800223 <_twiCurrentState>
+    5bb6:	60 91 21 02 	lds	r22, 0x0221	; 0x800221 <_twiCurrentState>
     5bba:	19 95       	eicall
     5bbc:	ff 91       	pop	r31
     5bbe:	ef 91       	pop	r30
