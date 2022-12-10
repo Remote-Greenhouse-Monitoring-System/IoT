@@ -5,7 +5,7 @@
 */
 
 #pragma once
+#include <stdint.h>
 
 void co2Sensor_create(UBaseType_t priority);
 uint16_t co2Sensor_getPPM();
-void myCo2CallBack(uint16_t ppm_parameter);

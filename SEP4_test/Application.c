@@ -4,12 +4,12 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include "ATMEGA_FreeRTOS.h"
-#include "stdio.h"
-#include "event_groups.h"
-#include "task.h"
-#include "message_buffer.h"
-#include "lora_driver.h"
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
+#include <event_groups.h>
+#include <task.h>
+#include <message_buffer.h>
+#include <lora_driver.h>
 
 #include "Sensors/co2Sensor.h"
 #include "Sensors/tempHumSensor.h"
@@ -19,13 +19,14 @@
 #include "application.h"
 
 void application_task(void *pvParameters);
+void application_createTask(UBaseType_t priority);
 
 void application_create(UBaseType_t priority)
 {
-	application_craeteTask(priority);
+	application_createTask(priority);
 }
 
-void application_craeteTask(UBaseType_t priority){
+void application_createTask(UBaseType_t priority){
 	xTaskCreate(
 	application_task
 	,  "MainApplication"

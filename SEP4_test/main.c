@@ -3,24 +3,26 @@
 *  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
 *  Authors: Christopher, Himal, Jurin
 */
-#include "stdio.h"
-#include "avr/io.h"
-#include "ATMEGA_FreeRTOS.h"
-#include "task.h"
-#include "semphr.h"
-#include "message_buffer.h"
-#include "stdio_driver.h"
-#include "serial.h"
-#include "string.h"
+#include <stdio.h>
+#include <avr/io.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <task.h>
+#include <semphr.h>
+#include <message_buffer.h>
+#include <stdio_driver.h>
+#include <serial.h>
+#include <string.h>
+
 
 // Needed for LoRaWAN
-#include "lora_driver.h"
-#include "status_leds.h"
+#include <lora_driver.h>
+#include <status_leds.h>
 
 
 #include "application.h"
 #include "initialize.h"
 #include "windowController.h"
+#include "servoController.h"
 #include "Sensors/co2Sensor.h"
 #include "Sensors/tempHumSensor.h"
 #include "uplinkHandler.h"
@@ -34,7 +36,7 @@ void main_create(){
 	co2Sensor_create(1);
 	tempHumSensor_create(1);
 	windowController_create(2);
-	servoController_craete();
+	servoController_create();
 }
 void initializeSystem()
 {
@@ -45,7 +47,8 @@ void initializeSystem()
 
 	initialize_event_groups();
 	initialize_message_buffers();
-	initialize_semaphore();
+// 	initialize_semaphore();
+	
 	// Initialise the LoRaWAN driver with down-link buffer
 	lora_driver_initialise(ser_USART1, downlinkMessageBufferHandle);
 	main_create();

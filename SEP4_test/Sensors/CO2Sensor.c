@@ -16,7 +16,10 @@
 
 #include "co2Sensor.h"
 
-void co2Sensor_task(void* pvpParameter);
+void co2Sensor_task(void *pvParameters);
+void co2Sensor_createTask(UBaseType_t priority);
+void co2Sensor_printReturnCode(mh_z19_returnCode_t rc);
+void myCo2CallBack(uint16_t ppm_parameter);
 
 //Initializing last ppm as 0.
 uint16_t lastCO2ppm = 0;
@@ -68,7 +71,7 @@ void co2Sensor_createTask(UBaseType_t priority){
 }
 
 //The CO2 sensor task.
-void co2Sensor_task(void* pvpParameter){
+void co2Sensor_task(void *pvParameters){
 	while(1)
 	{
 		//Usage of Event group Wait fun until co2 measure bit is set to 1

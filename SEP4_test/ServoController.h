@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "stdint.h"
+#include <stdint.h>
 
-void servoController_craete();
+void servoController_create();
 void servoController_setPosition(uint8_t servoNo, int8_t percent);

@@ -5,6 +5,8 @@
 */
 
 #pragma once
+#include <stdint.h>
+#include <lora_driver.h>
 
 #define PAYLOAD_SIZE 7
 

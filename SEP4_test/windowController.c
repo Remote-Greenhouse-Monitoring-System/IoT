@@ -4,18 +4,19 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include "stdint.h"
-#include "ATMEGA_FreeRTOS.h"
-#include "avr/io.h"
-#include "stdio.h"
+#include <stdint.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <avr/io.h>
+#include <stdio.h>
+
 #include "../Sensors/tempHumSensor.h"
 #include "application.h"
 #include "configuration.h"
 #include "servoController.h"
-
 #include "windowController.h"
 
 void windowController_task(void *pvParameters);
+void windowController_createTask(UBaseType_t priority);
 
 void windowController_create(UBaseType_t priority)
 {
@@ -42,7 +43,7 @@ void windowController_task(void *pvParameters) {
 	uint16_t thresholdHumidity = 0;
 	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(120000);
+	const TickType_t xFrequency = pdMS_TO_TICKS(5000);
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)
@@ -53,7 +54,7 @@ void windowController_task(void *pvParameters) {
 		
 		tempHumSensor_measure();
 		currentTemperature = tempHumSensor_getTemp();
-		currentHumidity = tempHumSensor_getHum;
+		currentHumidity = tempHumSensor_getHum();
 		
 		printf("windowController.c ---> Checked temp: %d threshold: %d \n", currentTemperature/10, thresholdTemperature);
 		printf("windowController.c ---> Checked hum: %d threshold: %d \n", currentHumidity/10, thresholdHumidity);

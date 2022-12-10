@@ -27,7 +27,7 @@ main.d main.o: .././main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
  ../drivers/lora_driver.h ../drivers/status_leds.h .././application.h \
  .././initialize.h ../FreeRTOS/src/event_groups.h \
- ../FreeRTOS/src/timers.h .././windowController.h \
+ ../FreeRTOS/src/timers.h .././windowController.h .././servoController.h \
  .././Sensors/co2Sensor.h .././Sensors/tempHumSensor.h \
  .././uplinkHandler.h .././downlinkHandler.h
 
@@ -112,6 +112,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../FreeRTOS/src/timers.h:
 
 .././windowController.h:
+
+.././servoController.h:
 
 .././Sensors/co2Sensor.h:
 

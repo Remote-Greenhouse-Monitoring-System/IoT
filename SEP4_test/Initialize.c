@@ -4,9 +4,9 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include "lora_driver.h"
-#include "ATMEGA_FreeRTOS.h"
-#include "stdio.h"
+#include <lora_driver.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <stdio.h>
 
 #include "initialize.h"
 
@@ -14,7 +14,7 @@ EventGroupHandle_t measureEventGroup;
 EventGroupHandle_t dataReadyEventGroup;
 MessageBufferHandle_t uplinkMessageBufferHandle;
 MessageBufferHandle_t downlinkMessageBufferHandle;
-SemaphoreHandle_t configSemaphore;
+// SemaphoreHandle_t configSemaphore;
 
 
 void initialize_event_groups(){
@@ -33,12 +33,12 @@ void initialize_message_buffers(){
 	}
 }
 
-void initialize_semaphore(){
-	configSemaphore = xSemaphoreCreateMutex();
-	if(configSemaphore != NULL){
-		xSemaphoreGive(configSemaphore);
-	}
-	else{
-		printf("initialize.c ---> Failed to create config semaphore.\n");
-	}
-}
+// void initialize_semaphore(){
+// 	configSemaphore = xSemaphoreCreateMutex();
+// 	if(configSemaphore != NULL){
+// 		xSemaphoreGive(configSemaphore);
+// 	}
+// 	else{
+// 		printf("initialize.c ---> Failed to create config semaphore.\n");
+// 	}
+//}

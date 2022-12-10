@@ -3,9 +3,9 @@
 *  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
 *  Authors: Christopher, Himal, Jurin
 */
-
-#include "lora_driver.h"
 #pragma once
+#include <stdint.h>
+#include <lora_driver.h>
 
 int16_t configuration_getMaxTemperature();
 uint16_t configuration_getMaxHumidity();

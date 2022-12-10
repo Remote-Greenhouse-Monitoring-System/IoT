@@ -3,11 +3,14 @@
 *  Git: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
 *  Authors: Christopher, Himal, Jurin
 */
-#include "event_groups.h"
-#include "message_buffer.h"
-#include "semphr.h"
 
 #pragma once
+
+#include <event_groups.h>
+#include <message_buffer.h>
+#include <semphr.h>
+
+
 
 #define CO2_MEASURE_BIT (1<<0)
 #define CO2_READY_BIT (1<<1)
@@ -21,10 +24,10 @@ extern EventGroupHandle_t measureEventGroup;
 extern EventGroupHandle_t dataReadyEventGroup;
 extern MessageBufferHandle_t uplinkMessageBufferHandle;
 extern MessageBufferHandle_t downlinkMessageBufferHandle;
-extern SemaphoreHandle_t configSemaphore;
+// extern SemaphoreHandle_t configSemaphore;
 
 void initialize_event_groups();
 void initialize_message_buffers();
-void initialize_semaphore();
+// void initialize_semaphore();
 
 

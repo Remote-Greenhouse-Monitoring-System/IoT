@@ -5,9 +5,9 @@
 */
 
 #include "servoController.h"
-#include "rc_servo.h"
+#include <rc_servo.h>
 
-void servoController_craete(){
+void servoController_create(){
 	rc_servo_initialise();
 }
 

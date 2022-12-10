@@ -20,7 +20,10 @@
 uint16_t humidity = 0;
 int16_t temperature = 0;
 
-void tempHumSensor_task(void* pvpParameter);
+void tempHumSensor_task(void *pvParameters);
+void tempHumSensor_createTask(UBaseType_t priority);
+void tempHumSensor_initialise();
+void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc);
 
 //Initializes the temperature and humidity sensor driver and creates the temperature and humidity task.
 void tempHumSensor_create(UBaseType_t priority)
@@ -103,7 +106,8 @@ void tempHumSensor_measure(){
 
 // Creates the temperature and humidity task.
 void tempHumSensor_createTask(UBaseType_t priority){
-	xTaskCreate(tempHumSensor_task,
+	xTaskCreate(
+	tempHumSensor_task,
 	"TempHumTask",
 	configMINIMAL_STACK_SIZE,
 	NULL,
@@ -112,7 +116,7 @@ void tempHumSensor_createTask(UBaseType_t priority){
 }
 
 //The temperature and humidity task.
-void tempHumSensor_task(void* pvpParameter){
+void tempHumSensor_task(void *pvParameters){
 	while (1)
 	{
 		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,TEMP_HUM_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);

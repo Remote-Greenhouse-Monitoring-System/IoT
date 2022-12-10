@@ -4,12 +4,12 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include "ATMEGA_FreeRTOS.h"
-#include "lora_driver.h"
-#include "stdio.h"
-#include "stdint.h"
-#include "message_buffer.h"
-#include "task.h"
+#include <ATMEGA_FreeRTOS.h>
+#include <lora_driver.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <message_buffer.h>
+#include <task.h>
 
 #include "configuration.h"
 #include "initialize.h"
@@ -17,6 +17,8 @@
 #include "downlinkHandler.h"
 
 static lora_driver_payload_t _downlink_payload;
+void downlinkHandler_createTask(UBaseType_t priority);
+void downlinkHandler_task(void *pvParameters);
 
 void downlinkHandler_create(UBaseType_t priority)
 {
@@ -25,7 +27,7 @@ void downlinkHandler_create(UBaseType_t priority)
 
 void downlinkHandler_createTask(UBaseType_t priority){
 	xTaskCreate(
-	downlinkHandler_task()
+	downlinkHandler_task
 	,  "LRHandDownlink"
 	,  configMINIMAL_STACK_SIZE+200
 	,  NULL
@@ -48,15 +50,15 @@ void downlinkHandler_task(void *pvParameters){
 		if(xReceivedBytes > 0){
 			printf("downlinkHandler ---> DOWN LINK: from port: %d with %d bytes received.\n", _downlink_payload.portNo, _downlink_payload.len); // Just for Debug
 			
-			if(configSemaphore != NULL){
-				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
-					configuration_setConfiguration(_downlink_payload);
-					xSemaphoreGive(configSemaphore);
-				}
-				else{
-					printf("downlinkHandler ---> ERROR: DownlinkHandler Couldn't obtain semaphore.\n");
-				}
-			}
+// 			if(configSemaphore != NULL){
+// 				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
+// 					configuration_setConfiguration(_downlink_payload);
+// 					xSemaphoreGive(configSemaphore);
+// 				}
+// 				else{
+// 					printf("downlinkHandler ---> ERROR: DownlinkHandler Couldn't obtain semaphore.\n");
+// 				}
+//			}
 		}
 	}
 }

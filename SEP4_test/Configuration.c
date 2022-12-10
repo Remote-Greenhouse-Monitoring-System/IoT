@@ -4,9 +4,10 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include "stdint.h"
-#include "lora_driver.h"
-#include "semphr.h"
+#include <stdint.h>
+#include <stdio.h>
+#include <lora_driver.h>
+#include <semphr.h>
 
 #include "configuration.h"
 

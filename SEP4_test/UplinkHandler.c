@@ -4,19 +4,19 @@
 *  Authors: Christopher, Himal, Jurin
 */
 
-#include "stddef.h"
-#include "stdio.h"
-#include "ATMEGA_FreeRTOS.h"
-#include "lora_driver.h"
-#include "status_leds.h"
+#include <stddef.h>
+#include <stdio.h>
+#include <ATMEGA_FreeRTOS.h>
+#include <lora_driver.h>
+#include <status_leds.h>
 
 #include "initialize.h"
-
 #include "uplinkHandler.h"
 
 static lora_driver_payload_t _uplink_payload;
 
 void uplinkHandler_task( void *pvParameters);
+void uplinkHandler_createTask(UBaseType_t priority);
 
 void uplinkHandler_create(UBaseType_t priority)
 {
