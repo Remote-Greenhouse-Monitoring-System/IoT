@@ -33,7 +33,8 @@ void main_application_task(void *pvParameters) {
 	uint8_t xBytesSent = 0;
 	//5 minute timer
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
+//	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
+	const TickType_t xFrequency = pdMS_TO_TICKS(60000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for (;;)
@@ -70,7 +71,7 @@ void main_application_task(void *pvParameters) {
 				printf("Timed out.\n");
 			}
 			else{
-				printf("Bytes put in buffer: %d\n", xBytesSent);
+			//	printf("Bytes put in buffer: %d\n", xBytesSent);
 			}
 		}	
 	}

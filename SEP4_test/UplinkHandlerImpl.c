@@ -106,7 +106,7 @@ void lora_uplink_handler_task( void *pvParameters )
 
 	lora_driver_flushBuffers(); // get rid of first version string from module after reset!
 
-	_lora_setup();
+// 	_lora_setup();
 	
 	for(;;)
 	{
@@ -123,21 +123,38 @@ void lora_uplink_handler_task( void *pvParameters )
 		portMAX_DELAY);
 
 		if(xReceivedBytes > 0){
-			// 				printf("Number of bytes read from the message buffer: %d\n", xReceivedBytes);
 			tem = (_uplink_payload.bytes[0] << 8) | (_uplink_payload.bytes[1]);
 			hum = (_uplink_payload.bytes[2] << 8) | (_uplink_payload.bytes[3]);
 			co2 = (_uplink_payload.bytes[4] << 8) | (_uplink_payload.bytes[5]);
 			status = _uplink_payload.bytes[6];
 			
-			printf("Temperature sent: %d\n", tem);
-			printf("Humidity sent: %d\n", hum);
-			printf("CO2 sent: %d\n", co2);
-			printf("Status sent: %d\n", status);
+// 			printf("Temperature sent: %d\n", tem);
+// 			printf("Humidity sent: %d\n", hum);
+// 			printf("CO2 sent: %d\n", co2);
+// 			printf("Status sent: %d\n", status);
 			
 			status_leds_shortPuls(led_ST4);  // OPTIONAL
-			//WHAT THE HELL DOES THE FALSE DO 
-			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
-
+			
+			// TEMPORARY SETUP 	
+			//----------------------------------------
+			//00FA 0096 0320 00C8 07D0 01F4
+			uint8_t fakePayloadBytes[] = {0x00, 0xFA, 0x00, 0x96, 0x03, 0x20, 0x00, 0xC8, 0x07, 0xD0, 0x01,0xF4};
+			lora_driver_payload_t fakePayload;
+			fakePayload.portNo = 2;
+			fakePayload.len = sizeof(fakePayloadBytes);
+			for(uint8_t i = 0; i < sizeof(fakePayloadBytes); i++){
+				fakePayload.bytes[i] = fakePayloadBytes[i];
+			}
+			
+			xMessageBufferSend(downlinkMessageBufferHandle,
+			&fakePayload,
+			sizeof(fakePayload),
+			portMAX_DELAY);
+			//---------------------------------------------
+			
+			
+//  			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
+			
 		}
 	}
 }

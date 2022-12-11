@@ -74,7 +74,7 @@ void create_CO2_sensor_task(UBaseType_t priority){
 }
 
 
-void MeasureCo2Task(void* pvpParameter){
+void MeasureCo2Task(void *pvParameters){
 	//printf("Measurement of co2 task has been started ");
 	while(1){
 		
