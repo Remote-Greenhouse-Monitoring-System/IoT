@@ -54,6 +54,12 @@ void main_application_task(void *pvParameters) {
 			set_temperature_percent(TempHumSensor_getTemp());
 			set_humidity_percent(TempHumSensor_getHum());
 			set_CO2_ppm(CO2_getPPM());
+			
+			if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
+				set_status(get_system_status());
+				xSemaphoreGive(configSemaphore);
+			}
+			
 			lora_driver_payload_t payload = get_lora_package(2);
 			
 			xBytesSent = xMessageBufferSend(uplinkMessageBufferHandle,
@@ -64,14 +70,7 @@ void main_application_task(void *pvParameters) {
 				printf("Timed out.\n");
 			}
 			else{
-				
-				// 			printf("Bytes sent: %d\n", xBytesSent);
-				// 			printf("Temp sent: %d\n", tem);
-				// 			printf("Humidity sent: %d\n", hum);
-				// 			printf("Size of payload: %d\n", sizeof(payload));
-				//			receivePayload();
 				printf("Bytes put in buffer: %d\n", xBytesSent);
-				
 			}
 		}	
 	}

@@ -11,6 +11,7 @@
 #include "Sensors/TempHumSensor.h"
 #include "PackageHandler.h"
 #include "Initialize.h"
+#include "Configuration.h"
 
 
 void create_main_application_task(UBaseType_t priority);

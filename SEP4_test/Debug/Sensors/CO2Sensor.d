@@ -30,7 +30,8 @@ Sensors/CO2Sensor.d Sensors/CO2Sensor.o: ../Sensors/CO2Sensor.c \
  ../drivers/hih8120.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
  ../Sensors/../Sensors/../Initialize.h ../FreeRTOS/src/semphr.h \
- ../FreeRTOS/src/queue.h ../Sensors/../PackageHandler.h
+ ../FreeRTOS/src/queue.h ../Sensors/../PackageHandler.h \
+ ../Sensors/../Configuration.h
 
 ../Sensors/CO2Sensor.h:
 
@@ -117,3 +118,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../FreeRTOS/src/queue.h:
 
 ../Sensors/../PackageHandler.h:
+
+../Sensors/../Configuration.h:

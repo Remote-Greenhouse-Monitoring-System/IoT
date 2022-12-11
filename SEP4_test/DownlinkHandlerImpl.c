@@ -34,7 +34,7 @@ void lora_downlink_handler_task(void *pvParameters){
 		portMAX_DELAY);
 		
 		if(xReceivedBytes > 0){
-			printf("DOWN LINK: from port: %d with %d bytes received!", _downlink_payload.portNo, _downlink_payload.len); // Just for Debug
+			printf("DOWN LINK: from port: %d with %d bytes received!\n", _downlink_payload.portNo, _downlink_payload.len); // Just for Debug
 			
 			if(configSemaphore != NULL){
 				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){

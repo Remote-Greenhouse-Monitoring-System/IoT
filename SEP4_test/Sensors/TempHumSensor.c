@@ -12,7 +12,7 @@ uint16_t humidity = 0;
 int16_t temperature = 0;
 
 void Temp_Hum_Main_Task(void *pvParameters);
-
+void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc);
 
 void initialise_TempHumSensor()
 {
@@ -53,42 +53,27 @@ void measure_Temp_Hum(){
 
 	vTaskDelay(pdMS_TO_TICKS(60));
 	
-// 		//--------------------
-// 		int count = 0;
-// 		
-// 		while(!hih8120_isReady() || count < 5)
-// 		{
-// 			vTaskDelay(pdMS_TO_TICKS(50));
-// 			count++;
-// 		}
-// 		humidity = hih8120_getHumidityPercent_x10();
-// 		temperature = hih8120_getTemperature_x10();
-// 		count = 0;
-// 		//----------------------------
-	
-	int16_t returnCode = hih8120_measure();
-	char* returnCodeString;
-	switch(returnCode){
-		case HIH8120_OK: returnCodeString = "HIH8120_OK";												/**< Everything went well */
-		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP";								/**< Not enough heap to initialise the driver */
-		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED";		/**< Driver must be initialise before use */
-		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY";									/**< The two wire/I2C interface is busy */
-	}
-	
-	
-	if ( returnCode != HIH8120_OK  )
+	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
+	if (measure_rc != HIH8120_OK)
 	{
-		printf("Could not measure temp hum sensor, code: %s \n", returnCodeString);
-		// Something went wrong
-		// Investigate the return code further
+		tempHumSensor_printReturnCode(measure_rc);
 	}
-	
 	vTaskDelay(pdMS_TO_TICKS(50));
+	
 	humidity = hih8120_getHumidityPercent_x10();
-	temperature = hih8120_getTemperature_x10();
-	vTaskDelay(pdMS_TO_TICKS(50));
-	
-	
+	temperature = hih8120_getTemperature_x10();	
+}
+
+void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc)
+{
+	char* returnCodeString;
+	switch(rc){
+		case HIH8120_OK: returnCodeString = "HIH8120_OK";
+		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP";
+		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED";
+		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY";
+	}
+	printf("RETURNCODE: %s \n", returnCodeString);
 }
 	
 int16_t TempHumSensor_getTemp(){

@@ -29,8 +29,8 @@ main.d main.o: .././main.c \
  ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
  .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
  .././Sensors/../Initialize.h .././Sensors/TempHumSensor.h \
- ../drivers/hih8120.h .././PackageHandler.h .././FanController.h \
- .././Configuration.h .././ServoController.h ../drivers/rc_servo.h \
+ ../drivers/hih8120.h .././PackageHandler.h .././Configuration.h \
+ .././FanController.h .././ServoController.h ../drivers/rc_servo.h \
  .././UplinkHandler.h .././DownlinkHandler.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
@@ -123,9 +123,9 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 .././PackageHandler.h:
 
-.././FanController.h:
-
 .././Configuration.h:
+
+.././FanController.h:
 
 .././ServoController.h:
 

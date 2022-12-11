@@ -23,7 +23,9 @@ ConfigurationImpl.d ConfigurationImpl.o: .././ConfigurationImpl.c \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h ../FreeRTOS/src/task.h \
  ../FreeRTOS/src/list.h ../FreeRTOS/src/message_buffer.h \
  ../FreeRTOS/src/stream_buffer.h ../drivers/serial.h \
- ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h
+ ../FreeRTOS/src/semphr.h ../FreeRTOS/src/queue.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h
 
 .././Configuration.h:
 
@@ -86,3 +88,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../FreeRTOS/src/semphr.h:
 
 ../FreeRTOS/src/queue.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:
