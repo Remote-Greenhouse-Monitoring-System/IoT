@@ -5,7 +5,7 @@
  *  Author: jurin
  */ 
 
-#include "ServoController.h"
+#include "servoController.h"
 
 void initialise_rc_servo(){
 	rc_servo_initialise();

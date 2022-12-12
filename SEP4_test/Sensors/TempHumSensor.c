@@ -5,7 +5,7 @@
  *  Author: himal
  */ 
 
-#include "TempHumSensor.h"
+#include "tempHumSensor.h"
 
 
 uint16_t humidity = 0;

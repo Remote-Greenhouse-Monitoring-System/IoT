@@ -11,10 +11,10 @@
 #include <stdint.h>
 #include <ATMEGA_FreeRTOS.h>
 #include <avr/io.h>
-#include "../Sensors/TempHumSensor.h"
-#include "Application.h"
-#include "Configuration.h"
-#include "ServoController.h"
+#include "../Sensors/tempHumSensor.h"
+#include "application.h"
+#include "configuration.h"
+#include "servoController.h"
 
 void create_fan_controller_task(UBaseType_t priority);
 

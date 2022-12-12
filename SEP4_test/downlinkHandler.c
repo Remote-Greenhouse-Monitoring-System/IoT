@@ -5,7 +5,7 @@
  *  Author: jurin
  */ 
 
-#include "DownlinkHandler.h"
+#include "downlinkHandler.h"
 
 void lora_downlink_handler_task(void *pvParameters);
 

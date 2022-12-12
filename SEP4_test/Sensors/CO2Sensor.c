@@ -5,7 +5,7 @@
  *  Author: Himal
  */ 
 
-#include "CO2Sensor.h"
+#include "co2Sensor.h"
 
 
 

@@ -5,7 +5,7 @@
  *  Author: jurin
  */ 
 
-#include "Initialize.h"
+#include "initialize.h"
 
 EventGroupHandle_t measureEventGroup;
 EventGroupHandle_t dataReadyEventGroup;

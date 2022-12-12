@@ -6,7 +6,7 @@
  */ 
 
 
-#include "Configuration.h"
+#include "configuration.h"
 
 static int16_t max_temperature = 0;
 static int16_t min_temperature = 0;

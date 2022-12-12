@@ -1,4 +1,4 @@
-Application.d Application.o: .././Application.c .././Application.h \
+application.d application.o: .././application.c .././application.h \
  ../FreeRTOS/src/ATMEGA_FreeRTOS.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdint.h \
@@ -25,11 +25,14 @@ Application.d Application.o: .././Application.c .././Application.h \
  ../FreeRTOS/src/task.h ../FreeRTOS/src/message_buffer.h \
  ../FreeRTOS/src/stream_buffer.h ../drivers/lora_driver.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../drivers/serial.h .././Sensors/CO2Sensor.h ../drivers/mh_z19.h \
- .././Sensors/TempHumSensor.h ../drivers/hih8120.h \
- .././Sensors/../SystemSetup.h .././PackageHandler.h .././SystemSetup.h
+ ../drivers/serial.h .././Sensors/co2Sensor.h ../drivers/mh_z19.h \
+ .././Sensors/../initialize.h ../FreeRTOS/src/semphr.h \
+ ../FreeRTOS/src/queue.h .././Sensors/tempHumSensor.h \
+ ../drivers/hih8120.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ .././packageHandler.h .././configuration.h
 
-.././Application.h:
+.././application.h:
 
 ../FreeRTOS/src/ATMEGA_FreeRTOS.h:
 
@@ -97,16 +100,22 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 
 ../drivers/serial.h:
 
-.././Sensors/CO2Sensor.h:
+.././Sensors/co2Sensor.h:
 
 ../drivers/mh_z19.h:
 
-.././Sensors/TempHumSensor.h:
+.././Sensors/../initialize.h:
+
+../FreeRTOS/src/semphr.h:
+
+../FreeRTOS/src/queue.h:
+
+.././Sensors/tempHumSensor.h:
 
 ../drivers/hih8120.h:
 
-.././Sensors/../SystemSetup.h:
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
 
-.././PackageHandler.h:
+.././packageHandler.h:
 
-.././SystemSetup.h:
+.././configuration.h:

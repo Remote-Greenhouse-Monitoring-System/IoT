@@ -13,7 +13,7 @@
 #include <task.h>
 #include <event_groups.h>
 #include <string.h>
-#include "../Initialize.h"
+#include "../initialize.h"
 
 
 void create_TempHum_sensor_task(UBaseType_t priority);

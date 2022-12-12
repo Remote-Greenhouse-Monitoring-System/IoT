@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include <message_buffer.h>
 #include <task.h>
-#include "Initialize.h"
-#include "Configuration.h"
+#include "initialize.h"
+#include "configuration.h"
 
 void create_lora_downlink_handler_task(UBaseType_t priority);
 

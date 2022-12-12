@@ -6,7 +6,7 @@
  */ 
 
 
-#include "UplinkHandler.h"
+#include "uplinkHandler.h"
 
 void lora_uplink_handler_task(void *pvParameters);
 

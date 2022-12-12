@@ -30,15 +30,15 @@
     <EraseKey />
     <AsfFrameworkConfig>
       <framework-data>
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.44.1" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
     <avrtool>com.atmel.avrdbg.tool.atmelice</avrtool>
     <avrtoolserialnumber>J41800046468</avrtoolserialnumber>
@@ -194,22 +194,22 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ApplicationImpl.c">
+    <Compile Include="application.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Application.h">
+    <Compile Include="application.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Configuration.h">
+    <Compile Include="configuration.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ConfigurationImpl.c">
+    <Compile Include="configuration.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="DownlinkHandler.h">
+    <Compile Include="downlinkHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="DownlinkHandlerImpl.c">
+    <Compile Include="downlinkHandler.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="drivers\display_7seg.h">
@@ -260,10 +260,10 @@
     <Compile Include="drivers\twi.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="FanController.h">
+    <Compile Include="actionsController.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="FanControllerImpl.c">
+    <Compile Include="actionsController.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="FreeRTOS\FreeRTOSTraceDriver\FreeRTOSTraceDriver.c">
@@ -356,40 +356,40 @@
     <Compile Include="FreeRTOS\src\variantHooks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="PackageHandlerImpl.c">
+    <Compile Include="packageHandler.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="PackageHandler.h">
+    <Compile Include="packageHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\CO2Sensor.c">
+    <Compile Include="Sensors\co2Sensor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\CO2Sensor.h">
+    <Compile Include="Sensors\co2Sensor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\TempHumSensor.c">
+    <Compile Include="Sensors\tempHumSensor.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Sensors\TempHumSensor.h">
+    <Compile Include="Sensors\tempHumSensor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Initialize.h">
+    <Compile Include="initialize.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="InitializeImpl.c">
+    <Compile Include="initialize.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ServoController.h">
+    <Compile Include="servoController.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ServoControllerImpl.c">
+    <Compile Include="servoController.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="UplinkHandler.h">
+    <Compile Include="uplinkHandler.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="UplinkHandlerImpl.c">
+    <Compile Include="uplinkHandler.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

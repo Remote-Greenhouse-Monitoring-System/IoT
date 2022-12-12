@@ -13,8 +13,8 @@
 #include <task.h>
 #include <mh_z19.h>
 #include <event_groups.h>
-#include "../Application.h"
-#include "../Initialize.h"
+#include "../application.h"
+#include "../initialize.h"
 
 void create_CO2_sensor_task(UBaseType_t priority);
 void CO2_measure();

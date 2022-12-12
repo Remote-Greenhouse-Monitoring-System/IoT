@@ -14,14 +14,14 @@
 #include <status_leds.h>
 
 
-#include "Application.h"
-#include "Initialize.h"
-#include "FanController.h"
-#include "Sensors/CO2Sensor.h"
-#include "Sensors/TempHumSensor.h"
-#include "UplinkHandler.h"
-#include "DownlinkHandler.h"
-#include "ServoController.h"
+#include "application.h"
+#include "initialize.h"
+#include "actionsController.h"
+#include "Sensors/co2Sensor.h"
+#include "Sensors/tempHumSensor.h"
+#include "uplinkHandler.h"
+#include "downlinkHandler.h"
+#include "servoController.h"
 
 
 void create_all_tasks(){
