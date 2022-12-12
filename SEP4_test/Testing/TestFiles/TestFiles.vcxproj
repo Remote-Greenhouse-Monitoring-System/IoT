@@ -75,7 +75,7 @@
     <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\Testing;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\Testing;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\Testing;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

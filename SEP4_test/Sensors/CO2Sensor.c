@@ -90,10 +90,10 @@ void MeasureCo2Task(void *pvParameters){
 				CO2_measure();
 				
 				//printf("Measurement successful , now time to set ready bit of c02 ");
-				
+				vTaskDelay(pdMS_TO_TICKS(100));
 				xEventGroupSetBits(dataReadyEventGroup,CO2_READY_BIT);
 				
-				//vTaskDelay(pdMS_TO_TICKS(100));
+				
 				
 			}
 	}

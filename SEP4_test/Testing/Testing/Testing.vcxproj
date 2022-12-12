@@ -36,7 +36,7 @@
     <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="CO2Sensor_FFF_MocksDeclaration.h" />
