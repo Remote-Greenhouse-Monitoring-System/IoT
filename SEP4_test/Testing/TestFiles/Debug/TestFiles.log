@@ -1,8 +1,23 @@
-﻿  CO2Sensor.c
-  Initialize.c
+﻿  actionsController.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\TempHumSensor.h(9,10): fatal  error C1083: Cannot open include file: 'ATMEGA_FreeRTOS.h': No such file or directory
+  application.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\application.h(6,10): fatal  error C1083: Cannot open include file: 'task.h': No such file or directory
+  CO2Sensor.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\mh_z19.h(41,10): fatal  error C1083: Cannot open include file: 'serial.h': No such file or directory
+  configuration.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\configuration.h(12,10): fatal  error C1083: Cannot open include file: 'lora_driver.h': No such file or directory
+  downlinkHandler.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\downlinkHandler.h(9,10): fatal  error C1083: Cannot open include file: 'ATMEGA_FreeRTOS.h': No such file or directory
+  initialize.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\lora_driver.h(38,10): fatal  error C1083: Cannot open include file: 'ATMEGA_FreeRTOS.h': No such file or directory
+  main.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\main.c(3,10): fatal  error C1083: Cannot open include file: 'avr/io.h': No such file or directory
+  packageHandler.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\packageHandler.h(12,10): fatal  error C1083: Cannot open include file: 'lora_driver.h': No such file or directory
+  servoController.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\servoController.h(10,10): fatal  error C1083: Cannot open include file: 'rc_servo.h': No such file or directory
+  TempHumSensor.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\tempHumSensor.h(9,10): fatal  error C1083: Cannot open include file: 'ATMEGA_FreeRTOS.h': No such file or directory
+  uplinkHandler.c
+C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles\uplinkHandler.h(13,10): fatal  error C1083: Cannot open include file: 'ATMEGA_FreeRTOS.h': No such file or directory
   Generating Code...
-CO2Sensor.obj : error LNK2019: unresolved external symbol _xEventGroupWaitBits referenced in function _MeasureCo2Task
-CO2Sensor.obj : error LNK2019: unresolved external symbol _xEventGroupSetBits referenced in function _MeasureCo2Task
-Initialize.obj : error LNK2019: unresolved external symbol _xEventGroupCreate referenced in function _initialize_event_groups
-MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
-C:\Users\Christopher\source\IoT\SEP4_test\Testing\Debug\TestFiles.exe : fatal error LNK1120: 4 unresolved externals

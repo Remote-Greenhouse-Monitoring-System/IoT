@@ -1,21 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\TestFiles\CO2Sensor.c">
-      <Filter>Sensors</Filter>
-    </ClCompile>
     <ClCompile Include="FreeRTOS_FFF_MocksDefinitions.cpp">
       <Filter>FFF</Filter>
     </ClCompile>
-    <ClCompile Include="TempHumSensorTest.cpp">
-      <Filter>Sensors\Tests</Filter>
+    <ClCompile Include="tempHumSensorTest.cpp">
+      <Filter>Tests\Sensors</Filter>
     </ClCompile>
-    <ClCompile Include="CO2SensorTest.cpp">
-      <Filter>Sensors\Tests</Filter>
+    <ClCompile Include="co2SensorTest.cpp">
+      <Filter>Tests\Sensors</Filter>
     </ClCompile>
-    <ClCompile Include="..\TestFiles\Initialize.c" />
-    <ClCompile Include="..\TestFiles\TempHumSensor.c">
-      <Filter>Sensors</Filter>
+    <ClCompile Include="..\TestFiles\tempHumSensor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\co2Sensor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\initialize.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="actionsControllerTest.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\actionsController.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\configuration.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\servoController.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\application.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="applicationTest.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\packageHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="downlinkHandlerTest.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\downlinkHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uplinkeHandlerTest.cpp">
+      <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -43,7 +75,6 @@
     <ClInclude Include="timers.h">
       <Filter>FreeRTOS\src</Filter>
     </ClInclude>
-    <ClInclude Include="CO2Sensor_FFF_MocksDeclaration.h" />
     <ClInclude Include="FreeRTOS_FFF_MocksDeclaration.h">
       <Filter>FFF</Filter>
     </ClInclude>
@@ -55,14 +86,17 @@
     <Filter Include="FreeRTOS\src">
       <UniqueIdentifier>{da8dfc4d-d16b-4c41-8b97-53381eb6b4bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sensors">
-      <UniqueIdentifier>{fef2dcf3-f2b3-4b0a-9a18-07a304742edf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FFF">
       <UniqueIdentifier>{1ff7ec54-a4e6-4f59-b76b-f9c73a348665}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sensors\Tests">
+    <Filter Include="Tests">
+      <UniqueIdentifier>{fef2dcf3-f2b3-4b0a-9a18-07a304742edf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests\Sensors">
       <UniqueIdentifier>{e08508c4-47cc-4804-b572-083a6c00c2e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c35752af-1c89-498d-8828-a25480a87008}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,2 +1,2 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1094,5): error MSB6006: "link.exe" exited with code 1104.
-LINK : fatal error LNK1104: cannot open file 'C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.6\build\native\..\..\lib\native\v140\windesktop\msvcstl\static\rt-dyn\x86\Debug\gtest_maind.lib'
+﻿  downlinkHandlerTest.cpp
+  Testing.vcxproj -> C:\Users\Christopher\source\IoT\SEP4_test\Testing\Debug\Testing.exe
