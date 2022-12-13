@@ -9,6 +9,7 @@
 
 #include "Sensors/co2Sensor.h"
 #include "Sensors/tempHumSensor.h"
+#include "Sensors/lightSensor.h"
 #include "packageHandler.h"
 #include "initialize.h"
 #include "configuration.h"
