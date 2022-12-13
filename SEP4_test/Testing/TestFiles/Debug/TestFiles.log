@@ -1,8 +1,0 @@
-﻿  CO2Sensor.c
-  Initialize.c
-  Generating Code...
-CO2Sensor.obj : error LNK2019: unresolved external symbol _xEventGroupWaitBits referenced in function _MeasureCo2Task
-CO2Sensor.obj : error LNK2019: unresolved external symbol _xEventGroupSetBits referenced in function _MeasureCo2Task
-Initialize.obj : error LNK2019: unresolved external symbol _xEventGroupCreate referenced in function _initialize_event_groups
-MSVCRTD.lib(exe_main.obj) : error LNK2019: unresolved external symbol _main referenced in function "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ)
-C:\Users\Christopher\source\IoT\SEP4_test\Testing\Debug\TestFiles.exe : fatal error LNK1120: 4 unresolved externals
