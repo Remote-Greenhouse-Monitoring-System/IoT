@@ -22,6 +22,12 @@
     <Filter Include="Header Files\Drivers">
       <UniqueIdentifier>{5e0ee4a9-9549-42b7-a064-e1a838b1b876}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Sensors">
+      <UniqueIdentifier>{2fbc0557-2f6d-45a7-981d-26ee834d0dbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sensors">
+      <UniqueIdentifier>{d458238b-c0a5-45d8-bd1e-ecad0afc25fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Testing\event_groups.h">
@@ -48,12 +54,6 @@
     <ClInclude Include="..\Testing\timers.h">
       <Filter>FreeRTOS\src</Filter>
     </ClInclude>
-    <ClInclude Include="CO2Sensor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Initialize.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="mh_z19.h">
       <Filter>Header Files\Drivers</Filter>
     </ClInclude>
@@ -63,18 +63,81 @@
     <ClInclude Include="hih8120.h">
       <Filter>Header Files\Drivers</Filter>
     </ClInclude>
-    <ClInclude Include="TempHumSensor.h">
+    <ClInclude Include="initialize.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="co2Sensor.h">
+      <Filter>Header Files\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="tempHumSensor.h">
+      <Filter>Header Files\Sensors</Filter>
+    </ClInclude>
+    <ClInclude Include="application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="configuration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="downlinkHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="packageHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="servoController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uplinkHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="actionsController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rc_servo.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="lora_driver.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="stdio_driver.h">
+      <Filter>Header Files\Drivers</Filter>
+    </ClInclude>
+    <ClInclude Include="status_leds.h">
+      <Filter>Header Files\Drivers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CO2Sensor.c">
+    <ClCompile Include="initialize.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TempHumSensor.c">
+    <ClCompile Include="tempHumSensor.c">
+      <Filter>Source Files\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="co2Sensor.c">
+      <Filter>Source Files\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="application.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Initialize.c">
+    <ClCompile Include="configuration.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="downlinkHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="packageHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="servoController.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uplinkHandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="actionsController.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

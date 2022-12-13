@@ -36,10 +36,9 @@
     <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
-    <ClInclude Include="CO2Sensor_FFF_MocksDeclaration.h" />
     <ClInclude Include="event_groups.h" />
     <ClInclude Include="FreeRTOS.h" />
     <ClInclude Include="FreeRTOS_FFF_MocksDeclaration.h" />
@@ -51,12 +50,22 @@
     <ClInclude Include="timers.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\TestFiles\CO2Sensor.c" />
-    <ClCompile Include="..\TestFiles\Initialize.c" />
-    <ClCompile Include="..\TestFiles\TempHumSensor.c" />
+    <ClCompile Include="..\TestFiles\actionsController.c" />
+    <ClCompile Include="..\TestFiles\application.c" />
+    <ClCompile Include="..\TestFiles\co2Sensor.c" />
+    <ClCompile Include="..\TestFiles\configuration.c" />
+    <ClCompile Include="..\TestFiles\downlinkHandler.c" />
+    <ClCompile Include="..\TestFiles\initialize.c" />
+    <ClCompile Include="..\TestFiles\packageHandler.c" />
+    <ClCompile Include="..\TestFiles\servoController.c" />
+    <ClCompile Include="..\TestFiles\tempHumSensor.c" />
+    <ClCompile Include="applicationTest.cpp" />
+    <ClCompile Include="downlinkHandlerTest.cpp" />
     <ClCompile Include="FreeRTOS_FFF_MocksDefinitions.cpp" />
-    <ClCompile Include="CO2SensorTest.cpp" />
-    <ClCompile Include="TempHumSensorTest.cpp" />
+    <ClCompile Include="co2SensorTest.cpp" />
+    <ClCompile Include="actionsControllerTest.cpp" />
+    <ClCompile Include="tempHumSensorTest.cpp" />
+    <ClCompile Include="uplinkeHandlerTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestFiles\TestFiles.vcxproj">

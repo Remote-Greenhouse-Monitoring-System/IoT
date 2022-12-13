@@ -142,17 +142,36 @@
     <ClInclude Include="..\Testing\semphr.h" />
     <ClInclude Include="..\Testing\task.h" />
     <ClInclude Include="..\Testing\timers.h" />
-    <ClInclude Include="CO2Sensor.h" />
+    <ClInclude Include="actionsController.h" />
+    <ClInclude Include="application.h" />
+    <ClInclude Include="co2Sensor.h" />
+    <ClInclude Include="configuration.h" />
+    <ClInclude Include="downlinkHandler.h" />
     <ClInclude Include="hih8120.h" />
-    <ClInclude Include="Initialize.h" />
+    <ClInclude Include="initialize.h" />
+    <ClInclude Include="lora_driver.h" />
     <ClInclude Include="mh_z19.h" />
+    <ClInclude Include="packageHandler.h" />
+    <ClInclude Include="rc_servo.h" />
     <ClInclude Include="serial.h" />
-    <ClInclude Include="TempHumSensor.h" />
+    <ClInclude Include="servoController.h" />
+    <ClInclude Include="status_leds.h" />
+    <ClInclude Include="stdio_driver.h" />
+    <ClInclude Include="tempHumSensor.h" />
+    <ClInclude Include="uplinkHandler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CO2Sensor.c" />
-    <ClCompile Include="Initialize.c" />
-    <ClCompile Include="TempHumSensor.c" />
+    <ClCompile Include="actionsController.c" />
+    <ClCompile Include="application.c" />
+    <ClCompile Include="co2Sensor.c" />
+    <ClCompile Include="configuration.c" />
+    <ClCompile Include="downlinkHandler.c" />
+    <ClCompile Include="initialize.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="packageHandler.c" />
+    <ClCompile Include="servoController.c" />
+    <ClCompile Include="tempHumSensor.c" />
+    <ClCompile Include="uplinkHandler.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
