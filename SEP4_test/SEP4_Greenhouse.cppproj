@@ -368,6 +368,12 @@
     <Compile Include="Sensors\co2Sensor.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Sensors\lightSensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Sensors\lightSensor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Sensors\tempHumSensor.c">
       <SubType>compile</SubType>
     </Compile>

@@ -61,6 +61,7 @@ C_SRCS +=  \
 ../FreeRTOS/src/variantHooks.c \
 ../packageHandler.c \
 ../Sensors/co2Sensor.c \
+../Sensors/lightSensor.c \
 ../Sensors/tempHumSensor.c \
 ../initialize.c \
 ../servoController.c \
@@ -92,6 +93,7 @@ FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
 packageHandler.o \
 Sensors/co2Sensor.o \
+Sensors/lightSensor.o \
 Sensors/tempHumSensor.o \
 initialize.o \
 servoController.o \
@@ -116,6 +118,7 @@ FreeRTOS/src/timers.o \
 FreeRTOS/src/variantHooks.o \
 packageHandler.o \
 Sensors/co2Sensor.o \
+Sensors/lightSensor.o \
 Sensors/tempHumSensor.o \
 initialize.o \
 servoController.o \
@@ -140,6 +143,7 @@ FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
 packageHandler.d \
 Sensors/co2Sensor.d \
+Sensors/lightSensor.d \
 Sensors/tempHumSensor.d \
 initialize.d \
 servoController.d \
@@ -164,6 +168,7 @@ FreeRTOS/src/timers.d \
 FreeRTOS/src/variantHooks.d \
 packageHandler.d \
 Sensors/co2Sensor.d \
+Sensors/lightSensor.d \
 Sensors/tempHumSensor.d \
 initialize.d \
 servoController.d \
@@ -297,6 +302,13 @@ FreeRTOS/src/variantHooks.o: ../FreeRTOS/src/variantHooks.c
 	
 
 Sensors/co2Sensor.o: ../Sensors/co2Sensor.c
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../drivers" -I"../FreeRTOS/src"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+Sensors/lightSensor.o: ../Sensors/lightSensor.c
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG -DF_CPU=16000000L  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include" -I"../drivers" -I"../FreeRTOS/src"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega2560 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega2560" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

@@ -19,6 +19,7 @@
 #include "actionsController.h"
 #include "Sensors/co2Sensor.h"
 #include "Sensors/tempHumSensor.h"
+#include "Sensors/lightSensor.h"
 #include "uplinkHandler.h"
 #include "downlinkHandler.h"
 #include "servoController.h"
@@ -30,7 +31,8 @@ void create_all_tasks(){
 	create_main_application_task(3);
 	create_CO2_sensor_task(1);
 	create_TempHum_sensor_task(1);
-	create_fan_controller_task(2);
+ 	create_light_sensor_task(2);
+	create_actions_controller_task(2);
 }
 void initializeSystem()
 {	

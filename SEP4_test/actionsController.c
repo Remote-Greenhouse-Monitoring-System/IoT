@@ -9,18 +9,18 @@
 
 
 
-void fan_controller_task(void *pvParameters);
+void actions_controller_task(void *pvParameters);
 void temperature_action(int16_t currentTemp, int16_t thresholdTemp);
 void humidity_action(uint16_t currentHum, uint16_t thresholdHum);
 void co2_action(uint16_t currentCO2, uint16_t thresholdCO2);
 
-void create_fan_controller_task(UBaseType_t priority){
+void create_actions_controller_task(UBaseType_t priority){
 	
 	DDRA = 0xFF;
 	PORTA = 0xFF;
 	
 	xTaskCreate(
-	fan_controller_task
+	actions_controller_task
 	,  "FanController"
 	,  configMINIMAL_STACK_SIZE
 	,  NULL
@@ -28,7 +28,7 @@ void create_fan_controller_task(UBaseType_t priority){
 	,  NULL );
 }
 
-void fan_controller_task(void *pvParameters) {
+void actions_controller_task(void *pvParameters) {
 	
 	int16_t currentTemperature = 0;
 	int16_t thresholdTemperature = 0;
@@ -36,9 +36,10 @@ void fan_controller_task(void *pvParameters) {
 	uint16_t thresholdHumidity = 0;
 	uint16_t currentCO2 = 0;
 	uint16_t thresholdCO2 = 0;
+	float currentLight = 0;
 	
 	TickType_t xLastWakeTime;
-	const TickType_t xFrequency = pdMS_TO_TICKS(5000); 
+	const TickType_t xFrequency = pdMS_TO_TICKS(60000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)
@@ -60,8 +61,9 @@ void fan_controller_task(void *pvParameters) {
 			currentTemperature = TempHumSensor_getTemp();
 			currentHumidity = TempHumSensor_getHum();
 			currentCO2 = CO2_getPPM();
-			printf("CURR/THRS: tmp %d/%d, hum %d/%d, co2ppm %d/%d\n", 
-			currentTemperature/10, thresholdTemperature, currentHumidity/10, thresholdHumidity, currentCO2, thresholdCO2);
+			currentLight = light_sensor_get_lux();
+			printf("CURR/THRS: tmp %d/%dC, hum %d/%d%%, co2 %d/%dppm, (light %5.2flux)\n", 
+			currentTemperature/10, thresholdTemperature, currentHumidity/10, thresholdHumidity, currentCO2, thresholdCO2, currentLight);
 			
 			if(!(thresholdTemperature == 0 && thresholdHumidity == 0 && thresholdCO2 == 0)){
 				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){

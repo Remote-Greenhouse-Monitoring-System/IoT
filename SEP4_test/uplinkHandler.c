@@ -117,6 +117,12 @@ void lora_uplink_handler_task( void *pvParameters )
 		uint8_t status = 0;
 		uint8_t xReceivedBytes = 0;
 		
+		union float_bytes{
+			float temp;
+			uint8_t bytes[sizeof(float)];
+		} holder;
+		
+		
 		xReceivedBytes = xMessageBufferReceive (uplinkMessageBufferHandle,
 		&_uplink_payload,
 		sizeof(_uplink_payload),
@@ -126,12 +132,18 @@ void lora_uplink_handler_task( void *pvParameters )
 			tem = (_uplink_payload.bytes[0] << 8) | (_uplink_payload.bytes[1]);
 			hum = (_uplink_payload.bytes[2] << 8) | (_uplink_payload.bytes[3]);
 			co2 = (_uplink_payload.bytes[4] << 8) | (_uplink_payload.bytes[5]);
-			status = _uplink_payload.bytes[6];
+			holder.bytes[0] = _uplink_payload.bytes[6];
+			holder.bytes[1] = _uplink_payload.bytes[7];
+			holder.bytes[2] = _uplink_payload.bytes[8];
+			holder.bytes[3] = _uplink_payload.bytes[9];
+			status = _uplink_payload.bytes[10];
 			
-			printf("Temperature sent: %d\n", tem);
-			printf("Humidity sent: %d\n", hum);
-			printf("CO2 sent: %d\n", co2);
-			printf("Status sent: %d\n", status);
+// 			printf("Temperature sent: %d\n", tem);
+// 			printf("Humidity sent: %d\n", hum);
+// 			printf("CO2 sent: %d\n", co2);
+// 			printf("Light sent: %f\n", holder.temp);
+// 			printf("Status sent: %d\n", status);
+			printf("UPLINK SENT: temp %d C, hum %d%%, CO2 %dppm, light %5.2flux, status %d\n", tem, hum, co2, holder.temp, status);
 			
 			status_leds_shortPuls(led_ST4);  // OPTIONAL
 			

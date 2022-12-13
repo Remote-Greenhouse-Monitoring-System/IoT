@@ -36,6 +36,8 @@ packageHandler.c
 
 Sensors\co2Sensor.c
 
+Sensors\lightSensor.c
+
 Sensors\tempHumSensor.c
 
 initialize.c
