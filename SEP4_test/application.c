@@ -34,7 +34,7 @@ void main_application_task(void *pvParameters) {
 	//5 minute timer
 	TickType_t xLastWakeTime;
 	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
-// 	const TickType_t xFrequency = pdMS_TO_TICKS(10000); 
+// 	const TickType_t xFrequency = pdMS_TO_TICKS(20000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for (;;)
@@ -55,7 +55,7 @@ void main_application_task(void *pvParameters) {
 			set_temperature_percent(TempHumSensor_getTemp());
 			set_humidity_percent(TempHumSensor_getHum());
 			set_CO2_ppm(CO2_getPPM());
-			
+			set_light_lux(light_sensor_get_lux());
 			
 			if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
 				set_status(get_system_status());

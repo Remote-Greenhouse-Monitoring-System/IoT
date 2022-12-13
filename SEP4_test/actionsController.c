@@ -40,6 +40,8 @@ void actions_controller_task(void *pvParameters) {
 	
 	TickType_t xLastWakeTime;
 	const TickType_t xFrequency = pdMS_TO_TICKS(60000); 
+// 	const TickType_t xFrequency = pdMS_TO_TICKS(5000);
+
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for(;;)

@@ -30,7 +30,8 @@ Sensors/co2Sensor.d Sensors/co2Sensor.o: ../Sensors/co2Sensor.c \
  ../drivers/hih8120.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
  ../Sensors/../Sensors/../initialize.h ../FreeRTOS/src/semphr.h \
- ../FreeRTOS/src/queue.h ../Sensors/../packageHandler.h \
+ ../FreeRTOS/src/queue.h ../Sensors/../Sensors/lightSensor.h \
+ ../drivers/tsl2591.h ../Sensors/../packageHandler.h \
  ../Sensors/../configuration.h
 
 ../Sensors/co2Sensor.h:
@@ -116,6 +117,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../FreeRTOS/src/semphr.h:
 
 ../FreeRTOS/src/queue.h:
+
+../Sensors/../Sensors/lightSensor.h:
+
+../drivers/tsl2591.h:
 
 ../Sensors/../packageHandler.h:
 

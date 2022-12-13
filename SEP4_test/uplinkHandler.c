@@ -143,7 +143,7 @@ void lora_uplink_handler_task( void *pvParameters )
 // 			printf("CO2 sent: %d\n", co2);
 // 			printf("Light sent: %f\n", holder.temp);
 // 			printf("Status sent: %d\n", status);
-			printf("UPLINK SENT: temp %d C, hum %d%%, CO2 %dppm, light %5.2flux, status %d\n", tem, hum, co2, holder.temp, status);
+			printf("UPLINK SENT: temp %dC, hum %d%%, CO2 %dppm, light %5.2flux, status %d\n", tem/10, hum/10, co2, holder.temp, status);
 			
 			status_leds_shortPuls(led_ST4);  // OPTIONAL
 			
@@ -165,7 +165,7 @@ void lora_uplink_handler_task( void *pvParameters )
 			//---------------------------------------------
 			
 			
- 			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
+//  			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
 			
 		}
 	}

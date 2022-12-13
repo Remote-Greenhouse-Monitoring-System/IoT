@@ -30,7 +30,8 @@ application.d application.o: .././application.c .././application.h \
  ../FreeRTOS/src/queue.h .././Sensors/tempHumSensor.h \
  ../drivers/hih8120.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- .././packageHandler.h .././configuration.h
+ .././Sensors/lightSensor.h ../drivers/tsl2591.h .././packageHandler.h \
+ .././configuration.h
 
 .././application.h:
 
@@ -115,6 +116,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../drivers/hih8120.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+.././Sensors/lightSensor.h:
+
+../drivers/tsl2591.h:
 
 .././packageHandler.h:
 

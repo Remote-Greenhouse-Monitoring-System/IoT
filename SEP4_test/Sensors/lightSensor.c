@@ -85,7 +85,7 @@ void measure_light_task(void *pvParameters){
 		
 		if((uxBits & (LIGHT_MEASURE_BIT)) == LIGHT_MEASURE_BIT){
 			light_sensor_measure();
-			vTaskDelay(pdMS_TO_TICKS(50));
+			vTaskDelay(pdMS_TO_TICKS(100));
 			xEventGroupSetBits(dataReadyEventGroup, LIGHT_READY_BIT);
 		}
 	}

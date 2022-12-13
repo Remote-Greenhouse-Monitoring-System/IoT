@@ -29,8 +29,8 @@ main.d main.o: .././main.c \
  ../FreeRTOS/src/event_groups.h ../FreeRTOS/src/timers.h \
  .././Sensors/co2Sensor.h ../drivers/mh_z19.h \
  .././Sensors/../initialize.h .././Sensors/tempHumSensor.h \
- ../drivers/hih8120.h .././packageHandler.h .././configuration.h \
- .././actionsController.h .././Sensors/lightSensor.h ../drivers/tsl2591.h \
+ ../drivers/hih8120.h .././Sensors/lightSensor.h ../drivers/tsl2591.h \
+ .././packageHandler.h .././configuration.h .././actionsController.h \
  .././servoController.h ../drivers/rc_servo.h .././uplinkHandler.h \
  .././downlinkHandler.h
 
@@ -122,15 +122,15 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../drivers/hih8120.h:
 
+.././Sensors/lightSensor.h:
+
+../drivers/tsl2591.h:
+
 .././packageHandler.h:
 
 .././configuration.h:
 
 .././actionsController.h:
-
-.././Sensors/lightSensor.h:
-
-../drivers/tsl2591.h:
 
 .././servoController.h:
 
