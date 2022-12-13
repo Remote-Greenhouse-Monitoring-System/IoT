@@ -23,11 +23,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_frame  000029cc  00000000  00000000  000225c0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000467d  00000000  00000000  00024f8c  2**0
+ 10 .debug_str    000046a8  00000000  00000000  00024f8c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000c940  00000000  00000000  00029609  2**0
+ 11 .debug_loc    0000c940  00000000  00000000  00029634  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000b58  00000000  00000000  00035f49  2**0
+ 12 .debug_ranges 00000b58  00000000  00000000  00035f74  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -252,12 +252,6 @@ Disassembly of section .text:
      28e:	84 72 5e 22 81 00 c9 f1 24 ec a1 e5 3d 27           .r^"....$...='
 
 0000029c <prvIdleTask>:
-                    mtCOVERAGE_TEST_MARKER();
-                }
-            }
-        }
-        portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
-    }
      29c:	0e 94 d5 10 	call	0x21aa	; 0x21aa <prvCheckTasksWaitingTermination>
      2a0:	80 91 5e 17 	lds	r24, 0x175E	; 0x80175e <pxReadyTasksLists>
      2a4:	82 30       	cpi	r24, 0x02	; 2
@@ -267,12 +261,6 @@ Disassembly of section .text:
      2ae:	f6 cf       	rjmp	.-20     	; 0x29c <prvIdleTask>
 
 000002b0 <prvTimerTask>:
-                pxNewTimer->ucStatus = 0x00;
-                prvInitialiseNewTimer( pcTimerName, xTimerPeriodInTicks, uxAutoReload, pvTimerID, pxCallbackFunction, pxNewTimer );
-            }
-
-            return pxNewTimer;
-        }
      2b0:	cf 93       	push	r28
      2b2:	df 93       	push	r29
      2b4:	1f 92       	push	r1
@@ -1264,12 +1252,6 @@ void fan_controller_task(void *pvParameters) {
 
 000008d6 <prvTestWaitCondition>:
      8d6:	0f 93       	push	r16
-        uxReturn = pxEventBits->uxEventBits;
-    }
-    portCLEAR_INTERRUPT_MASK_FROM_ISR( uxSavedInterruptStatus );
-
-    return uxReturn;
-} /*lint !e818 EventGroupHandle_t is a typedef used in other functions to so can't be pointer to const. */
      8d8:	01 11       	cpse	r16, r1
      8da:	0c c0       	rjmp	.+24     	; 0x8f4 <prvTestWaitCondition+0x1e>
      8dc:	dc 01       	movw	r26, r24
@@ -1483,11 +1465,6 @@ void fan_controller_task(void *pvParameters) {
      a7c:	08 95       	ret
 
 00000a7e <xEventGroupSetBits>:
-/*-----------------------------------------------------------*/
-
-EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
-                                const EventBits_t uxBitsToSet )
-{
      a7e:	4f 92       	push	r4
      a80:	5f 92       	push	r5
      a82:	6f 92       	push	r6
@@ -1505,26 +1482,12 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      a9a:	ec 01       	movw	r28, r24
      a9c:	6a 01       	movw	r12, r20
      a9e:	7b 01       	movw	r14, r22
-     * itself. */
-    configASSERT( xEventGroup );
-    configASSERT( ( uxBitsToSet & eventEVENT_BITS_CONTROL_BYTES ) == 0 );
-
-    pxList = &( pxEventBits->xTasksWaitingForBits );
-    pxListEnd = listGET_END_MARKER( pxList ); /*lint !e826 !e740 !e9087 The mini list structure is used as the list end to save RAM.  This is checked and valid. */
      aa0:	8c 01       	movw	r16, r24
      aa2:	09 5f       	subi	r16, 0xF9	; 249
      aa4:	1f 4f       	sbci	r17, 0xFF	; 255
-    vTaskSuspendAll();
      aa6:	0e 94 20 12 	call	0x2440	; 0x2440 <vTaskSuspendAll>
-    {
-        traceEVENT_GROUP_SET_BITS( xEventGroup, uxBitsToSet );
-
-        pxListItem = listGET_HEAD_ENTRY( pxList );
      aaa:	eb 85       	ldd	r30, Y+11	; 0x0b
      aac:	fc 85       	ldd	r31, Y+12	; 0x0c
-
-        /* Set the bits. */
-        pxEventBits->uxEventBits |= uxBitsToSet;
      aae:	88 81       	ld	r24, Y
      ab0:	99 81       	ldd	r25, Y+1	; 0x01
      ab2:	aa 81       	ldd	r26, Y+2	; 0x02
@@ -1537,46 +1500,21 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      ac0:	d9 82       	std	Y+1, r13	; 0x01
      ac2:	ea 82       	std	Y+2, r14	; 0x02
      ac4:	fb 82       	std	Y+3, r15	; 0x03
-                                const EventBits_t uxBitsToSet )
-{
-    ListItem_t * pxListItem, * pxNext;
-    ListItem_t const * pxListEnd;
-    List_t const * pxList;
-    EventBits_t uxBitsToClear = 0, uxBitsWaitedFor, uxControlBits;
      ac6:	c1 2c       	mov	r12, r1
      ac8:	d1 2c       	mov	r13, r1
      aca:	76 01       	movw	r14, r12
-
-        /* Set the bits. */
-        pxEventBits->uxEventBits |= uxBitsToSet;
-
-        /* See if the new bit value should unblock any tasks. */
-        while( pxListItem != pxListEnd )
      acc:	3d c0       	rjmp	.+122    	; 0xb48 <xEventGroupSetBits+0xca>
-        {
-            pxNext = listGET_NEXT( pxListItem );
      ace:	a4 80       	ldd	r10, Z+4	; 0x04
      ad0:	b5 80       	ldd	r11, Z+5	; 0x05
-            uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
      ad2:	80 81       	ld	r24, Z
      ad4:	91 81       	ldd	r25, Z+1	; 0x01
      ad6:	a2 81       	ldd	r26, Z+2	; 0x02
      ad8:	b3 81       	ldd	r27, Z+3	; 0x03
-            xMatchFound = pdFALSE;
-
-            /* Split the bits waited for from the control bits. */
-            uxControlBits = uxBitsWaitedFor & eventEVENT_BITS_CONTROL_BYTES;
-            uxBitsWaitedFor &= ~eventEVENT_BITS_CONTROL_BYTES;
      ada:	ac 01       	movw	r20, r24
      adc:	bd 01       	movw	r22, r26
      ade:	77 27       	eor	r23, r23
-
-            if( ( uxControlBits & eventWAIT_FOR_ALL_BITS ) == ( EventBits_t ) 0 )
      ae0:	b2 fd       	sbrc	r27, 2
      ae2:	0e c0       	rjmp	.+28     	; 0xb00 <xEventGroupSetBits+0x82>
-            {
-                /* Just looking for single bit being set. */
-                if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) != ( EventBits_t ) 0 )
      ae4:	48 80       	ld	r4, Y
      ae6:	59 80       	ldd	r5, Y+1	; 0x01
      ae8:	6a 80       	ldd	r6, Y+2	; 0x02
@@ -1589,20 +1527,8 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      af6:	46 28       	or	r4, r6
      af8:	47 28       	or	r4, r7
      afa:	89 f4       	brne	.+34     	; 0xb1e <xEventGroupSetBits+0xa0>
-        /* See if the new bit value should unblock any tasks. */
-        while( pxListItem != pxListEnd )
-        {
-            pxNext = listGET_NEXT( pxListItem );
-            uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
-            xMatchFound = pdFALSE;
      afc:	20 e0       	ldi	r18, 0x00	; 0
      afe:	12 c0       	rjmp	.+36     	; 0xb24 <xEventGroupSetBits+0xa6>
-                else
-                {
-                    mtCOVERAGE_TEST_MARKER();
-                }
-            }
-            else if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) == uxBitsWaitedFor )
      b00:	48 80       	ld	r4, Y
      b02:	59 80       	ldd	r5, Y+1	; 0x01
      b04:	6a 80       	ldd	r6, Y+2	; 0x02
@@ -1616,54 +1542,19 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      b14:	66 05       	cpc	r22, r6
      b16:	77 05       	cpc	r23, r7
      b18:	21 f0       	breq	.+8      	; 0xb22 <xEventGroupSetBits+0xa4>
-        /* See if the new bit value should unblock any tasks. */
-        while( pxListItem != pxListEnd )
-        {
-            pxNext = listGET_NEXT( pxListItem );
-            uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
-            xMatchFound = pdFALSE;
      b1a:	20 e0       	ldi	r18, 0x00	; 0
      b1c:	03 c0       	rjmp	.+6      	; 0xb24 <xEventGroupSetBits+0xa6>
-            if( ( uxControlBits & eventWAIT_FOR_ALL_BITS ) == ( EventBits_t ) 0 )
-            {
-                /* Just looking for single bit being set. */
-                if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) != ( EventBits_t ) 0 )
-                {
-                    xMatchFound = pdTRUE;
      b1e:	21 e0       	ldi	r18, 0x01	; 1
      b20:	01 c0       	rjmp	.+2      	; 0xb24 <xEventGroupSetBits+0xa6>
-                }
-            }
-            else if( ( uxBitsWaitedFor & pxEventBits->uxEventBits ) == uxBitsWaitedFor )
-            {
-                /* All bits are set. */
-                xMatchFound = pdTRUE;
      b22:	21 e0       	ldi	r18, 0x01	; 1
-            else
-            {
-                /* Need all bits to be set, but not all the bits were set. */
-            }
-
-            if( xMatchFound != pdFALSE )
      b24:	22 23       	and	r18, r18
      b26:	71 f0       	breq	.+28     	; 0xb44 <xEventGroupSetBits+0xc6>
-            {
-                /* The bits match.  Should the bits be cleared on exit? */
-                if( ( uxControlBits & eventCLEAR_EVENTS_ON_EXIT_BIT ) != ( EventBits_t ) 0 )
      b28:	b0 ff       	sbrs	r27, 0
      b2a:	04 c0       	rjmp	.+8      	; 0xb34 <xEventGroupSetBits+0xb6>
-                {
-                    uxBitsToClear |= uxBitsWaitedFor;
      b2c:	c4 2a       	or	r12, r20
      b2e:	d5 2a       	or	r13, r21
      b30:	e6 2a       	or	r14, r22
      b32:	f7 2a       	or	r15, r23
-                /* Store the actual event flag value in the task's event list
-                 * item before removing the task from the event list.  The
-                 * eventUNBLOCKED_DUE_TO_BIT_SET bit is set so the task knows
-                 * that is was unblocked due to its required bits matching, rather
-                 * than because it timed out. */
-                vTaskRemoveFromUnorderedEventList( pxListItem, pxEventBits->uxEventBits | eventUNBLOCKED_DUE_TO_BIT_SET );
      b34:	48 81       	ld	r20, Y
      b36:	59 81       	ldd	r21, Y+1	; 0x01
      b38:	6a 81       	ldd	r22, Y+2	; 0x02
@@ -1671,30 +1562,12 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      b3c:	72 60       	ori	r23, 0x02	; 2
      b3e:	cf 01       	movw	r24, r30
      b40:	0e 94 73 16 	call	0x2ce6	; 0x2ce6 <vTaskRemoveFromUnorderedEventList>
-        /* See if the new bit value should unblock any tasks. */
-        while( pxListItem != pxListEnd )
-        {
-            pxNext = listGET_NEXT( pxListItem );
-            uxBitsWaitedFor = listGET_LIST_ITEM_VALUE( pxListItem );
-            xMatchFound = pdFALSE;
      b44:	ea 2d       	mov	r30, r10
      b46:	fb 2d       	mov	r31, r11
-
-        /* Set the bits. */
-        pxEventBits->uxEventBits |= uxBitsToSet;
-
-        /* See if the new bit value should unblock any tasks. */
-        while( pxListItem != pxListEnd )
      b48:	e0 17       	cp	r30, r16
      b4a:	f1 07       	cpc	r31, r17
      b4c:	09 f0       	breq	.+2      	; 0xb50 <xEventGroupSetBits+0xd2>
      b4e:	bf cf       	rjmp	.-130    	; 0xace <xEventGroupSetBits+0x50>
-            pxListItem = pxNext;
-        }
-
-        /* Clear any bits that matched when the eventCLEAR_EVENTS_ON_EXIT_BIT
-         * bit was set in the control word. */
-        pxEventBits->uxEventBits &= ~uxBitsToClear;
      b50:	c0 94       	com	r12
      b52:	d0 94       	com	r13
      b54:	e0 94       	com	r14
@@ -1711,16 +1584,11 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      b6a:	d9 82       	std	Y+1, r13	; 0x01
      b6c:	ea 82       	std	Y+2, r14	; 0x02
      b6e:	fb 82       	std	Y+3, r15	; 0x03
-    }
-    ( void ) xTaskResumeAll();
      b70:	0e 94 60 13 	call	0x26c0	; 0x26c0 <xTaskResumeAll>
-
-    return pxEventBits->uxEventBits;
      b74:	68 81       	ld	r22, Y
      b76:	79 81       	ldd	r23, Y+1	; 0x01
      b78:	8a 81       	ldd	r24, Y+2	; 0x02
      b7a:	9b 81       	ldd	r25, Y+3	; 0x03
-}
      b7c:	df 91       	pop	r29
      b7e:	cf 91       	pop	r28
      b80:	1f 91       	pop	r17
@@ -1738,63 +1606,34 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      b98:	08 95       	ret
 
 00000b9a <prvHeapInit>:
-
-    pucAlignedHeap = ( uint8_t * ) uxAddress;
-
-    /* xStart is used to hold a pointer to the first item in the list of free
-     * blocks.  The void cast is used to prevent compiler warnings. */
-    xStart.pxNextFreeBlock = ( void * ) pucAlignedHeap;
      b9a:	ed e5       	ldi	r30, 0x5D	; 93
      b9c:	f9 e0       	ldi	r31, 0x09	; 9
      b9e:	a1 e6       	ldi	r26, 0x61	; 97
      ba0:	b9 e0       	ldi	r27, 0x09	; 9
      ba2:	b1 83       	std	Z+1, r27	; 0x01
      ba4:	a0 83       	st	Z, r26
-    xStart.xBlockSize = ( size_t ) 0;
      ba6:	13 82       	std	Z+3, r1	; 0x03
      ba8:	12 82       	std	Z+2, r1	; 0x02
-
-    /* pxEnd is used to mark the end of the list of free blocks and is inserted
-     * at the end of the heap space. */
-    uxAddress = ( ( size_t ) pucAlignedHeap ) + xTotalHeapSize;
-    uxAddress -= xHeapStructSize;
      baa:	e9 e0       	ldi	r30, 0x09	; 9
      bac:	f7 e1       	ldi	r31, 0x17	; 23
-    uxAddress &= ~( ( size_t ) portBYTE_ALIGNMENT_MASK );
-    pxEnd = ( void * ) uxAddress;
      bae:	f0 93 5c 09 	sts	0x095C, r31	; 0x80095c <pxEnd+0x1>
      bb2:	e0 93 5b 09 	sts	0x095B, r30	; 0x80095b <pxEnd>
-    pxEnd->xBlockSize = 0;
      bb6:	13 82       	std	Z+3, r1	; 0x03
      bb8:	12 82       	std	Z+2, r1	; 0x02
-    pxEnd->pxNextFreeBlock = NULL;
      bba:	11 82       	std	Z+1, r1	; 0x01
      bbc:	10 82       	st	Z, r1
-
-    /* To start with there is a single free block that is sized to take up the
-     * entire heap space, minus the space taken by pxEnd. */
-    pxFirstFreeBlock = ( void * ) pucAlignedHeap;
-    pxFirstFreeBlock->xBlockSize = uxAddress - ( size_t ) pxFirstFreeBlock;
      bbe:	88 ea       	ldi	r24, 0xA8	; 168
      bc0:	9d e0       	ldi	r25, 0x0D	; 13
      bc2:	13 96       	adiw	r26, 0x03	; 3
      bc4:	9c 93       	st	X, r25
      bc6:	8e 93       	st	-X, r24
      bc8:	12 97       	sbiw	r26, 0x02	; 2
-    pxFirstFreeBlock->pxNextFreeBlock = pxEnd;
      bca:	ed 93       	st	X+, r30
      bcc:	fc 93       	st	X, r31
-
-    /* Only one block exists - and it covers the entire usable heap space. */
-    xMinimumEverFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
      bce:	90 93 58 09 	sts	0x0958, r25	; 0x800958 <xMinimumEverFreeBytesRemaining+0x1>
      bd2:	80 93 57 09 	sts	0x0957, r24	; 0x800957 <xMinimumEverFreeBytesRemaining>
-    xFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
      bd6:	90 93 5a 09 	sts	0x095A, r25	; 0x80095a <xFreeBytesRemaining+0x1>
      bda:	80 93 59 09 	sts	0x0959, r24	; 0x800959 <xFreeBytesRemaining>
-
-    /* Work out the position of the top bit in a size_t variable. */
-    xBlockAllocatedBit = ( ( size_t ) 1 ) << ( ( sizeof( size_t ) * heapBITS_PER_BYTE ) - 1 );
      bde:	80 e0       	ldi	r24, 0x00	; 0
      be0:	90 e8       	ldi	r25, 0x80	; 128
      be2:	90 93 52 09 	sts	0x0952, r25	; 0x800952 <xBlockAllocatedBit+0x1>
@@ -1802,20 +1641,9 @@ EventBits_t xEventGroupSetBits( EventGroupHandle_t xEventGroup,
      bea:	08 95       	ret
 
 00000bec <prvInsertBlockIntoFreeList>:
-}
-/*-----------------------------------------------------------*/
-
-static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVILEGED_FUNCTION */
-{
      bec:	cf 93       	push	r28
      bee:	df 93       	push	r29
      bf0:	ec 01       	movw	r28, r24
-    BlockLink_t * pxIterator;
-    uint8_t * puc;
-
-    /* Iterate through the list until a block is found that has a higher address
-     * than the block being inserted. */
-    for( pxIterator = &xStart; pxIterator->pxNextFreeBlock < pxBlockToInsert; pxIterator = pxIterator->pxNextFreeBlock )
      bf2:	ad e5       	ldi	r26, 0x5D	; 93
      bf4:	b9 e0       	ldi	r27, 0x09	; 9
      bf6:	01 c0       	rjmp	.+2      	; 0xbfa <prvInsertBlockIntoFreeList+0xe>
@@ -1826,12 +1654,6 @@ static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVI
      c00:	ec 17       	cp	r30, r28
      c02:	fd 07       	cpc	r31, r29
      c04:	c8 f3       	brcs	.-14     	; 0xbf8 <prvInsertBlockIntoFreeList+0xc>
-
-    /* Do the block being inserted, and the block it is being inserted after
-     * make a contiguous block of memory? */
-    puc = ( uint8_t * ) pxIterator;
-
-    if( ( puc + pxIterator->xBlockSize ) == ( uint8_t * ) pxBlockToInsert )
      c06:	12 96       	adiw	r26, 0x02	; 2
      c08:	8d 91       	ld	r24, X+
      c0a:	9c 91       	ld	r25, X
@@ -1842,8 +1664,6 @@ static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVI
      c14:	c2 17       	cp	r28, r18
      c16:	d3 07       	cpc	r29, r19
      c18:	49 f4       	brne	.+18     	; 0xc2c <prvInsertBlockIntoFreeList+0x40>
-    {
-        pxIterator->xBlockSize += pxBlockToInsert->xBlockSize;
      c1a:	2a 81       	ldd	r18, Y+2	; 0x02
      c1c:	3b 81       	ldd	r19, Y+3	; 0x03
      c1e:	82 0f       	add	r24, r18
@@ -1852,14 +1672,7 @@ static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVI
      c24:	9c 93       	st	X, r25
      c26:	8e 93       	st	-X, r24
      c28:	12 97       	sbiw	r26, 0x02	; 2
-        pxBlockToInsert = pxIterator;
      c2a:	ed 01       	movw	r28, r26
-
-    /* Do the block being inserted, and the block it is being inserted before
-     * make a contiguous block of memory? */
-    puc = ( uint8_t * ) pxBlockToInsert;
-
-    if( ( puc + pxBlockToInsert->xBlockSize ) == ( uint8_t * ) pxIterator->pxNextFreeBlock )
      c2c:	8a 81       	ldd	r24, Y+2	; 0x02
      c2e:	9b 81       	ldd	r25, Y+3	; 0x03
      c30:	9e 01       	movw	r18, r28
@@ -1868,23 +1681,17 @@ static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVI
      c36:	e2 17       	cp	r30, r18
      c38:	f3 07       	cpc	r31, r19
      c3a:	c1 f4       	brne	.+48     	; 0xc6c <prvInsertBlockIntoFreeList+0x80>
-    {
-        if( pxIterator->pxNextFreeBlock != pxEnd )
      c3c:	20 91 5b 09 	lds	r18, 0x095B	; 0x80095b <pxEnd>
      c40:	30 91 5c 09 	lds	r19, 0x095C	; 0x80095c <pxEnd+0x1>
      c44:	e2 17       	cp	r30, r18
      c46:	f3 07       	cpc	r31, r19
      c48:	71 f0       	breq	.+28     	; 0xc66 <prvInsertBlockIntoFreeList+0x7a>
-        {
-            /* Form one big block from the two blocks. */
-            pxBlockToInsert->xBlockSize += pxIterator->pxNextFreeBlock->xBlockSize;
      c4a:	22 81       	ldd	r18, Z+2	; 0x02
      c4c:	33 81       	ldd	r19, Z+3	; 0x03
      c4e:	82 0f       	add	r24, r18
      c50:	93 1f       	adc	r25, r19
      c52:	9b 83       	std	Y+3, r25	; 0x03
      c54:	8a 83       	std	Y+2, r24	; 0x02
-            pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock->pxNextFreeBlock;
      c56:	ed 91       	ld	r30, X+
      c58:	fc 91       	ld	r31, X
      c5a:	11 97       	sbiw	r26, 0x01	; 1
@@ -1893,50 +1700,21 @@ static void prvInsertBlockIntoFreeList( BlockLink_t * pxBlockToInsert ) /* PRIVI
      c60:	99 83       	std	Y+1, r25	; 0x01
      c62:	88 83       	st	Y, r24
      c64:	05 c0       	rjmp	.+10     	; 0xc70 <prvInsertBlockIntoFreeList+0x84>
-        }
-        else
-        {
-            pxBlockToInsert->pxNextFreeBlock = pxEnd;
      c66:	39 83       	std	Y+1, r19	; 0x01
      c68:	28 83       	st	Y, r18
      c6a:	02 c0       	rjmp	.+4      	; 0xc70 <prvInsertBlockIntoFreeList+0x84>
-        }
-    }
-    else
-    {
-        pxBlockToInsert->pxNextFreeBlock = pxIterator->pxNextFreeBlock;
      c6c:	f9 83       	std	Y+1, r31	; 0x01
      c6e:	e8 83       	st	Y, r30
-
-    /* If the block being inserted plugged a gab, so was merged with the block
-     * before and the block after, then it's pxNextFreeBlock pointer will have
-     * already been set, and should not be set here as that would make it point
-     * to itself. */
-    if( pxIterator != pxBlockToInsert )
      c70:	ca 17       	cp	r28, r26
      c72:	db 07       	cpc	r29, r27
      c74:	11 f0       	breq	.+4      	; 0xc7a <prvInsertBlockIntoFreeList+0x8e>
-    {
-        pxIterator->pxNextFreeBlock = pxBlockToInsert;
      c76:	cd 93       	st	X+, r28
      c78:	dc 93       	st	X, r29
-    }
-    else
-    {
-        mtCOVERAGE_TEST_MARKER();
-    }
-}
      c7a:	df 91       	pop	r29
      c7c:	cf 91       	pop	r28
      c7e:	08 95       	ret
 
 00000c80 <pvPortMalloc>:
-PRIVILEGED_DATA static size_t xBlockAllocatedBit = 0;
-
-/*-----------------------------------------------------------*/
-
-void * pvPortMalloc( size_t xWantedSize )
-{
      c80:	ef 92       	push	r14
      c82:	ff 92       	push	r15
      c84:	0f 93       	push	r16
@@ -1944,28 +1722,12 @@ void * pvPortMalloc( size_t xWantedSize )
      c88:	cf 93       	push	r28
      c8a:	df 93       	push	r29
      c8c:	8c 01       	movw	r16, r24
-    BlockLink_t * pxBlock, * pxPreviousBlock, * pxNewBlockLink;
-    void * pvReturn = NULL;
-
-    vTaskSuspendAll();
      c8e:	0e 94 20 12 	call	0x2440	; 0x2440 <vTaskSuspendAll>
-    {
-        /* If this is the first call to malloc then the heap will require
-         * initialisation to setup the list of free blocks. */
-        if( pxEnd == NULL )
      c92:	80 91 5b 09 	lds	r24, 0x095B	; 0x80095b <pxEnd>
      c96:	90 91 5c 09 	lds	r25, 0x095C	; 0x80095c <pxEnd+0x1>
      c9a:	89 2b       	or	r24, r25
      c9c:	09 f4       	brne	.+2      	; 0xca0 <pvPortMalloc+0x20>
-        {
-            prvHeapInit();
      c9e:	7d df       	rcall	.-262    	; 0xb9a <prvHeapInit>
-
-        /* Check the requested block size is not so large that the top bit is
-         * set.  The top bit of the block size member of the BlockLink_t structure
-         * is used to determine who owns the block - the application or the
-         * kernel, so it must be free. */
-        if( ( xWantedSize & xBlockAllocatedBit ) == 0 )
      ca0:	80 91 51 09 	lds	r24, 0x0951	; 0x800951 <xBlockAllocatedBit>
      ca4:	90 91 52 09 	lds	r25, 0x0952	; 0x800952 <xBlockAllocatedBit+0x1>
      ca8:	80 23       	and	r24, r16
@@ -1973,47 +1735,18 @@ void * pvPortMalloc( size_t xWantedSize )
      cac:	89 2b       	or	r24, r25
      cae:	09 f0       	breq	.+2      	; 0xcb2 <pvPortMalloc+0x32>
      cb0:	76 c0       	rjmp	.+236    	; 0xd9e <pvPortMalloc+0x11e>
-        {
-            /* The wanted size must be increased so it can contain a BlockLink_t
-             * structure in addition to the requested amount of bytes. */
-            if( ( xWantedSize > 0 ) && 
      cb2:	01 15       	cp	r16, r1
      cb4:	11 05       	cpc	r17, r1
      cb6:	49 f0       	breq	.+18     	; 0xcca <pvPortMalloc+0x4a>
-                ( ( xWantedSize + xHeapStructSize ) >  xWantedSize ) ) /* Overflow check */
      cb8:	c8 01       	movw	r24, r16
      cba:	04 96       	adiw	r24, 0x04	; 4
-         * kernel, so it must be free. */
-        if( ( xWantedSize & xBlockAllocatedBit ) == 0 )
-        {
-            /* The wanted size must be increased so it can contain a BlockLink_t
-             * structure in addition to the requested amount of bytes. */
-            if( ( xWantedSize > 0 ) && 
      cbc:	08 17       	cp	r16, r24
      cbe:	19 07       	cpc	r17, r25
      cc0:	18 f0       	brcs	.+6      	; 0xcc8 <pvPortMalloc+0x48>
-                    mtCOVERAGE_TEST_MARKER();
-                }
-            } 
-            else 
-            {
-                xWantedSize = 0;
      cc2:	00 e0       	ldi	r16, 0x00	; 0
      cc4:	10 e0       	ldi	r17, 0x00	; 0
      cc6:	01 c0       	rjmp	.+2      	; 0xcca <pvPortMalloc+0x4a>
-            /* The wanted size must be increased so it can contain a BlockLink_t
-             * structure in addition to the requested amount of bytes. */
-            if( ( xWantedSize > 0 ) && 
-                ( ( xWantedSize + xHeapStructSize ) >  xWantedSize ) ) /* Overflow check */
-            {
-                xWantedSize += xHeapStructSize;
      cc8:	8c 01       	movw	r16, r24
-            else 
-            {
-                xWantedSize = 0;
-            }
-
-            if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
      cca:	01 15       	cp	r16, r1
      ccc:	11 05       	cpc	r17, r1
      cce:	09 f4       	brne	.+2      	; 0xcd2 <pvPortMalloc+0x52>
@@ -2024,36 +1757,13 @@ void * pvPortMalloc( size_t xWantedSize )
      cdc:	91 07       	cpc	r25, r17
      cde:	08 f4       	brcc	.+2      	; 0xce2 <pvPortMalloc+0x62>
      ce0:	64 c0       	rjmp	.+200    	; 0xdaa <pvPortMalloc+0x12a>
-            {
-                /* Traverse the list from the start	(lowest address) block until
-                 * one of adequate size is found. */
-                pxPreviousBlock = &xStart;
-                pxBlock = xStart.pxNextFreeBlock;
      ce2:	c0 91 5d 09 	lds	r28, 0x095D	; 0x80095d <xStart>
      ce6:	d0 91 5e 09 	lds	r29, 0x095E	; 0x80095e <xStart+0x1>
-
-            if( ( xWantedSize > 0 ) && ( xWantedSize <= xFreeBytesRemaining ) )
-            {
-                /* Traverse the list from the start	(lowest address) block until
-                 * one of adequate size is found. */
-                pxPreviousBlock = &xStart;
      cea:	ed e5       	ldi	r30, 0x5D	; 93
      cec:	f9 e0       	ldi	r31, 0x09	; 9
-                pxBlock = xStart.pxNextFreeBlock;
-
-                while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
      cee:	02 c0       	rjmp	.+4      	; 0xcf4 <pvPortMalloc+0x74>
-                {
-                    pxPreviousBlock = pxBlock;
      cf0:	fe 01       	movw	r30, r28
-                    pxBlock = pxBlock->pxNextFreeBlock;
      cf2:	ec 01       	movw	r28, r24
-                /* Traverse the list from the start	(lowest address) block until
-                 * one of adequate size is found. */
-                pxPreviousBlock = &xStart;
-                pxBlock = xStart.pxNextFreeBlock;
-
-                while( ( pxBlock->xBlockSize < xWantedSize ) && ( pxBlock->pxNextFreeBlock != NULL ) )
      cf4:	8a 81       	ldd	r24, Y+2	; 0x02
      cf6:	9b 81       	ldd	r25, Y+3	; 0x03
      cf8:	80 17       	cp	r24, r16
@@ -2063,39 +1773,21 @@ void * pvPortMalloc( size_t xWantedSize )
      d00:	99 81       	ldd	r25, Y+1	; 0x01
      d02:	00 97       	sbiw	r24, 0x00	; 0
      d04:	a9 f7       	brne	.-22     	; 0xcf0 <pvPortMalloc+0x70>
-                    pxBlock = pxBlock->pxNextFreeBlock;
-                }
-
-                /* If the end marker was reached then a block of adequate size
-                 * was not found. */
-                if( pxBlock != pxEnd )
      d06:	80 91 5b 09 	lds	r24, 0x095B	; 0x80095b <pxEnd>
      d0a:	90 91 5c 09 	lds	r25, 0x095C	; 0x80095c <pxEnd+0x1>
      d0e:	c8 17       	cp	r28, r24
      d10:	d9 07       	cpc	r29, r25
      d12:	09 f4       	brne	.+2      	; 0xd16 <pvPortMalloc+0x96>
      d14:	4d c0       	rjmp	.+154    	; 0xdb0 <pvPortMalloc+0x130>
-                {
-                    /* Return the memory space pointed to - jumping over the
-                     * BlockLink_t structure at its start. */
-                    pvReturn = ( void * ) ( ( ( uint8_t * ) pxPreviousBlock->pxNextFreeBlock ) + xHeapStructSize );
      d16:	e0 80       	ld	r14, Z
      d18:	f1 80       	ldd	r15, Z+1	; 0x01
      d1a:	84 e0       	ldi	r24, 0x04	; 4
      d1c:	e8 0e       	add	r14, r24
      d1e:	f1 1c       	adc	r15, r1
-
-                    /* This block is being returned for use so must be taken out
-                     * of the list of free blocks. */
-                    pxPreviousBlock->pxNextFreeBlock = pxBlock->pxNextFreeBlock;
      d20:	88 81       	ld	r24, Y
      d22:	99 81       	ldd	r25, Y+1	; 0x01
      d24:	91 83       	std	Z+1, r25	; 0x01
      d26:	80 83       	st	Z, r24
-
-                    /* If the block is larger than required it can be split into
-                     * two. */
-                    if( ( pxBlock->xBlockSize - xWantedSize ) > heapMINIMUM_BLOCK_SIZE )
      d28:	2a 81       	ldd	r18, Y+2	; 0x02
      d2a:	3b 81       	ldd	r19, Y+3	; 0x03
      d2c:	20 1b       	sub	r18, r16
@@ -2103,36 +1795,15 @@ void * pvPortMalloc( size_t xWantedSize )
      d30:	29 30       	cpi	r18, 0x09	; 9
      d32:	31 05       	cpc	r19, r1
      d34:	48 f0       	brcs	.+18     	; 0xd48 <pvPortMalloc+0xc8>
-                    {
-                        /* This block is to be split into two.  Create a new
-                         * block following the number of bytes requested. The void
-                         * cast is used to prevent byte alignment warnings from the
-                         * compiler. */
-                        pxNewBlockLink = ( void * ) ( ( ( uint8_t * ) pxBlock ) + xWantedSize );
      d36:	ce 01       	movw	r24, r28
      d38:	80 0f       	add	r24, r16
      d3a:	91 1f       	adc	r25, r17
-                        configASSERT( ( ( ( size_t ) pxNewBlockLink ) & portBYTE_ALIGNMENT_MASK ) == 0 );
-
-                        /* Calculate the sizes of two blocks split from the
-                         * single block. */
-                        pxNewBlockLink->xBlockSize = pxBlock->xBlockSize - xWantedSize;
      d3c:	fc 01       	movw	r30, r24
      d3e:	33 83       	std	Z+3, r19	; 0x03
      d40:	22 83       	std	Z+2, r18	; 0x02
-                        pxBlock->xBlockSize = xWantedSize;
      d42:	1b 83       	std	Y+3, r17	; 0x03
-
-                        /* Insert the new block into the list of free blocks. */
-                        prvInsertBlockIntoFreeList( pxNewBlockLink );
      d44:	0a 83       	std	Y+2, r16	; 0x02
      d46:	52 df       	rcall	.-348    	; 0xbec <prvInsertBlockIntoFreeList>
-                    else
-                    {
-                        mtCOVERAGE_TEST_MARKER();
-                    }
-
-                    xFreeBytesRemaining -= pxBlock->xBlockSize;
      d48:	2a 81       	ldd	r18, Y+2	; 0x02
      d4a:	3b 81       	ldd	r19, Y+3	; 0x03
      d4c:	80 91 59 09 	lds	r24, 0x0959	; 0x800959 <xFreeBytesRemaining>
@@ -2141,45 +1812,27 @@ void * pvPortMalloc( size_t xWantedSize )
      d56:	93 0b       	sbc	r25, r19
      d58:	90 93 5a 09 	sts	0x095A, r25	; 0x80095a <xFreeBytesRemaining+0x1>
      d5c:	80 93 59 09 	sts	0x0959, r24	; 0x800959 <xFreeBytesRemaining>
-
-                    if( xFreeBytesRemaining < xMinimumEverFreeBytesRemaining )
      d60:	40 91 57 09 	lds	r20, 0x0957	; 0x800957 <xMinimumEverFreeBytesRemaining>
      d64:	50 91 58 09 	lds	r21, 0x0958	; 0x800958 <xMinimumEverFreeBytesRemaining+0x1>
      d68:	84 17       	cp	r24, r20
      d6a:	95 07       	cpc	r25, r21
      d6c:	20 f4       	brcc	.+8      	; 0xd76 <pvPortMalloc+0xf6>
-                    {
-                        xMinimumEverFreeBytesRemaining = xFreeBytesRemaining;
      d6e:	90 93 58 09 	sts	0x0958, r25	; 0x800958 <xMinimumEverFreeBytesRemaining+0x1>
      d72:	80 93 57 09 	sts	0x0957, r24	; 0x800957 <xMinimumEverFreeBytesRemaining>
-                        mtCOVERAGE_TEST_MARKER();
-                    }
-
-                    /* The block is being returned - it is allocated and owned
-                     * by the application and has no "next" block. */
-                    pxBlock->xBlockSize |= xBlockAllocatedBit;
      d76:	80 91 51 09 	lds	r24, 0x0951	; 0x800951 <xBlockAllocatedBit>
      d7a:	90 91 52 09 	lds	r25, 0x0952	; 0x800952 <xBlockAllocatedBit+0x1>
      d7e:	28 2b       	or	r18, r24
      d80:	39 2b       	or	r19, r25
      d82:	3b 83       	std	Y+3, r19	; 0x03
      d84:	2a 83       	std	Y+2, r18	; 0x02
-                    pxBlock->pxNextFreeBlock = NULL;
      d86:	19 82       	std	Y+1, r1	; 0x01
      d88:	18 82       	st	Y, r1
-                    xNumberOfSuccessfulAllocations++;
      d8a:	80 91 55 09 	lds	r24, 0x0955	; 0x800955 <xNumberOfSuccessfulAllocations>
      d8e:	90 91 56 09 	lds	r25, 0x0956	; 0x800956 <xNumberOfSuccessfulAllocations+0x1>
      d92:	01 96       	adiw	r24, 0x01	; 1
      d94:	90 93 56 09 	sts	0x0956, r25	; 0x800956 <xNumberOfSuccessfulAllocations+0x1>
      d98:	80 93 55 09 	sts	0x0955, r24	; 0x800955 <xNumberOfSuccessfulAllocations>
      d9c:	0b c0       	rjmp	.+22     	; 0xdb4 <pvPortMalloc+0x134>
-/*-----------------------------------------------------------*/
-
-void * pvPortMalloc( size_t xWantedSize )
-{
-    BlockLink_t * pxBlock, * pxPreviousBlock, * pxNewBlockLink;
-    void * pvReturn = NULL;
      d9e:	e1 2c       	mov	r14, r1
      da0:	f1 2c       	mov	r15, r1
      da2:	08 c0       	rjmp	.+16     	; 0xdb4 <pvPortMalloc+0x134>
@@ -2191,30 +1844,11 @@ void * pvPortMalloc( size_t xWantedSize )
      dae:	02 c0       	rjmp	.+4      	; 0xdb4 <pvPortMalloc+0x134>
      db0:	e1 2c       	mov	r14, r1
      db2:	f1 2c       	mov	r15, r1
-            mtCOVERAGE_TEST_MARKER();
-        }
-
-        traceMALLOC( pvReturn, xWantedSize );
-    }
-    ( void ) xTaskResumeAll();
      db4:	0e 94 60 13 	call	0x26c0	; 0x26c0 <xTaskResumeAll>
-
-    #if ( configUSE_MALLOC_FAILED_HOOK == 1 )
-        {
-            if( pvReturn == NULL )
      db8:	e1 14       	cp	r14, r1
      dba:	f1 04       	cpc	r15, r1
      dbc:	11 f4       	brne	.+4      	; 0xdc2 <pvPortMalloc+0x142>
-            {
-                extern void vApplicationMallocFailedHook( void );
-                vApplicationMallocFailedHook();
      dbe:	0e 94 1d 1f 	call	0x3e3a	; 0x3e3a <vApplicationMallocFailedHook>
-        }
-    #endif /* if ( configUSE_MALLOC_FAILED_HOOK == 1 ) */
-
-    configASSERT( ( ( ( size_t ) pvReturn ) & ( size_t ) portBYTE_ALIGNMENT_MASK ) == 0 );
-    return pvReturn;
-}
      dc2:	c7 01       	movw	r24, r14
      dc4:	df 91       	pop	r29
      dc6:	cf 91       	pop	r28
@@ -2225,32 +1859,14 @@ void * pvPortMalloc( size_t xWantedSize )
      dd0:	08 95       	ret
 
 00000dd2 <vPortFree>:
-/*-----------------------------------------------------------*/
-
-void vPortFree( void * pv )
-{
      dd2:	0f 93       	push	r16
      dd4:	1f 93       	push	r17
      dd6:	cf 93       	push	r28
      dd8:	df 93       	push	r29
-    uint8_t * puc = ( uint8_t * ) pv;
-    BlockLink_t * pxLink;
-
-    if( pv != NULL )
      dda:	00 97       	sbiw	r24, 0x00	; 0
      ddc:	91 f1       	breq	.+100    	; 0xe42 <vPortFree+0x70>
-    {
-        /* The memory being freed will have an BlockLink_t structure immediately
-         * before it. */
-        puc -= xHeapStructSize;
      dde:	ec 01       	movw	r28, r24
      de0:	24 97       	sbiw	r28, 0x04	; 4
-
-        /* Check the block is actually allocated. */
-        configASSERT( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 );
-        configASSERT( pxLink->pxNextFreeBlock == NULL );
-
-        if( ( pxLink->xBlockSize & xBlockAllocatedBit ) != 0 )
      de2:	4a 81       	ldd	r20, Y+2	; 0x02
      de4:	5b 81       	ldd	r21, Y+3	; 0x03
      de6:	20 91 51 09 	lds	r18, 0x0951	; 0x800951 <xBlockAllocatedBit>
@@ -2260,28 +1876,17 @@ void vPortFree( void * pv )
      df2:	73 23       	and	r23, r19
      df4:	67 2b       	or	r22, r23
      df6:	29 f1       	breq	.+74     	; 0xe42 <vPortFree+0x70>
-        {
-            if( pxLink->pxNextFreeBlock == NULL )
      df8:	68 81       	ld	r22, Y
      dfa:	79 81       	ldd	r23, Y+1	; 0x01
      dfc:	67 2b       	or	r22, r23
      dfe:	09 f5       	brne	.+66     	; 0xe42 <vPortFree+0x70>
-            {
-                /* The block is being returned to the heap - it is no longer
-                 * allocated. */
-                pxLink->xBlockSize &= ~xBlockAllocatedBit;
      e00:	20 95       	com	r18
      e02:	30 95       	com	r19
      e04:	24 23       	and	r18, r20
      e06:	35 23       	and	r19, r21
      e08:	3b 83       	std	Y+3, r19	; 0x03
      e0a:	2a 83       	std	Y+2, r18	; 0x02
-
-                vTaskSuspendAll();
      e0c:	0e 94 20 12 	call	0x2440	; 0x2440 <vTaskSuspendAll>
-                {
-                    /* Add this block to the list of free blocks. */
-                    xFreeBytesRemaining += pxLink->xBlockSize;
      e10:	8a 81       	ldd	r24, Y+2	; 0x02
      e12:	9b 81       	ldd	r25, Y+3	; 0x03
      e14:	20 91 59 09 	lds	r18, 0x0959	; 0x800959 <xFreeBytesRemaining>
@@ -2290,25 +1895,14 @@ void vPortFree( void * pv )
      e1e:	93 1f       	adc	r25, r19
      e20:	90 93 5a 09 	sts	0x095A, r25	; 0x80095a <xFreeBytesRemaining+0x1>
      e24:	80 93 59 09 	sts	0x0959, r24	; 0x800959 <xFreeBytesRemaining>
-                    traceFREE( pv, pxLink->xBlockSize );
-                    prvInsertBlockIntoFreeList( ( ( BlockLink_t * ) pxLink ) );
      e28:	ce 01       	movw	r24, r28
      e2a:	e0 de       	rcall	.-576    	; 0xbec <prvInsertBlockIntoFreeList>
-                    xNumberOfSuccessfulFrees++;
      e2c:	80 91 53 09 	lds	r24, 0x0953	; 0x800953 <xNumberOfSuccessfulFrees>
      e30:	90 91 54 09 	lds	r25, 0x0954	; 0x800954 <xNumberOfSuccessfulFrees+0x1>
      e34:	01 96       	adiw	r24, 0x01	; 1
      e36:	90 93 54 09 	sts	0x0954, r25	; 0x800954 <xNumberOfSuccessfulFrees+0x1>
      e3a:	80 93 53 09 	sts	0x0953, r24	; 0x800953 <xNumberOfSuccessfulFrees>
-                }
-                ( void ) xTaskResumeAll();
      e3e:	0e 94 60 13 	call	0x26c0	; 0x26c0 <xTaskResumeAll>
-        else
-        {
-            mtCOVERAGE_TEST_MARKER();
-        }
-    }
-}
      e42:	df 91       	pop	r29
      e44:	cf 91       	pop	r28
      e46:	1f 91       	pop	r17
@@ -2316,12 +1910,6 @@ void vPortFree( void * pv )
      e4a:	08 95       	ret
 
 00000e4c <vListInitialise>:
-
-    /* Remember which list the item is in. */
-    pxNewListItem->pxContainer = pxList;
-
-    ( pxList->uxNumberOfItems )++;
-}
      e4c:	fc 01       	movw	r30, r24
      e4e:	03 96       	adiw	r24, 0x03	; 3
      e50:	92 83       	std	Z+2, r25	; 0x02
@@ -2347,46 +1935,25 @@ void vPortFree( void * pv )
      e74:	08 95       	ret
 
 00000e76 <vListInsert>:
-/*-----------------------------------------------------------*/
-
-void vListInsert( List_t * const pxList,
-                  ListItem_t * const pxNewListItem )
-{
      e76:	0f 93       	push	r16
      e78:	1f 93       	push	r17
      e7a:	cf 93       	push	r28
      e7c:	df 93       	push	r29
      e7e:	eb 01       	movw	r28, r22
-    ListItem_t * pxIterator;
-    const TickType_t xValueOfInsertion = pxNewListItem->xItemValue;
      e80:	08 81       	ld	r16, Y
      e82:	19 81       	ldd	r17, Y+1	; 0x01
      e84:	2a 81       	ldd	r18, Y+2	; 0x02
      e86:	3b 81       	ldd	r19, Y+3	; 0x03
-     * new list item should be placed after it.  This ensures that TCBs which are
-     * stored in ready lists (all of which have the same xItemValue value) get a
-     * share of the CPU.  However, if the xItemValue is the same as the back marker
-     * the iteration loop below will not end.  Therefore the value is checked
-     * first, and the algorithm slightly modified if necessary. */
-    if( xValueOfInsertion == portMAX_DELAY )
      e88:	0f 3f       	cpi	r16, 0xFF	; 255
      e8a:	4f ef       	ldi	r20, 0xFF	; 255
      e8c:	14 07       	cpc	r17, r20
      e8e:	24 07       	cpc	r18, r20
      e90:	34 07       	cpc	r19, r20
      e92:	21 f4       	brne	.+8      	; 0xe9c <vListInsert+0x26>
-    {
-        pxIterator = pxList->xListEnd.pxPrevious;
      e94:	fc 01       	movw	r30, r24
      e96:	a1 85       	ldd	r26, Z+9	; 0x09
      e98:	b2 85       	ldd	r27, Z+10	; 0x0a
      e9a:	11 c0       	rjmp	.+34     	; 0xebe <vListInsert+0x48>
-        *   4) Using a queue or semaphore before it has been initialised or
-        *      before the scheduler has been started (are interrupts firing
-        *      before vTaskStartScheduler() has been called?).
-        **********************************************************************/
-
-        for( pxIterator = ( ListItem_t * ) &( pxList->xListEnd ); pxIterator->pxNext->xItemValue <= xValueOfInsertion; pxIterator = pxIterator->pxNext ) /*lint !e826 !e740 !e9087 The mini list structure is used as the list end to save RAM.  This is checked and valid. *//*lint !e440 The iterator moves to a different value, not xValueOfInsertion. */
      e9c:	dc 01       	movw	r26, r24
      e9e:	13 96       	adiw	r26, 0x03	; 3
      ea0:	01 c0       	rjmp	.+2      	; 0xea4 <vListInsert+0x2e>
@@ -2404,42 +1971,26 @@ void vListInsert( List_t * const pxList,
      eb8:	26 07       	cpc	r18, r22
      eba:	37 07       	cpc	r19, r23
      ebc:	90 f7       	brcc	.-28     	; 0xea2 <vListInsert+0x2c>
-            /* There is nothing to do here, just iterating to the wanted
-             * insertion position. */
-        }
-    }
-
-    pxNewListItem->pxNext = pxIterator->pxNext;
      ebe:	14 96       	adiw	r26, 0x04	; 4
      ec0:	ed 91       	ld	r30, X+
      ec2:	fc 91       	ld	r31, X
      ec4:	15 97       	sbiw	r26, 0x05	; 5
      ec6:	fd 83       	std	Y+5, r31	; 0x05
      ec8:	ec 83       	std	Y+4, r30	; 0x04
-    pxNewListItem->pxNext->pxPrevious = pxNewListItem;
      eca:	d7 83       	std	Z+7, r29	; 0x07
      ecc:	c6 83       	std	Z+6, r28	; 0x06
-    pxNewListItem->pxPrevious = pxIterator;
      ece:	bf 83       	std	Y+7, r27	; 0x07
      ed0:	ae 83       	std	Y+6, r26	; 0x06
-    pxIterator->pxNext = pxNewListItem;
      ed2:	15 96       	adiw	r26, 0x05	; 5
      ed4:	dc 93       	st	X, r29
      ed6:	ce 93       	st	-X, r28
      ed8:	14 97       	sbiw	r26, 0x04	; 4
-
-    /* Remember which list the item is in.  This allows fast removal of the
-     * item later. */
-    pxNewListItem->pxContainer = pxList;
      eda:	9b 87       	std	Y+11, r25	; 0x0b
      edc:	8a 87       	std	Y+10, r24	; 0x0a
-
-    ( pxList->uxNumberOfItems )++;
      ede:	fc 01       	movw	r30, r24
      ee0:	20 81       	ld	r18, Z
      ee2:	2f 5f       	subi	r18, 0xFF	; 255
      ee4:	20 83       	st	Z, r18
-}
      ee6:	df 91       	pop	r29
      ee8:	cf 91       	pop	r28
      eea:	1f 91       	pop	r17
@@ -2447,39 +1998,23 @@ void vListInsert( List_t * const pxList,
      eee:	08 95       	ret
 
 00000ef0 <uxListRemove>:
-/*-----------------------------------------------------------*/
-
-UBaseType_t uxListRemove( ListItem_t * const pxItemToRemove )
-{
      ef0:	cf 93       	push	r28
      ef2:	df 93       	push	r29
      ef4:	fc 01       	movw	r30, r24
-/* The list item knows which list it is in.  Obtain the list from the list
- * item. */
-    List_t * const pxList = pxItemToRemove->pxContainer;
      ef6:	a2 85       	ldd	r26, Z+10	; 0x0a
      ef8:	b3 85       	ldd	r27, Z+11	; 0x0b
-
-    pxItemToRemove->pxNext->pxPrevious = pxItemToRemove->pxPrevious;
      efa:	c4 81       	ldd	r28, Z+4	; 0x04
      efc:	d5 81       	ldd	r29, Z+5	; 0x05
      efe:	86 81       	ldd	r24, Z+6	; 0x06
      f00:	97 81       	ldd	r25, Z+7	; 0x07
      f02:	9f 83       	std	Y+7, r25	; 0x07
      f04:	8e 83       	std	Y+6, r24	; 0x06
-    pxItemToRemove->pxPrevious->pxNext = pxItemToRemove->pxNext;
      f06:	c6 81       	ldd	r28, Z+6	; 0x06
      f08:	d7 81       	ldd	r29, Z+7	; 0x07
      f0a:	84 81       	ldd	r24, Z+4	; 0x04
      f0c:	95 81       	ldd	r25, Z+5	; 0x05
      f0e:	9d 83       	std	Y+5, r25	; 0x05
      f10:	8c 83       	std	Y+4, r24	; 0x04
-
-    /* Only used during decision coverage testing. */
-    mtCOVERAGE_TEST_DELAY();
-
-    /* Make sure the index is left pointing to a valid item. */
-    if( pxList->pxIndex == pxItemToRemove )
      f12:	11 96       	adiw	r26, 0x01	; 1
      f14:	8d 91       	ld	r24, X+
      f16:	9c 91       	ld	r25, X
@@ -2487,41 +2022,23 @@ UBaseType_t uxListRemove( ListItem_t * const pxItemToRemove )
      f1a:	e8 17       	cp	r30, r24
      f1c:	f9 07       	cpc	r31, r25
      f1e:	31 f4       	brne	.+12     	; 0xf2c <uxListRemove+0x3c>
-    {
-        pxList->pxIndex = pxItemToRemove->pxPrevious;
      f20:	86 81       	ldd	r24, Z+6	; 0x06
      f22:	97 81       	ldd	r25, Z+7	; 0x07
      f24:	12 96       	adiw	r26, 0x02	; 2
      f26:	9c 93       	st	X, r25
      f28:	8e 93       	st	-X, r24
      f2a:	11 97       	sbiw	r26, 0x01	; 1
-    else
-    {
-        mtCOVERAGE_TEST_MARKER();
-    }
-
-    pxItemToRemove->pxContainer = NULL;
      f2c:	13 86       	std	Z+11, r1	; 0x0b
      f2e:	12 86       	std	Z+10, r1	; 0x0a
-    ( pxList->uxNumberOfItems )--;
      f30:	8c 91       	ld	r24, X
      f32:	81 50       	subi	r24, 0x01	; 1
      f34:	8c 93       	st	X, r24
-
-    return pxList->uxNumberOfItems;
      f36:	8c 91       	ld	r24, X
-}
      f38:	df 91       	pop	r29
      f3a:	cf 91       	pop	r28
      f3c:	08 95       	ret
 
 00000f3e <prvSetupTimerInterrupt>:
-{
-    portSAVE_CONTEXT();
-    vTaskSwitchContext();
-    portRESTORE_CONTEXT();
-
-    __asm__ __volatile__ ( "reti" );
      f3e:	a8 95       	wdr
      f40:	90 ec       	ldi	r25, 0xC0	; 192
      f42:	88 e1       	ldi	r24, 0x18	; 24
@@ -2703,12 +2220,6 @@ UBaseType_t uxListRemove( ListItem_t * const pxItemToRemove )
     10a8:	08 95       	ret
 
 000010aa <vPortYieldFromTick>:
- * call comes from the tick ISR.
- */
-void vPortYieldFromTick( void ) __attribute__ ( ( hot, flatten, naked ) );
-void vPortYieldFromTick( void )
-{
-    portSAVE_CONTEXT();
     10aa:	0f 92       	push	r0
     10ac:	0f b6       	in	r0, 0x3f	; 63
     10ae:	f8 94       	cli
@@ -2755,16 +2266,10 @@ void vPortYieldFromTick( void )
     1104:	0d 92       	st	X+, r0
     1106:	0e b6       	in	r0, 0x3e	; 62
     1108:	0d 92       	st	X+, r0
-    sleep_reset();        /* reset the sleep_mode() faster than sleep_disable(); */
     110a:	13 be       	out	0x33, r1	; 51
-    if( xTaskIncrementTick() != pdFALSE )
     110c:	0e 94 34 12 	call	0x2468	; 0x2468 <xTaskIncrementTick>
     1110:	81 11       	cpse	r24, r1
-    {
-        vTaskSwitchContext();
     1112:	0e 94 bc 14 	call	0x2978	; 0x2978 <vTaskSwitchContext>
-    }
-    portRESTORE_CONTEXT();
     1116:	a0 91 cc 17 	lds	r26, 0x17CC	; 0x8017cc <pxCurrentTCB>
     111a:	b0 91 cd 17 	lds	r27, 0x17CD	; 0x8017cd <pxCurrentTCB+0x1>
     111e:	cd 91       	ld	r28, X+
@@ -2809,28 +2314,13 @@ void vPortYieldFromTick( void )
     116c:	0f 90       	pop	r0
     116e:	0f be       	out	0x3f, r0	; 63
     1170:	0f 90       	pop	r0
-
-    __asm__ __volatile__ ( "ret" );
     1172:	08 95       	ret
 
 00001174 <__vector_12>:
-    ISR(portSCHEDULER_ISR, ISR_NAKED) __attribute__ ((hot, flatten));
-/*  ISR(portSCHEDULER_ISR, ISR_NAKED ISR_NOBLOCK) __attribute__ ((hot, flatten));
- */
-    ISR(portSCHEDULER_ISR)
-    {
-        vPortYieldFromTick();
     1174:	9a df       	rcall	.-204    	; 0x10aa <vPortYieldFromTick>
-        __asm__ __volatile__ ( "reti" );
     1176:	18 95       	reti
 
 00001178 <prvGetDisinheritPriorityAfterTimeout>:
-    {
-        xReturn = pdFALSE;
-    }
-
-    return xReturn;
-} /*lint !e818 xQueue could not be pointer to const because it is a typedef. */
     1178:	dc 01       	movw	r26, r24
     117a:	53 96       	adiw	r26, 0x13	; 19
     117c:	2c 91       	ld	r18, X
@@ -3724,21 +3214,9 @@ void vPortYieldFromTick( void )
     186c:	08 95       	ret
 
 0000186e <vQueueWaitForMessageRestricted>:
-#if ( configUSE_TIMERS == 1 )
-
-    void vQueueWaitForMessageRestricted( QueueHandle_t xQueue,
-                                         TickType_t xTicksToWait,
-                                         const BaseType_t xWaitIndefinitely )
-    {
     186e:	cf 93       	push	r28
     1870:	df 93       	push	r29
     1872:	ec 01       	movw	r28, r24
-         *  will not actually cause the task to block, just place it on a blocked
-         *  list.  It will not block until the scheduler is unlocked - at which
-         *  time a yield will be performed.  If an item is added to the queue while
-         *  the queue is locked, and the calling task blocks on the queue, then the
-         *  calling task will be immediately unblocked when the queue is unlocked. */
-        prvLockQueue( pxQueue );
     1874:	0f b6       	in	r0, 0x3f	; 63
     1876:	f8 94       	cli
     1878:	0f 92       	push	r0
@@ -3752,37 +3230,19 @@ void vPortYieldFromTick( void )
     1888:	1a a2       	std	Y+34, r1	; 0x22
     188a:	0f 90       	pop	r0
     188c:	0f be       	out	0x3f, r0	; 63
-
-        if( pxQueue->uxMessagesWaiting == ( UBaseType_t ) 0U )
     188e:	8e 8d       	ldd	r24, Y+30	; 0x1e
     1890:	81 11       	cpse	r24, r1
     1892:	04 c0       	rjmp	.+8      	; 0x189c <vQueueWaitForMessageRestricted+0x2e>
-        {
-            /* There is nothing in the queue, block for the specified period. */
-            vTaskPlaceOnEventListRestricted( &( pxQueue->xTasksWaitingToReceive ), xTicksToWait, xWaitIndefinitely );
     1894:	ce 01       	movw	r24, r28
     1896:	43 96       	adiw	r24, 0x13	; 19
     1898:	0e 94 82 15 	call	0x2b04	; 0x2b04 <vTaskPlaceOnEventListRestricted>
-        else
-        {
-            mtCOVERAGE_TEST_MARKER();
-        }
-
-        prvUnlockQueue( pxQueue );
     189c:	ce 01       	movw	r24, r28
     189e:	10 dd       	rcall	.-1504   	; 0x12c0 <prvUnlockQueue>
-    }
     18a0:	df 91       	pop	r29
     18a2:	cf 91       	pop	r28
     18a4:	08 95       	ret
 
 000018a6 <prvBytesInBuffer>:
-
-    configASSERT( pxStreamBuffer );
-
-    xReturn = prvBytesInBuffer( pxStreamBuffer );
-    return xReturn;
-}
     18a6:	fc 01       	movw	r30, r24
     18a8:	44 81       	ldd	r20, Z+4	; 0x04
     18aa:	55 81       	ldd	r21, Z+5	; 0x05
@@ -4218,12 +3678,6 @@ void vPortYieldFromTick( void )
     1bee:	08 95       	ret
 
 00001bf0 <xStreamBufferSend>:
-
-size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
-                          const void * pvTxData,
-                          size_t xDataLengthBytes,
-                          TickType_t xTicksToWait )
-{
     1bf0:	2f 92       	push	r2
     1bf2:	3f 92       	push	r3
     1bf4:	4f 92       	push	r4
@@ -4258,79 +3712,31 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1c2e:	1f 83       	std	Y+7, r17	; 0x07
     1c30:	28 87       	std	Y+8, r18	; 0x08
     1c32:	39 87       	std	Y+9, r19	; 0x09
-    size_t xRequiredSpace = xDataLengthBytes;
-    TimeOut_t xTimeOut;
-
-    /* The maximum amount of space a stream buffer will ever report is its length
-     * minus 1. */
-    const size_t xMaxReportedSpace = pxStreamBuffer->xLength - ( size_t ) 1;
     1c34:	fc 01       	movw	r30, r24
     1c36:	84 81       	ldd	r24, Z+4	; 0x04
     1c38:	95 81       	ldd	r25, Z+5	; 0x05
     1c3a:	01 97       	sbiw	r24, 0x01	; 1
-
-    /* This send function is used to write to both message buffers and stream
-     * buffers.  If this is a message buffer then the space needed must be
-     * increased by the amount of bytes needed to store the length of the
-     * message. */
-    if( ( pxStreamBuffer->ucFlags & sbFLAGS_IS_MESSAGE_BUFFER ) != ( uint8_t ) 0 )
     1c3c:	26 85       	ldd	r18, Z+14	; 0x0e
     1c3e:	20 ff       	sbrs	r18, 0
     1c40:	0c c0       	rjmp	.+24     	; 0x1c5a <xStreamBufferSend+0x6a>
-    {
-        xRequiredSpace += sbBYTES_TO_STORE_MESSAGE_LENGTH;
     1c42:	2a 01       	movw	r4, r20
     1c44:	f2 e0       	ldi	r31, 0x02	; 2
     1c46:	4f 0e       	add	r4, r31
     1c48:	51 1c       	adc	r5, r1
-        /* Overflow? */
-        configASSERT( xRequiredSpace > xDataLengthBytes );
-
-        /* If this is a message buffer then it must be possible to write the
-         * whole message. */
-        if( xRequiredSpace > xMaxReportedSpace )
     1c4a:	84 15       	cp	r24, r4
     1c4c:	95 05       	cpc	r25, r5
     1c4e:	58 f4       	brcc	.+22     	; 0x1c66 <xStreamBufferSend+0x76>
-        {
-            /* The message would not fit even if the entire buffer was empty,
-             * so don't wait for space. */
-            xTicksToWait = ( TickType_t ) 0;
     1c50:	1e 82       	std	Y+6, r1	; 0x06
     1c52:	1f 82       	std	Y+7, r1	; 0x07
     1c54:	18 86       	std	Y+8, r1	; 0x08
     1c56:	19 86       	std	Y+9, r1	; 0x09
     1c58:	06 c0       	rjmp	.+12     	; 0x1c66 <xStreamBufferSend+0x76>
-    else
-    {
-        /* If this is a stream buffer then it is acceptable to write only part
-         * of the message to the buffer.  Cap the length to the total length of
-         * the buffer. */
-        if( xRequiredSpace > xMaxReportedSpace )
     1c5a:	84 17       	cp	r24, r20
     1c5c:	95 07       	cpc	r25, r21
     1c5e:	10 f0       	brcs	.+4      	; 0x1c64 <xStreamBufferSend+0x74>
-                          size_t xDataLengthBytes,
-                          TickType_t xTicksToWait )
-{
-    StreamBuffer_t * const pxStreamBuffer = xStreamBuffer;
-    size_t xReturn, xSpace = 0;
-    size_t xRequiredSpace = xDataLengthBytes;
     1c60:	2a 01       	movw	r4, r20
     1c62:	01 c0       	rjmp	.+2      	; 0x1c66 <xStreamBufferSend+0x76>
-        /* If this is a stream buffer then it is acceptable to write only part
-         * of the message to the buffer.  Cap the length to the total length of
-         * the buffer. */
-        if( xRequiredSpace > xMaxReportedSpace )
-        {
-            xRequiredSpace = xMaxReportedSpace;
     1c64:	2c 01       	movw	r4, r24
-        {
-            mtCOVERAGE_TEST_MARKER();
-        }
-    }
-
-    if( xTicksToWait != ( TickType_t ) 0 )
     1c66:	8e 81       	ldd	r24, Y+6	; 0x06
     1c68:	9f 81       	ldd	r25, Y+7	; 0x07
     1c6a:	a8 85       	ldd	r26, Y+8	; 0x08
@@ -4340,56 +3746,28 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1c72:	8b 2b       	or	r24, r27
     1c74:	09 f4       	brne	.+2      	; 0x1c78 <xStreamBufferSend+0x88>
     1c76:	38 c0       	rjmp	.+112    	; 0x1ce8 <xStreamBufferSend+0xf8>
-    {
-        vTaskSetTimeOutState( &xTimeOut );
     1c78:	ce 01       	movw	r24, r28
     1c7a:	01 96       	adiw	r24, 0x01	; 1
     1c7c:	0e 94 0d 17 	call	0x2e1a	; 0x2e1a <vTaskSetTimeOutState>
-
-        do
-        {
-            /* Wait until the required number of bytes are free in the message
-             * buffer. */
-            taskENTER_CRITICAL();
     1c80:	0f b6       	in	r0, 0x3f	; 63
     1c82:	f8 94       	cli
     1c84:	0f 92       	push	r0
-            {
-                xSpace = xStreamBufferSpacesAvailable( pxStreamBuffer );
     1c86:	c4 01       	movw	r24, r8
     1c88:	a1 df       	rcall	.-190    	; 0x1bcc <xStreamBufferSpacesAvailable>
     1c8a:	3c 01       	movw	r6, r24
-
-                if( xSpace < xRequiredSpace )
     1c8c:	84 15       	cp	r24, r4
     1c8e:	95 05       	cpc	r25, r5
     1c90:	40 f5       	brcc	.+80     	; 0x1ce2 <xStreamBufferSend+0xf2>
-                {
-                    /* Clear notification state as going to wait for space. */
-                    ( void ) xTaskNotifyStateClear( NULL );
     1c92:	60 e0       	ldi	r22, 0x00	; 0
     1c94:	80 e0       	ldi	r24, 0x00	; 0
     1c96:	90 e0       	ldi	r25, 0x00	; 0
     1c98:	0e 94 f7 1b 	call	0x37ee	; 0x37ee <xTaskGenericNotifyStateClear>
-
-                    /* Should only be one writer. */
-                    configASSERT( pxStreamBuffer->xTaskWaitingToSend == NULL );
-                    pxStreamBuffer->xTaskWaitingToSend = xTaskGetCurrentTaskHandle();
     1c9c:	0e 94 9e 17 	call	0x2f3c	; 0x2f3c <xTaskGetCurrentTaskHandle>
     1ca0:	f4 01       	movw	r30, r8
     1ca2:	93 87       	std	Z+11, r25	; 0x0b
     1ca4:	82 87       	std	Z+10, r24	; 0x0a
-                {
-                    taskEXIT_CRITICAL();
-                    break;
-                }
-            }
-            taskEXIT_CRITICAL();
     1ca6:	0f 90       	pop	r0
     1ca8:	0f be       	out	0x3f, r0	; 63
-
-            traceBLOCKING_ON_STREAM_BUFFER_SEND( xStreamBuffer );
-            ( void ) xTaskNotifyWait( ( uint32_t ) 0, ( uint32_t ) 0, NULL, xTicksToWait );
     1caa:	ae 80       	ldd	r10, Y+6	; 0x06
     1cac:	bf 80       	ldd	r11, Y+7	; 0x07
     1cae:	c8 84       	ldd	r12, Y+8	; 0x08
@@ -4404,11 +3782,9 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1cc0:	ba 01       	movw	r22, r20
     1cc2:	80 e0       	ldi	r24, 0x00	; 0
     1cc4:	0e 94 36 19 	call	0x326c	; 0x326c <xTaskGenericNotifyWait>
-            pxStreamBuffer->xTaskWaitingToSend = NULL;
     1cc8:	f4 01       	movw	r30, r8
     1cca:	13 86       	std	Z+11, r1	; 0x0b
     1ccc:	12 86       	std	Z+10, r1	; 0x0a
-        } while( xTaskCheckForTimeOut( &xTimeOut, &xTicksToWait ) == pdFALSE );
     1cce:	be 01       	movw	r22, r28
     1cd0:	6a 5f       	subi	r22, 0xFA	; 250
     1cd2:	7f 4f       	sbci	r23, 0xFF	; 255
@@ -4418,44 +3794,17 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1cdc:	88 23       	and	r24, r24
     1cde:	81 f2       	breq	.-96     	; 0x1c80 <xStreamBufferSend+0x90>
     1ce0:	05 c0       	rjmp	.+10     	; 0x1cec <xStreamBufferSend+0xfc>
-                    configASSERT( pxStreamBuffer->xTaskWaitingToSend == NULL );
-                    pxStreamBuffer->xTaskWaitingToSend = xTaskGetCurrentTaskHandle();
-                }
-                else
-                {
-                    taskEXIT_CRITICAL();
     1ce2:	0f 90       	pop	r0
     1ce4:	0f be       	out	0x3f, r0	; 63
-                    break;
     1ce6:	02 c0       	rjmp	.+4      	; 0x1cec <xStreamBufferSend+0xfc>
-                          const void * pvTxData,
-                          size_t xDataLengthBytes,
-                          TickType_t xTicksToWait )
-{
-    StreamBuffer_t * const pxStreamBuffer = xStreamBuffer;
-    size_t xReturn, xSpace = 0;
     1ce8:	61 2c       	mov	r6, r1
     1cea:	71 2c       	mov	r7, r1
-    else
-    {
-        mtCOVERAGE_TEST_MARKER();
-    }
-
-    if( xSpace == ( size_t ) 0 )
     1cec:	61 14       	cp	r6, r1
     1cee:	71 04       	cpc	r7, r1
     1cf0:	19 f4       	brne	.+6      	; 0x1cf8 <xStreamBufferSend+0x108>
-    {
-        xSpace = xStreamBufferSpacesAvailable( pxStreamBuffer );
     1cf2:	c4 01       	movw	r24, r8
     1cf4:	6b df       	rcall	.-298    	; 0x1bcc <xStreamBufferSpacesAvailable>
     1cf6:	3c 01       	movw	r6, r24
-    else
-    {
-        mtCOVERAGE_TEST_MARKER();
-    }
-
-    xReturn = prvWriteMessageToBuffer( pxStreamBuffer, pvTxData, xDataLengthBytes, xSpace, xRequiredSpace );
     1cf8:	82 01       	movw	r16, r4
     1cfa:	93 01       	movw	r18, r6
     1cfc:	a1 01       	movw	r20, r2
@@ -4464,14 +3813,7 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1d02:	c4 01       	movw	r24, r8
     1d04:	3c de       	rcall	.-904    	; 0x197e <prvWriteMessageToBuffer>
     1d06:	6c 01       	movw	r12, r24
-
-    if( xReturn > ( size_t ) 0 )
     1d08:	89 2b       	or	r24, r25
-    {
-        traceSTREAM_BUFFER_SEND( xStreamBuffer, xReturn );
-
-        /* Was a task waiting for the data? */
-        if( prvBytesInBuffer( pxStreamBuffer ) >= pxStreamBuffer->xTriggerLevelBytes )
     1d0a:	e9 f0       	breq	.+58     	; 0x1d46 <xStreamBufferSend+0x156>
     1d0c:	c4 01       	movw	r24, r8
     1d0e:	cb dd       	rcall	.-1130   	; 0x18a6 <prvBytesInBuffer>
@@ -4480,8 +3822,6 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1d14:	37 81       	ldd	r19, Z+7	; 0x07
     1d16:	82 17       	cp	r24, r18
     1d18:	93 07       	cpc	r25, r19
-        {
-            sbSEND_COMPLETED( pxStreamBuffer );
     1d1a:	a8 f0       	brcs	.+42     	; 0x1d46 <xStreamBufferSend+0x156>
     1d1c:	91 d3       	rcall	.+1826   	; 0x2440 <vTaskSuspendAll>
     1d1e:	f4 01       	movw	r30, r8
@@ -4503,12 +3843,6 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1d40:	11 86       	std	Z+9, r1	; 0x09
     1d42:	10 86       	std	Z+8, r1	; 0x08
     1d44:	bd d4       	rcall	.+2426   	; 0x26c0 <xTaskResumeAll>
-        mtCOVERAGE_TEST_MARKER();
-        traceSTREAM_BUFFER_SEND_FAILED( xStreamBuffer );
-    }
-
-    return xReturn;
-}
     1d46:	c6 01       	movw	r24, r12
     1d48:	2b 96       	adiw	r28, 0x0b	; 11
     1d4a:	0f b6       	in	r0, 0x3f	; 63
@@ -4537,12 +3871,6 @@ size_t xStreamBufferSend( StreamBufferHandle_t xStreamBuffer,
     1d78:	08 95       	ret
 
 00001d7a <xStreamBufferSendFromISR>:
-
-size_t xStreamBufferSendFromISR( StreamBufferHandle_t xStreamBuffer,
-                                 const void * pvTxData,
-                                 size_t xDataLengthBytes,
-                                 BaseType_t * const pxHigherPriorityTaskWoken )
-{
     1d7a:	af 92       	push	r10
     1d7c:	bf 92       	push	r11
     1d7e:	cf 92       	push	r12
@@ -4557,49 +3885,23 @@ size_t xStreamBufferSendFromISR( StreamBufferHandle_t xStreamBuffer,
     1d90:	7b 01       	movw	r14, r22
     1d92:	5a 01       	movw	r10, r20
     1d94:	69 01       	movw	r12, r18
-
-    /* This send function is used to write to both message buffers and stream
-     * buffers.  If this is a message buffer then the space needed must be
-     * increased by the amount of bytes needed to store the length of the
-     * message. */
-    if( ( pxStreamBuffer->ucFlags & sbFLAGS_IS_MESSAGE_BUFFER ) != ( uint8_t ) 0 )
     1d96:	8e 85       	ldd	r24, Y+14	; 0x0e
     1d98:	80 ff       	sbrs	r24, 0
     1d9a:	04 c0       	rjmp	.+8      	; 0x1da4 <xStreamBufferSendFromISR+0x2a>
-    {
-        xRequiredSpace += sbBYTES_TO_STORE_MESSAGE_LENGTH;
     1d9c:	8a 01       	movw	r16, r20
     1d9e:	0e 5f       	subi	r16, 0xFE	; 254
     1da0:	1f 4f       	sbci	r17, 0xFF	; 255
     1da2:	01 c0       	rjmp	.+2      	; 0x1da6 <xStreamBufferSendFromISR+0x2c>
-                                 size_t xDataLengthBytes,
-                                 BaseType_t * const pxHigherPriorityTaskWoken )
-{
-    StreamBuffer_t * const pxStreamBuffer = xStreamBuffer;
-    size_t xReturn, xSpace;
-    size_t xRequiredSpace = xDataLengthBytes;
     1da4:	8a 01       	movw	r16, r20
-    else
-    {
-        mtCOVERAGE_TEST_MARKER();
-    }
-
-    xSpace = xStreamBufferSpacesAvailable( pxStreamBuffer );
     1da6:	ce 01       	movw	r24, r28
     1da8:	11 df       	rcall	.-478    	; 0x1bcc <xStreamBufferSpacesAvailable>
-    xReturn = prvWriteMessageToBuffer( pxStreamBuffer, pvTxData, xDataLengthBytes, xSpace, xRequiredSpace );
     1daa:	9c 01       	movw	r18, r24
     1dac:	a5 01       	movw	r20, r10
     1dae:	b7 01       	movw	r22, r14
     1db0:	ce 01       	movw	r24, r28
     1db2:	e5 dd       	rcall	.-1078   	; 0x197e <prvWriteMessageToBuffer>
     1db4:	5c 01       	movw	r10, r24
-
-    if( xReturn > ( size_t ) 0 )
     1db6:	89 2b       	or	r24, r25
-    {
-        /* Was a task waiting for the data? */
-        if( prvBytesInBuffer( pxStreamBuffer ) >= pxStreamBuffer->xTriggerLevelBytes )
     1db8:	c1 f0       	breq	.+48     	; 0x1dea <xStreamBufferSendFromISR+0x70>
     1dba:	ce 01       	movw	r24, r28
     1dbc:	74 dd       	rcall	.-1304   	; 0x18a6 <prvBytesInBuffer>
@@ -4608,8 +3910,6 @@ size_t xStreamBufferSendFromISR( StreamBufferHandle_t xStreamBuffer,
     1dc2:	82 17       	cp	r24, r18
     1dc4:	93 07       	cpc	r25, r19
     1dc6:	88 f0       	brcs	.+34     	; 0x1dea <xStreamBufferSendFromISR+0x70>
-        {
-            sbSEND_COMPLETE_FROM_ISR( pxStreamBuffer, pxHigherPriorityTaskWoken );
     1dc8:	88 85       	ldd	r24, Y+8	; 0x08
     1dca:	99 85       	ldd	r25, Y+9	; 0x09
     1dcc:	89 2b       	or	r24, r25
@@ -4626,12 +3926,6 @@ size_t xStreamBufferSendFromISR( StreamBufferHandle_t xStreamBuffer,
     1de2:	0e 94 d5 1a 	call	0x35aa	; 0x35aa <xTaskGenericNotifyFromISR>
     1de6:	19 86       	std	Y+9, r1	; 0x09
     1de8:	18 86       	std	Y+8, r1	; 0x08
-    }
-
-    traceSTREAM_BUFFER_SEND_FROM_ISR( xStreamBuffer, xReturn );
-
-    return xReturn;
-}
     1dea:	c5 01       	movw	r24, r10
     1dec:	df 91       	pop	r29
     1dee:	cf 91       	pop	r28
@@ -4646,12 +3940,6 @@ size_t xStreamBufferSendFromISR( StreamBufferHandle_t xStreamBuffer,
     1e00:	08 95       	ret
 
 00001e02 <xStreamBufferReceive>:
-
-size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
-                             void * pvRxData,
-                             size_t xBufferLengthBytes,
-                             TickType_t xTicksToWait )
-{
     1e02:	4f 92       	push	r4
     1e04:	5f 92       	push	r5
     1e06:	6f 92       	push	r6
@@ -4673,88 +3961,42 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     1e26:	3a 01       	movw	r6, r20
     1e28:	58 01       	movw	r10, r16
     1e2a:	69 01       	movw	r12, r18
-    /* This receive function is used by both message buffers, which store
-     * discrete messages, and stream buffers, which store a continuous stream of
-     * bytes.  Discrete messages include an additional
-     * sbBYTES_TO_STORE_MESSAGE_LENGTH bytes that hold the length of the
-     * message. */
-    if( ( pxStreamBuffer->ucFlags & sbFLAGS_IS_MESSAGE_BUFFER ) != ( uint8_t ) 0 )
     1e2c:	8e 85       	ldd	r24, Y+14	; 0x0e
     1e2e:	80 ff       	sbrs	r24, 0
     1e30:	05 c0       	rjmp	.+10     	; 0x1e3c <xStreamBufferReceive+0x3a>
-    {
-        xBytesToStoreMessageLength = sbBYTES_TO_STORE_MESSAGE_LENGTH;
     1e32:	68 94       	set
     1e34:	88 24       	eor	r8, r8
     1e36:	81 f8       	bld	r8, 1
     1e38:	91 2c       	mov	r9, r1
     1e3a:	02 c0       	rjmp	.+4      	; 0x1e40 <xStreamBufferReceive+0x3e>
-    }
-    else
-    {
-        xBytesToStoreMessageLength = 0;
     1e3c:	81 2c       	mov	r8, r1
     1e3e:	91 2c       	mov	r9, r1
-    }
-
-    if( xTicksToWait != ( TickType_t ) 0 )
     1e40:	a1 14       	cp	r10, r1
     1e42:	b1 04       	cpc	r11, r1
     1e44:	c1 04       	cpc	r12, r1
     1e46:	d1 04       	cpc	r13, r1
     1e48:	41 f1       	breq	.+80     	; 0x1e9a <xStreamBufferReceive+0x98>
-    {
-        /* Checking if there is data and clearing the notification state must be
-         * performed atomically. */
-        taskENTER_CRITICAL();
     1e4a:	0f b6       	in	r0, 0x3f	; 63
     1e4c:	f8 94       	cli
     1e4e:	0f 92       	push	r0
-        {
-            xBytesAvailable = prvBytesInBuffer( pxStreamBuffer );
     1e50:	ce 01       	movw	r24, r28
     1e52:	29 dd       	rcall	.-1454   	; 0x18a6 <prvBytesInBuffer>
     1e54:	7c 01       	movw	r14, r24
-            /* If this function was invoked by a message buffer read then
-             * xBytesToStoreMessageLength holds the number of bytes used to hold
-             * the length of the next discrete message.  If this function was
-             * invoked by a stream buffer read then xBytesToStoreMessageLength will
-             * be 0. */
-            if( xBytesAvailable <= xBytesToStoreMessageLength )
     1e56:	88 16       	cp	r8, r24
     1e58:	99 06       	cpc	r9, r25
     1e5a:	48 f0       	brcs	.+18     	; 0x1e6e <xStreamBufferReceive+0x6c>
-            {
-                /* Clear notification state as going to wait for data. */
-                ( void ) xTaskNotifyStateClear( NULL );
     1e5c:	60 e0       	ldi	r22, 0x00	; 0
     1e5e:	80 e0       	ldi	r24, 0x00	; 0
     1e60:	90 e0       	ldi	r25, 0x00	; 0
     1e62:	0e 94 f7 1b 	call	0x37ee	; 0x37ee <xTaskGenericNotifyStateClear>
-
-                /* Should only be one reader. */
-                configASSERT( pxStreamBuffer->xTaskWaitingToReceive == NULL );
-                pxStreamBuffer->xTaskWaitingToReceive = xTaskGetCurrentTaskHandle();
     1e66:	0e 94 9e 17 	call	0x2f3c	; 0x2f3c <xTaskGetCurrentTaskHandle>
     1e6a:	99 87       	std	Y+9, r25	; 0x09
     1e6c:	88 87       	std	Y+8, r24	; 0x08
-            else
-            {
-                mtCOVERAGE_TEST_MARKER();
-            }
-        }
-        taskEXIT_CRITICAL();
     1e6e:	0f 90       	pop	r0
     1e70:	0f be       	out	0x3f, r0	; 63
-
-        if( xBytesAvailable <= xBytesToStoreMessageLength )
     1e72:	8e 14       	cp	r8, r14
     1e74:	9f 04       	cpc	r9, r15
     1e76:	a0 f0       	brcs	.+40     	; 0x1ea0 <xStreamBufferReceive+0x9e>
-        {
-            /* Wait for data to be available. */
-            traceBLOCKING_ON_STREAM_BUFFER_RECEIVE( xStreamBuffer );
-            ( void ) xTaskNotifyWait( ( uint32_t ) 0, ( uint32_t ) 0, NULL, xTicksToWait );
     1e78:	e1 2c       	mov	r14, r1
     1e7a:	f1 2c       	mov	r15, r1
     1e7c:	00 e0       	ldi	r16, 0x00	; 0
@@ -4765,51 +4007,27 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     1e86:	ba 01       	movw	r22, r20
     1e88:	80 e0       	ldi	r24, 0x00	; 0
     1e8a:	0e 94 36 19 	call	0x326c	; 0x326c <xTaskGenericNotifyWait>
-            pxStreamBuffer->xTaskWaitingToReceive = NULL;
     1e8e:	19 86       	std	Y+9, r1	; 0x09
     1e90:	18 86       	std	Y+8, r1	; 0x08
-
-            /* Recheck the data available after blocking. */
-            xBytesAvailable = prvBytesInBuffer( pxStreamBuffer );
     1e92:	ce 01       	movw	r24, r28
     1e94:	08 dd       	rcall	.-1520   	; 0x18a6 <prvBytesInBuffer>
     1e96:	7c 01       	movw	r14, r24
     1e98:	03 c0       	rjmp	.+6      	; 0x1ea0 <xStreamBufferReceive+0x9e>
-            mtCOVERAGE_TEST_MARKER();
-        }
-    }
-    else
-    {
-        xBytesAvailable = prvBytesInBuffer( pxStreamBuffer );
     1e9a:	ce 01       	movw	r24, r28
     1e9c:	04 dd       	rcall	.-1528   	; 0x18a6 <prvBytesInBuffer>
     1e9e:	7c 01       	movw	r14, r24
     1ea0:	8e 14       	cp	r8, r14
-    /* Whether receiving a discrete message (where xBytesToStoreMessageLength
-     * holds the number of bytes used to store the message length) or a stream of
-     * bytes (where xBytesToStoreMessageLength is zero), the number of bytes
-     * available must be greater than xBytesToStoreMessageLength to be able to
-     * read bytes from the buffer. */
-    if( xBytesAvailable > xBytesToStoreMessageLength )
     1ea2:	9f 04       	cpc	r9, r15
     1ea4:	e8 f4       	brcc	.+58     	; 0x1ee0 <xStreamBufferReceive+0xde>
     1ea6:	84 01       	movw	r16, r8
-    {
-        xReceivedLength = prvReadMessageFromBuffer( pxStreamBuffer, pvRxData, xBufferLengthBytes, xBytesAvailable, xBytesToStoreMessageLength );
     1ea8:	97 01       	movw	r18, r14
     1eaa:	a3 01       	movw	r20, r6
     1eac:	b2 01       	movw	r22, r4
     1eae:	ce 01       	movw	r24, r28
     1eb0:	f8 dd       	rcall	.-1040   	; 0x1aa2 <prvReadMessageFromBuffer>
     1eb2:	6c 01       	movw	r12, r24
-
-        /* Was a task waiting for space in the buffer? */
-        if( xReceivedLength != ( size_t ) 0 )
     1eb4:	89 2b       	or	r24, r25
     1eb6:	b1 f0       	breq	.+44     	; 0x1ee4 <xStreamBufferReceive+0xe2>
-        {
-            traceSTREAM_BUFFER_RECEIVE( xStreamBuffer, xReceivedLength );
-            sbRECEIVE_COMPLETED( pxStreamBuffer );
     1eb8:	c3 d2       	rcall	.+1414   	; 0x2440 <vTaskSuspendAll>
     1eba:	8a 85       	ldd	r24, Y+10	; 0x0a
     1ebc:	9b 85       	ldd	r25, Y+11	; 0x0b
@@ -4830,20 +4048,8 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     1edc:	f1 d3       	rcall	.+2018   	; 0x26c0 <xTaskResumeAll>
     1ede:	02 c0       	rjmp	.+4      	; 0x1ee4 <xStreamBufferReceive+0xe2>
     1ee0:	c1 2c       	mov	r12, r1
-                             void * pvRxData,
-                             size_t xBufferLengthBytes,
-                             TickType_t xTicksToWait )
-{
-    StreamBuffer_t * const pxStreamBuffer = xStreamBuffer;
-    size_t xReceivedLength = 0, xBytesAvailable, xBytesToStoreMessageLength;
     1ee2:	d1 2c       	mov	r13, r1
     1ee4:	c6 01       	movw	r24, r12
-        traceSTREAM_BUFFER_RECEIVE_FAILED( xStreamBuffer );
-        mtCOVERAGE_TEST_MARKER();
-    }
-
-    return xReceivedLength;
-}
     1ee6:	df 91       	pop	r29
     1ee8:	cf 91       	pop	r28
     1eea:	1f 91       	pop	r17
@@ -7797,23 +7003,13 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     37ec:	08 95       	ret
 
 000037ee <xTaskGenericNotifyStateClear>:
-
-        configASSERT( uxIndexToClear < configTASK_NOTIFICATION_ARRAY_ENTRIES );
-
-        /* If null is passed in here then it is the calling task that is having
-         * its notification state cleared. */
-        pxTCB = prvGetTCBFromHandle( xTask );
     37ee:	00 97       	sbiw	r24, 0x00	; 0
     37f0:	21 f4       	brne	.+8      	; 0x37fa <xTaskGenericNotifyStateClear+0xc>
     37f2:	80 91 cc 17 	lds	r24, 0x17CC	; 0x8017cc <pxCurrentTCB>
     37f6:	90 91 cd 17 	lds	r25, 0x17CD	; 0x8017cd <pxCurrentTCB+0x1>
-
-        taskENTER_CRITICAL();
     37fa:	0f b6       	in	r0, 0x3f	; 63
     37fc:	f8 94       	cli
     37fe:	0f 92       	push	r0
-        {
-            if( pxTCB->ucNotifyState[ uxIndexToClear ] == taskNOTIFICATION_RECEIVED )
     3800:	70 e0       	ldi	r23, 0x00	; 0
     3802:	fc 01       	movw	r30, r24
     3804:	e6 0f       	add	r30, r22
@@ -7821,28 +7017,15 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3808:	23 a9       	ldd	r18, Z+51	; 0x33
     380a:	22 30       	cpi	r18, 0x02	; 2
     380c:	31 f4       	brne	.+12     	; 0x381a <xTaskGenericNotifyStateClear+0x2c>
-            {
-                pxTCB->ucNotifyState[ uxIndexToClear ] = taskNOT_WAITING_NOTIFICATION;
     380e:	fc 01       	movw	r30, r24
     3810:	e6 0f       	add	r30, r22
     3812:	f7 1f       	adc	r31, r23
     3814:	13 aa       	std	Z+51, r1	; 0x33
-                xReturn = pdPASS;
     3816:	81 e0       	ldi	r24, 0x01	; 1
     3818:	01 c0       	rjmp	.+2      	; 0x381c <xTaskGenericNotifyStateClear+0x2e>
-            }
-            else
-            {
-                xReturn = pdFAIL;
     381a:	80 e0       	ldi	r24, 0x00	; 0
-            }
-        }
-        taskEXIT_CRITICAL();
     381c:	0f 90       	pop	r0
     381e:	0f be       	out	0x3f, r0	; 63
-
-        return xReturn;
-    }
     3820:	08 95       	ret
 
 00003822 <prvGetNextExpireTime>:
@@ -8003,12 +7186,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3976:	08 95       	ret
 
 00003978 <xTimerGenericCommand>:
-    BaseType_t xTimerGenericCommand( TimerHandle_t xTimer,
-                                     const BaseType_t xCommandID,
-                                     const TickType_t xOptionalValue,
-                                     BaseType_t * const pxHigherPriorityTaskWoken,
-                                     const TickType_t xTicksToWait )
-    {
     3978:	8f 92       	push	r8
     397a:	9f 92       	push	r9
     397c:	af 92       	push	r10
@@ -8029,39 +7206,22 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     399a:	de bf       	out	0x3e, r29	; 62
     399c:	0f be       	out	0x3f, r0	; 63
     399e:	cd bf       	out	0x3d, r28	; 61
-
-        configASSERT( xTimer );
-
-        /* Send a message to the timer service task to perform a particular action
-         * on a particular timer definition. */
-        if( xTimerQueue != NULL )
     39a0:	e0 91 d4 17 	lds	r30, 0x17D4	; 0x8017d4 <xTimerQueue>
     39a4:	f0 91 d5 17 	lds	r31, 0x17D5	; 0x8017d5 <xTimerQueue+0x1>
     39a8:	30 97       	sbiw	r30, 0x00	; 0
     39aa:	81 f1       	breq	.+96     	; 0x3a0c <xTimerGenericCommand+0x94>
-        {
-            /* Send a command to the timer service task to start the xTimer timer. */
-            xMessage.xMessageID = xCommandID;
     39ac:	69 83       	std	Y+1, r22	; 0x01
-            xMessage.u.xTimerParameters.xMessageValue = xOptionalValue;
     39ae:	2a 83       	std	Y+2, r18	; 0x02
     39b0:	3b 83       	std	Y+3, r19	; 0x03
     39b2:	4c 83       	std	Y+4, r20	; 0x04
     39b4:	5d 83       	std	Y+5, r21	; 0x05
-            xMessage.u.xTimerParameters.pxTimer = xTimer;
     39b6:	9f 83       	std	Y+7, r25	; 0x07
     39b8:	8e 83       	std	Y+6, r24	; 0x06
-
-            if( xCommandID < tmrFIRST_FROM_ISR_COMMAND )
     39ba:	66 30       	cpi	r22, 0x06	; 6
     39bc:	f4 f4       	brge	.+60     	; 0x39fa <xTimerGenericCommand+0x82>
-            {
-                if( xTaskGetSchedulerState() == taskSCHEDULER_RUNNING )
     39be:	c3 da       	rcall	.-2682   	; 0x2f46 <xTaskGetSchedulerState>
     39c0:	82 30       	cpi	r24, 0x02	; 2
     39c2:	69 f4       	brne	.+26     	; 0x39de <xTimerGenericCommand+0x66>
-                {
-                    xReturn = xQueueSendToBack( xTimerQueue, &xMessage, xTicksToWait );
     39c4:	00 e0       	ldi	r16, 0x00	; 0
     39c6:	a7 01       	movw	r20, r14
     39c8:	96 01       	movw	r18, r12
@@ -8072,10 +7232,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     39d4:	90 91 d5 17 	lds	r25, 0x17D5	; 0x8017d5 <xTimerQueue+0x1>
     39d8:	0e 94 0c 0a 	call	0x1418	; 0x1418 <xQueueGenericSend>
     39dc:	18 c0       	rjmp	.+48     	; 0x3a0e <xTimerGenericCommand+0x96>
-                }
-                else
-                {
-                    xReturn = xQueueSendToBack( xTimerQueue, &xMessage, tmrNO_DELAY );
     39de:	00 e0       	ldi	r16, 0x00	; 0
     39e0:	20 e0       	ldi	r18, 0x00	; 0
     39e2:	30 e0       	ldi	r19, 0x00	; 0
@@ -8087,11 +7243,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     39f0:	90 91 d5 17 	lds	r25, 0x17D5	; 0x8017d5 <xTimerQueue+0x1>
     39f4:	0e 94 0c 0a 	call	0x1418	; 0x1418 <xQueueGenericSend>
     39f8:	0a c0       	rjmp	.+20     	; 0x3a0e <xTimerGenericCommand+0x96>
-                }
-            }
-            else
-            {
-                xReturn = xQueueSendToBackFromISR( xTimerQueue, &xMessage, pxHigherPriorityTaskWoken );
     39fa:	20 e0       	ldi	r18, 0x00	; 0
     39fc:	a8 01       	movw	r20, r16
     39fe:	be 01       	movw	r22, r28
@@ -8100,19 +7251,7 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3a04:	cf 01       	movw	r24, r30
     3a06:	0e 94 bc 0a 	call	0x1578	; 0x1578 <xQueueGenericSendFromISR>
     3a0a:	01 c0       	rjmp	.+2      	; 0x3a0e <xTimerGenericCommand+0x96>
-                                     const BaseType_t xCommandID,
-                                     const TickType_t xOptionalValue,
-                                     BaseType_t * const pxHigherPriorityTaskWoken,
-                                     const TickType_t xTicksToWait )
-    {
-        BaseType_t xReturn = pdFAIL;
     3a0c:	80 e0       	ldi	r24, 0x00	; 0
-        {
-            mtCOVERAGE_TEST_MARKER();
-        }
-
-        return xReturn;
-    }
     3a0e:	27 96       	adiw	r28, 0x07	; 7
     3a10:	0f b6       	in	r0, 0x3f	; 63
     3a12:	f8 94       	cli
@@ -8134,12 +7273,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3a32:	08 95       	ret
 
 00003a34 <prvSwitchTimerLists>:
-        }
-    }
-/*-----------------------------------------------------------*/
-
-    static void prvSwitchTimerLists( void )
-    {
     3a34:	8f 92       	push	r8
     3a36:	9f 92       	push	r9
     3a38:	af 92       	push	r10
@@ -8152,15 +7285,7 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3a46:	1f 93       	push	r17
     3a48:	cf 93       	push	r28
     3a4a:	df 93       	push	r29
-
-        /* The tick count has overflowed.  The timer lists must be switched.
-         * If there are any timers still referenced from the current timer list
-         * then they must have expired and should be processed before the lists
-         * are switched. */
-        while( listLIST_IS_EMPTY( pxCurrentTimerList ) == pdFALSE )
     3a4c:	3b c0       	rjmp	.+118    	; 0x3ac4 <prvSwitchTimerLists+0x90>
-        {
-            xNextExpireTime = listGET_ITEM_VALUE_OF_HEAD_ENTRY( pxCurrentTimerList );
     3a4e:	07 80       	ldd	r0, Z+7	; 0x07
     3a50:	f0 85       	ldd	r31, Z+8	; 0x08
     3a52:	e0 2d       	mov	r30, r0
@@ -8168,38 +7293,20 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3a56:	91 80       	ldd	r9, Z+1	; 0x01
     3a58:	a2 80       	ldd	r10, Z+2	; 0x02
     3a5a:	b3 80       	ldd	r11, Z+3	; 0x03
-
-            /* Remove the timer from the list. */
-            pxTimer = ( Timer_t * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList ); /*lint !e9087 !e9079 void * is used as this macro is used with tasks and co-routines too.  Alignment is known to be fine as the type of the pointer stored and retrieved is the same. */
     3a5c:	c0 85       	ldd	r28, Z+8	; 0x08
     3a5e:	d1 85       	ldd	r29, Z+9	; 0x09
-            ( void ) uxListRemove( &( pxTimer->xTimerListItem ) );
     3a60:	8e 01       	movw	r16, r28
     3a62:	0e 5f       	subi	r16, 0xFE	; 254
     3a64:	1f 4f       	sbci	r17, 0xFF	; 255
     3a66:	c8 01       	movw	r24, r16
     3a68:	0e 94 78 07 	call	0xef0	; 0xef0 <uxListRemove>
-            traceTIMER_EXPIRED( pxTimer );
-
-            /* Execute its callback, then send a command to restart the timer if
-             * it is an auto-reload timer.  It cannot be restarted here as the lists
-             * have not yet been switched. */
-            pxTimer->pxCallbackFunction( ( TimerHandle_t ) pxTimer );
     3a6c:	ec 89       	ldd	r30, Y+20	; 0x14
     3a6e:	fd 89       	ldd	r31, Y+21	; 0x15
     3a70:	ce 01       	movw	r24, r28
     3a72:	19 95       	eicall
-
-            if( ( pxTimer->ucStatus & tmrSTATUS_IS_AUTORELOAD ) != 0 )
     3a74:	8e 89       	ldd	r24, Y+22	; 0x16
     3a76:	82 ff       	sbrs	r24, 2
     3a78:	25 c0       	rjmp	.+74     	; 0x3ac4 <prvSwitchTimerLists+0x90>
-                 * the timer going into the same timer list then it has already expired
-                 * and the timer should be re-inserted into the current list so it is
-                 * processed again within this loop.  Otherwise a command should be sent
-                 * to restart the timer to ensure it is only inserted into a list after
-                 * the lists have been swapped. */
-                xReloadTime = ( xNextExpireTime + pxTimer->xTimerPeriodInTicks );
     3a7a:	8e 85       	ldd	r24, Y+14	; 0x0e
     3a7c:	9f 85       	ldd	r25, Y+15	; 0x0f
     3a7e:	a8 89       	ldd	r26, Y+16	; 0x10
@@ -8208,32 +7315,22 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3a84:	99 1d       	adc	r25, r9
     3a86:	aa 1d       	adc	r26, r10
     3a88:	bb 1d       	adc	r27, r11
-
-                if( xReloadTime > xNextExpireTime )
     3a8a:	88 16       	cp	r8, r24
     3a8c:	99 06       	cpc	r9, r25
     3a8e:	aa 06       	cpc	r10, r26
     3a90:	bb 06       	cpc	r11, r27
     3a92:	70 f4       	brcc	.+28     	; 0x3ab0 <prvSwitchTimerLists+0x7c>
-                {
-                    listSET_LIST_ITEM_VALUE( &( pxTimer->xTimerListItem ), xReloadTime );
     3a94:	8a 83       	std	Y+2, r24	; 0x02
     3a96:	9b 83       	std	Y+3, r25	; 0x03
     3a98:	ac 83       	std	Y+4, r26	; 0x04
     3a9a:	bd 83       	std	Y+5, r27	; 0x05
-                    listSET_LIST_ITEM_OWNER( &( pxTimer->xTimerListItem ), pxTimer );
     3a9c:	db 87       	std	Y+11, r29	; 0x0b
     3a9e:	ca 87       	std	Y+10, r28	; 0x0a
-                    vListInsert( pxCurrentTimerList, &( pxTimer->xTimerListItem ) );
     3aa0:	b8 01       	movw	r22, r16
     3aa2:	80 91 d8 17 	lds	r24, 0x17D8	; 0x8017d8 <pxCurrentTimerList>
     3aa6:	90 91 d9 17 	lds	r25, 0x17D9	; 0x8017d9 <pxCurrentTimerList+0x1>
     3aaa:	0e 94 3b 07 	call	0xe76	; 0xe76 <vListInsert>
     3aae:	0a c0       	rjmp	.+20     	; 0x3ac4 <prvSwitchTimerLists+0x90>
-                }
-                else
-                {
-                    xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START_DONT_TRACE, xNextExpireTime, NULL, tmrNO_DELAY );
     3ab0:	c1 2c       	mov	r12, r1
     3ab2:	d1 2c       	mov	r13, r1
     3ab4:	76 01       	movw	r14, r12
@@ -8244,31 +7341,17 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3abe:	60 e0       	ldi	r22, 0x00	; 0
     3ac0:	ce 01       	movw	r24, r28
     3ac2:	5a df       	rcall	.-332    	; 0x3978 <xTimerGenericCommand>
-
-        /* The tick count has overflowed.  The timer lists must be switched.
-         * If there are any timers still referenced from the current timer list
-         * then they must have expired and should be processed before the lists
-         * are switched. */
-        while( listLIST_IS_EMPTY( pxCurrentTimerList ) == pdFALSE )
     3ac4:	e0 91 d8 17 	lds	r30, 0x17D8	; 0x8017d8 <pxCurrentTimerList>
     3ac8:	f0 91 d9 17 	lds	r31, 0x17D9	; 0x8017d9 <pxCurrentTimerList+0x1>
     3acc:	80 81       	ld	r24, Z
     3ace:	81 11       	cpse	r24, r1
     3ad0:	be cf       	rjmp	.-132    	; 0x3a4e <prvSwitchTimerLists+0x1a>
-                mtCOVERAGE_TEST_MARKER();
-            }
-        }
-
-        pxTemp = pxCurrentTimerList;
-        pxCurrentTimerList = pxOverflowTimerList;
     3ad2:	80 91 d6 17 	lds	r24, 0x17D6	; 0x8017d6 <pxOverflowTimerList>
     3ad6:	90 91 d7 17 	lds	r25, 0x17D7	; 0x8017d7 <pxOverflowTimerList+0x1>
     3ada:	90 93 d9 17 	sts	0x17D9, r25	; 0x8017d9 <pxCurrentTimerList+0x1>
     3ade:	80 93 d8 17 	sts	0x17D8, r24	; 0x8017d8 <pxCurrentTimerList>
-        pxOverflowTimerList = pxTemp;
     3ae2:	f0 93 d7 17 	sts	0x17D7, r31	; 0x8017d7 <pxOverflowTimerList+0x1>
     3ae6:	e0 93 d6 17 	sts	0x17D6, r30	; 0x8017d6 <pxOverflowTimerList>
-    }
     3aea:	df 91       	pop	r29
     3aec:	cf 91       	pop	r28
     3aee:	1f 91       	pop	r17
@@ -8284,12 +7367,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3b02:	08 95       	ret
 
 00003b04 <prvSampleTimeNow>:
-        return xNextExpireTime;
-    }
-/*-----------------------------------------------------------*/
-
-    static TickType_t prvSampleTimeNow( BaseType_t * const pxTimerListsWereSwitched )
-    {
     3b04:	cf 92       	push	r12
     3b06:	df 92       	push	r13
     3b08:	ef 92       	push	r14
@@ -8297,15 +7374,9 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3b0c:	cf 93       	push	r28
     3b0e:	df 93       	push	r29
     3b10:	ec 01       	movw	r28, r24
-        TickType_t xTimeNow;
-        PRIVILEGED_DATA static TickType_t xLastTime = ( TickType_t ) 0U; /*lint !e956 Variable is only accessible to one task. */
-
-        xTimeNow = xTaskGetTickCount();
     3b12:	0e 94 26 12 	call	0x244c	; 0x244c <xTaskGetTickCount>
     3b16:	6b 01       	movw	r12, r22
     3b18:	7c 01       	movw	r14, r24
-
-        if( xTimeNow < xLastTime )
     3b1a:	80 91 ce 17 	lds	r24, 0x17CE	; 0x8017ce <xLastTime.2436>
     3b1e:	90 91 cf 17 	lds	r25, 0x17CF	; 0x8017cf <xLastTime.2436+0x1>
     3b22:	a0 91 d0 17 	lds	r26, 0x17D0	; 0x8017d0 <xLastTime.2436+0x2>
@@ -8315,28 +7386,15 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3b2e:	ea 06       	cpc	r14, r26
     3b30:	fb 06       	cpc	r15, r27
     3b32:	20 f4       	brcc	.+8      	; 0x3b3c <prvSampleTimeNow+0x38>
-        {
-            prvSwitchTimerLists();
     3b34:	7f df       	rcall	.-258    	; 0x3a34 <prvSwitchTimerLists>
-            *pxTimerListsWereSwitched = pdTRUE;
     3b36:	81 e0       	ldi	r24, 0x01	; 1
     3b38:	88 83       	st	Y, r24
     3b3a:	01 c0       	rjmp	.+2      	; 0x3b3e <prvSampleTimeNow+0x3a>
-        }
-        else
-        {
-            *pxTimerListsWereSwitched = pdFALSE;
     3b3c:	18 82       	st	Y, r1
-        }
-
-        xLastTime = xTimeNow;
     3b3e:	c0 92 ce 17 	sts	0x17CE, r12	; 0x8017ce <xLastTime.2436>
     3b42:	d0 92 cf 17 	sts	0x17CF, r13	; 0x8017cf <xLastTime.2436+0x1>
     3b46:	e0 92 d0 17 	sts	0x17D0, r14	; 0x8017d0 <xLastTime.2436+0x2>
     3b4a:	f0 92 d1 17 	sts	0x17D1, r15	; 0x8017d1 <xLastTime.2436+0x3>
-
-        return xTimeNow;
-    }
     3b4e:	c7 01       	movw	r24, r14
     3b50:	b6 01       	movw	r22, r12
     3b52:	df 91       	pop	r29
@@ -8348,12 +7406,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3b5e:	08 95       	ret
 
 00003b60 <prvProcessExpiredTimer>:
-    }
-/*-----------------------------------------------------------*/
-
-    static void prvProcessExpiredTimer( const TickType_t xNextExpireTime,
-                                        const TickType_t xTimeNow )
-    {
     3b60:	4f 92       	push	r4
     3b62:	5f 92       	push	r5
     3b64:	6f 92       	push	r6
@@ -8374,8 +7426,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3b82:	5c 01       	movw	r10, r24
     3b84:	29 01       	movw	r4, r18
     3b86:	3a 01       	movw	r6, r20
-        BaseType_t xResult;
-        Timer_t * const pxTimer = ( Timer_t * ) listGET_OWNER_OF_HEAD_ENTRY( pxCurrentTimerList ); /*lint !e9087 !e9079 void * is used as this macro is used with tasks and co-routines too.  Alignment is known to be fine as the type of the pointer stored and retrieved is the same. */
     3b88:	e0 91 d8 17 	lds	r30, 0x17D8	; 0x8017d8 <pxCurrentTimerList>
     3b8c:	f0 91 d9 17 	lds	r31, 0x17D9	; 0x8017d9 <pxCurrentTimerList+0x1>
     3b90:	07 80       	ldd	r0, Z+7	; 0x07
@@ -8383,27 +7433,12 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3b94:	e0 2d       	mov	r30, r0
     3b96:	c0 85       	ldd	r28, Z+8	; 0x08
     3b98:	d1 85       	ldd	r29, Z+9	; 0x09
-
-        /* Remove the timer from the list of active timers.  A check has already
-         * been performed to ensure the list is not empty. */
-
-        ( void ) uxListRemove( &( pxTimer->xTimerListItem ) );
     3b9a:	ce 01       	movw	r24, r28
     3b9c:	02 96       	adiw	r24, 0x02	; 2
     3b9e:	0e 94 78 07 	call	0xef0	; 0xef0 <uxListRemove>
-        traceTIMER_EXPIRED( pxTimer );
-
-        /* If the timer is an auto-reload timer then calculate the next
-         * expiry time and re-insert the timer in the list of active timers. */
-        if( ( pxTimer->ucStatus & tmrSTATUS_IS_AUTORELOAD ) != 0 )
     3ba2:	8e 89       	ldd	r24, Y+22	; 0x16
     3ba4:	82 ff       	sbrs	r24, 2
     3ba6:	1b c0       	rjmp	.+54     	; 0x3bde <prvProcessExpiredTimer+0x7e>
-        {
-            /* The timer is inserted into a list using a time relative to anything
-             * other than the current time.  It will therefore be inserted into the
-             * correct list relative to the time this task thinks it is now. */
-            if( prvInsertTimerInActiveList( pxTimer, ( xNextExpireTime + pxTimer->xTimerPeriodInTicks ), xTimeNow, xNextExpireTime ) != pdFALSE )
     3ba8:	4e 85       	ldd	r20, Y+14	; 0x0e
     3baa:	5f 85       	ldd	r21, Y+15	; 0x0f
     3bac:	68 89       	ldd	r22, Y+16	; 0x10
@@ -8420,10 +7455,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3bc2:	47 de       	rcall	.-882    	; 0x3852 <prvInsertTimerInActiveList>
     3bc4:	88 23       	and	r24, r24
     3bc6:	69 f0       	breq	.+26     	; 0x3be2 <prvProcessExpiredTimer+0x82>
-            {
-                /* The timer expired before it was added to the active timer
-                 * list.  Reload it now.  */
-                xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START_DONT_TRACE, xNextExpireTime, NULL, tmrNO_DELAY );
     3bc8:	c1 2c       	mov	r12, r1
     3bca:	d1 2c       	mov	r13, r1
     3bcc:	76 01       	movw	r14, r12
@@ -8435,24 +7466,12 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3bd8:	ce 01       	movw	r24, r28
     3bda:	ce de       	rcall	.-612    	; 0x3978 <xTimerGenericCommand>
     3bdc:	02 c0       	rjmp	.+4      	; 0x3be2 <prvProcessExpiredTimer+0x82>
-                mtCOVERAGE_TEST_MARKER();
-            }
-        }
-        else
-        {
-            pxTimer->ucStatus &= ~tmrSTATUS_IS_ACTIVE;
     3bde:	8e 7f       	andi	r24, 0xFE	; 254
     3be0:	8e 8b       	std	Y+22, r24	; 0x16
-            mtCOVERAGE_TEST_MARKER();
-        }
-
-        /* Call the timer callback. */
-        pxTimer->pxCallbackFunction( ( TimerHandle_t ) pxTimer );
     3be2:	ec 89       	ldd	r30, Y+20	; 0x14
     3be4:	fd 89       	ldd	r31, Y+21	; 0x15
     3be6:	ce 01       	movw	r24, r28
     3be8:	19 95       	eicall
-    }
     3bea:	df 91       	pop	r29
     3bec:	cf 91       	pop	r28
     3bee:	1f 91       	pop	r17
@@ -8472,12 +7491,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3c0a:	08 95       	ret
 
 00003c0c <prvProcessTimerOrBlockTask>:
-    }
-/*-----------------------------------------------------------*/
-
-    static void prvProcessTimerOrBlockTask( const TickType_t xNextExpireTime,
-                                            BaseType_t xListWasEmpty )
-    {
     3c0c:	8f 92       	push	r8
     3c0e:	9f 92       	push	r9
     3c10:	af 92       	push	r10
@@ -8495,30 +7508,15 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3c28:	6b 01       	movw	r12, r22
     3c2a:	7c 01       	movw	r14, r24
     3c2c:	14 2f       	mov	r17, r20
-        TickType_t xTimeNow;
-        BaseType_t xTimerListsWereSwitched;
-
-        vTaskSuspendAll();
     3c2e:	0e 94 20 12 	call	0x2440	; 0x2440 <vTaskSuspendAll>
-            /* Obtain the time now to make an assessment as to whether the timer
-             * has expired or not.  If obtaining the time causes the lists to switch
-             * then don't process this timer as any timers that remained in the list
-             * when the lists were switched will have been processed within the
-             * prvSampleTimeNow() function. */
-            xTimeNow = prvSampleTimeNow( &xTimerListsWereSwitched );
     3c32:	ce 01       	movw	r24, r28
     3c34:	01 96       	adiw	r24, 0x01	; 1
     3c36:	66 df       	rcall	.-308    	; 0x3b04 <prvSampleTimeNow>
     3c38:	4b 01       	movw	r8, r22
     3c3a:	5c 01       	movw	r10, r24
-
-            if( xTimerListsWereSwitched == pdFALSE )
     3c3c:	89 81       	ldd	r24, Y+1	; 0x01
     3c3e:	81 11       	cpse	r24, r1
     3c40:	2d c0       	rjmp	.+90     	; 0x3c9c <prvProcessTimerOrBlockTask+0x90>
-            {
-                /* The tick count has not overflowed, has the timer expired? */
-                if( ( xListWasEmpty == pdFALSE ) && ( xNextExpireTime <= xTimeNow ) )
     3c42:	11 11       	cpse	r17, r1
     3c44:	0d c0       	rjmp	.+26     	; 0x3c60 <prvProcessTimerOrBlockTask+0x54>
     3c46:	8c 14       	cp	r8, r12
@@ -8526,37 +7524,21 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3c4a:	ae 04       	cpc	r10, r14
     3c4c:	bf 04       	cpc	r11, r15
     3c4e:	40 f0       	brcs	.+16     	; 0x3c60 <prvProcessTimerOrBlockTask+0x54>
-                {
-                    ( void ) xTaskResumeAll();
     3c50:	0e 94 60 13 	call	0x26c0	; 0x26c0 <xTaskResumeAll>
-                    prvProcessExpiredTimer( xNextExpireTime, xTimeNow );
     3c54:	a5 01       	movw	r20, r10
     3c56:	94 01       	movw	r18, r8
     3c58:	c7 01       	movw	r24, r14
     3c5a:	b6 01       	movw	r22, r12
     3c5c:	81 df       	rcall	.-254    	; 0x3b60 <prvProcessExpiredTimer>
     3c5e:	20 c0       	rjmp	.+64     	; 0x3ca0 <prvProcessTimerOrBlockTask+0x94>
-                     * time has not been reached yet.  This task should therefore
-                     * block to wait for the next expire time or a command to be
-                     * received - whichever comes first.  The following line cannot
-                     * be reached unless xNextExpireTime > xTimeNow, except in the
-                     * case when the current timer list is empty. */
-                    if( xListWasEmpty != pdFALSE )
     3c60:	11 23       	and	r17, r17
     3c62:	41 f0       	breq	.+16     	; 0x3c74 <prvProcessTimerOrBlockTask+0x68>
-                    {
-                        /* The current timer list is empty - is the overflow list
-                         * also empty? */
-                        xListWasEmpty = listLIST_IS_EMPTY( pxOverflowTimerList );
     3c64:	e0 91 d6 17 	lds	r30, 0x17D6	; 0x8017d6 <pxOverflowTimerList>
     3c68:	f0 91 d7 17 	lds	r31, 0x17D7	; 0x8017d7 <pxOverflowTimerList+0x1>
     3c6c:	80 81       	ld	r24, Z
     3c6e:	11 e0       	ldi	r17, 0x01	; 1
     3c70:	81 11       	cpse	r24, r1
     3c72:	10 e0       	ldi	r17, 0x00	; 0
-                    }
-
-                    vQueueWaitForMessageRestricted( xTimerQueue, ( xNextExpireTime - xTimeNow ), xListWasEmpty );
     3c74:	b7 01       	movw	r22, r14
     3c76:	a6 01       	movw	r20, r12
     3c78:	48 19       	sub	r20, r8
@@ -8567,29 +7549,12 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3c82:	80 91 d4 17 	lds	r24, 0x17D4	; 0x8017d4 <xTimerQueue>
     3c86:	90 91 d5 17 	lds	r25, 0x17D5	; 0x8017d5 <xTimerQueue+0x1>
     3c8a:	0e 94 37 0c 	call	0x186e	; 0x186e <vQueueWaitForMessageRestricted>
-
-                    if( xTaskResumeAll() == pdFALSE )
     3c8e:	0e 94 60 13 	call	0x26c0	; 0x26c0 <xTaskResumeAll>
     3c92:	81 11       	cpse	r24, r1
     3c94:	05 c0       	rjmp	.+10     	; 0x3ca0 <prvProcessTimerOrBlockTask+0x94>
-                    {
-                        /* Yield to wait for either a command to arrive, or the
-                         * block time to expire.  If a command arrived between the
-                         * critical section being exited and this yield then the yield
-                         * will not cause the task to block. */
-                        portYIELD_WITHIN_API();
     3c96:	0e 94 f4 07 	call	0xfe8	; 0xfe8 <vPortYield>
     3c9a:	02 c0       	rjmp	.+4      	; 0x3ca0 <prvProcessTimerOrBlockTask+0x94>
-                    }
-                }
-            }
-            else
-            {
-                ( void ) xTaskResumeAll();
     3c9c:	0e 94 60 13 	call	0x26c0	; 0x26c0 <xTaskResumeAll>
-            }
-        }
-    }
     3ca0:	0f 90       	pop	r0
     3ca2:	df 91       	pop	r29
     3ca4:	cf 91       	pop	r28
@@ -8605,12 +7570,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3cb8:	08 95       	ret
 
 00003cba <prvProcessReceivedCommands>:
-        return xProcessTimerNow;
-    }
-/*-----------------------------------------------------------*/
-
-    static void prvProcessReceivedCommands( void )
-    {
     3cba:	af 92       	push	r10
     3cbc:	bf 92       	push	r11
     3cbe:	cf 92       	push	r12
@@ -8629,31 +7588,13 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3cd8:	de bf       	out	0x3e, r29	; 62
     3cda:	0f be       	out	0x3f, r0	; 63
     3cdc:	cd bf       	out	0x3d, r28	; 61
-        DaemonTaskMessage_t xMessage;
-        Timer_t * pxTimer;
-        BaseType_t xTimerListsWereSwitched, xResult;
-        TickType_t xTimeNow;
-
-        while( xQueueReceive( xTimerQueue, &xMessage, tmrNO_DELAY ) != pdFAIL ) /*lint !e603 xMessage does not have to be initialised as it is passed out, not in, and it is not used unless xQueueReceive() returns pdTRUE. */
     3cde:	82 c0       	rjmp	.+260    	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-                }
-            #endif /* INCLUDE_xTimerPendFunctionCall */
-
-            /* Commands that are positive are timer commands rather than pended
-             * function calls. */
-            if( xMessage.xMessageID >= ( BaseType_t ) 0 )
     3ce0:	89 81       	ldd	r24, Y+1	; 0x01
     3ce2:	88 23       	and	r24, r24
     3ce4:	0c f4       	brge	.+2      	; 0x3ce8 <prvProcessReceivedCommands+0x2e>
     3ce6:	7e c0       	rjmp	.+252    	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-            {
-                /* The messages uses the xTimerParameters member to work on a
-                 * software timer. */
-                pxTimer = xMessage.u.xTimerParameters.pxTimer;
     3ce8:	ae 80       	ldd	r10, Y+6	; 0x06
     3cea:	bf 80       	ldd	r11, Y+7	; 0x07
-
-                if( listIS_CONTAINED_WITHIN( NULL, &( pxTimer->xTimerListItem ) ) == pdFALSE ) /*lint !e961. The cast is only redundant when NULL is passed into the macro. */
     3cec:	d5 01       	movw	r26, r10
     3cee:	1c 96       	adiw	r26, 0x0c	; 12
     3cf0:	8d 91       	ld	r24, X+
@@ -8661,25 +7602,14 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3cf4:	1d 97       	sbiw	r26, 0x0d	; 13
     3cf6:	89 2b       	or	r24, r25
     3cf8:	21 f0       	breq	.+8      	; 0x3d02 <prvProcessReceivedCommands+0x48>
-                {
-                    /* The timer is in a list, remove it. */
-                    ( void ) uxListRemove( &( pxTimer->xTimerListItem ) );
     3cfa:	c5 01       	movw	r24, r10
     3cfc:	02 96       	adiw	r24, 0x02	; 2
     3cfe:	0e 94 78 07 	call	0xef0	; 0xef0 <uxListRemove>
-                 *  it must be present in the function call.  prvSampleTimeNow() must be
-                 *  called after the message is received from xTimerQueue so there is no
-                 *  possibility of a higher priority task adding a message to the message
-                 *  queue with a time that is ahead of the timer daemon task (because it
-                 *  pre-empted the timer daemon task after the xTimeNow value was set). */
-                xTimeNow = prvSampleTimeNow( &xTimerListsWereSwitched );
     3d02:	ce 01       	movw	r24, r28
     3d04:	08 96       	adiw	r24, 0x08	; 8
     3d06:	fe de       	rcall	.-516    	; 0x3b04 <prvSampleTimeNow>
     3d08:	8b 01       	movw	r16, r22
     3d0a:	9c 01       	movw	r18, r24
-
-                switch( xMessage.xMessageID )
     3d0c:	e9 81       	ldd	r30, Y+1	; 0x01
     3d0e:	0e 2e       	mov	r0, r30
     3d10:	00 0c       	add	r0, r0
@@ -8693,18 +7623,10 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3d20:	ff 4f       	sbci	r31, 0xFF	; 255
     3d22:	8f 4f       	sbci	r24, 0xFF	; 255
     3d24:	0c 94 15 35 	jmp	0x6a2a	; 0x6a2a <__tablejump2__>
-                    case tmrCOMMAND_START_FROM_ISR:
-                    case tmrCOMMAND_RESET:
-                    case tmrCOMMAND_RESET_FROM_ISR:
-                    case tmrCOMMAND_START_DONT_TRACE:
-                        /* Start or restart a timer. */
-                        pxTimer->ucStatus |= tmrSTATUS_IS_ACTIVE;
     3d28:	f5 01       	movw	r30, r10
     3d2a:	86 89       	ldd	r24, Z+22	; 0x16
     3d2c:	81 60       	ori	r24, 0x01	; 1
     3d2e:	86 8b       	std	Z+22, r24	; 0x16
-
-                        if( prvInsertTimerInActiveList( pxTimer, xMessage.u.xTimerParameters.xMessageValue + pxTimer->xTimerPeriodInTicks, xTimeNow, xMessage.u.xTimerParameters.xMessageValue ) != pdFALSE )
     3d30:	ca 80       	ldd	r12, Y+2	; 0x02
     3d32:	db 80       	ldd	r13, Y+3	; 0x03
     3d34:	ec 80       	ldd	r14, Y+4	; 0x04
@@ -8722,10 +7644,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3d4c:	88 23       	and	r24, r24
     3d4e:	09 f4       	brne	.+2      	; 0x3d52 <prvProcessReceivedCommands+0x98>
     3d50:	49 c0       	rjmp	.+146    	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-                        {
-                            /* The timer expired before it was added to the active
-                             * timer list.  Process it now. */
-                            pxTimer->pxCallbackFunction( ( TimerHandle_t ) pxTimer );
     3d52:	d5 01       	movw	r26, r10
     3d54:	54 96       	adiw	r26, 0x14	; 20
     3d56:	ed 91       	ld	r30, X+
@@ -8733,15 +7651,10 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3d5a:	55 97       	sbiw	r26, 0x15	; 21
     3d5c:	c5 01       	movw	r24, r10
     3d5e:	19 95       	eicall
-                            traceTIMER_EXPIRED( pxTimer );
-
-                            if( ( pxTimer->ucStatus & tmrSTATUS_IS_AUTORELOAD ) != 0 )
     3d60:	f5 01       	movw	r30, r10
     3d62:	86 89       	ldd	r24, Z+22	; 0x16
     3d64:	82 ff       	sbrs	r24, 2
     3d66:	3e c0       	rjmp	.+124    	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-                            {
-                                xResult = xTimerGenericCommand( pxTimer, tmrCOMMAND_START_DONT_TRACE, xMessage.u.xTimerParameters.xMessageValue + pxTimer->xTimerPeriodInTicks, NULL, tmrNO_DELAY );
     3d68:	4a 81       	ldd	r20, Y+2	; 0x02
     3d6a:	5b 81       	ldd	r21, Y+3	; 0x03
     3d6c:	6c 81       	ldd	r22, Y+4	; 0x04
@@ -8765,12 +7678,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3d90:	c5 01       	movw	r24, r10
     3d92:	f2 dd       	rcall	.-1052   	; 0x3978 <xTimerGenericCommand>
     3d94:	27 c0       	rjmp	.+78     	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-                        break;
-
-                    case tmrCOMMAND_STOP:
-                    case tmrCOMMAND_STOP_FROM_ISR:
-                        /* The timer has already been removed from the active list. */
-                        pxTimer->ucStatus &= ~tmrSTATUS_IS_ACTIVE;
     3d96:	d5 01       	movw	r26, r10
     3d98:	56 96       	adiw	r26, 0x16	; 22
     3d9a:	8c 91       	ld	r24, X
@@ -8778,17 +7685,11 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3d9e:	8e 7f       	andi	r24, 0xFE	; 254
     3da0:	56 96       	adiw	r26, 0x16	; 22
     3da2:	8c 93       	st	X, r24
-                        break;
     3da4:	1f c0       	rjmp	.+62     	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-
-                    case tmrCOMMAND_CHANGE_PERIOD:
-                    case tmrCOMMAND_CHANGE_PERIOD_FROM_ISR:
-                        pxTimer->ucStatus |= tmrSTATUS_IS_ACTIVE;
     3da6:	f5 01       	movw	r30, r10
     3da8:	86 89       	ldd	r24, Z+22	; 0x16
     3daa:	81 60       	ori	r24, 0x01	; 1
     3dac:	86 8b       	std	Z+22, r24	; 0x16
-                        pxTimer->xTimerPeriodInTicks = xMessage.u.xTimerParameters.xMessageValue;
     3dae:	4a 81       	ldd	r20, Y+2	; 0x02
     3db0:	5b 81       	ldd	r21, Y+3	; 0x03
     3db2:	6c 81       	ldd	r22, Y+4	; 0x04
@@ -8797,12 +7698,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3db8:	57 87       	std	Z+15, r21	; 0x0f
     3dba:	60 8b       	std	Z+16, r22	; 0x10
     3dbc:	71 8b       	std	Z+17, r23	; 0x11
-                         * be longer or shorter than the old one.  The command time is
-                         * therefore set to the current time, and as the period cannot
-                         * be zero the next expiry time can only be in the future,
-                         * meaning (unlike for the xTimerStart() case above) there is
-                         * no fail case that needs to be handled here. */
-                        ( void ) prvInsertTimerInActiveList( pxTimer, ( xTimeNow + pxTimer->xTimerPeriodInTicks ), xTimeNow, xTimeNow );
     3dbe:	40 0f       	add	r20, r16
     3dc0:	51 1f       	adc	r21, r17
     3dc2:	62 1f       	adc	r22, r18
@@ -8811,35 +7706,16 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3dc8:	79 01       	movw	r14, r18
     3dca:	c5 01       	movw	r24, r10
     3dcc:	42 dd       	rcall	.-1404   	; 0x3852 <prvInsertTimerInActiveList>
-                        break;
     3dce:	0a c0       	rjmp	.+20     	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-                        #if ( configSUPPORT_DYNAMIC_ALLOCATION == 1 )
-                            {
-                                /* The timer has already been removed from the active list,
-                                 * just free up the memory if the memory was dynamically
-                                 * allocated. */
-                                if( ( pxTimer->ucStatus & tmrSTATUS_IS_STATICALLY_ALLOCATED ) == ( uint8_t ) 0 )
     3dd0:	f5 01       	movw	r30, r10
     3dd2:	86 89       	ldd	r24, Z+22	; 0x16
     3dd4:	81 fd       	sbrc	r24, 1
     3dd6:	04 c0       	rjmp	.+8      	; 0x3de0 <prvProcessReceivedCommands+0x126>
-                                {
-                                    vPortFree( pxTimer );
     3dd8:	c5 01       	movw	r24, r10
     3dda:	0e 94 e9 06 	call	0xdd2	; 0xdd2 <vPortFree>
     3dde:	02 c0       	rjmp	.+4      	; 0x3de4 <prvProcessReceivedCommands+0x12a>
-                                }
-                                else
-                                {
-                                    pxTimer->ucStatus &= ~tmrSTATUS_IS_ACTIVE;
     3de0:	8e 7f       	andi	r24, 0xFE	; 254
     3de2:	86 8b       	std	Z+22, r24	; 0x16
-        DaemonTaskMessage_t xMessage;
-        Timer_t * pxTimer;
-        BaseType_t xTimerListsWereSwitched, xResult;
-        TickType_t xTimeNow;
-
-        while( xQueueReceive( xTimerQueue, &xMessage, tmrNO_DELAY ) != pdFAIL ) /*lint !e603 xMessage does not have to be initialised as it is passed out, not in, and it is not used unless xQueueReceive() returns pdTRUE. */
     3de4:	20 e0       	ldi	r18, 0x00	; 0
     3de6:	30 e0       	ldi	r19, 0x00	; 0
     3de8:	a9 01       	movw	r20, r18
@@ -8851,12 +7727,6 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3df8:	0e 94 f7 0a 	call	0x15ee	; 0x15ee <xQueueReceive>
     3dfc:	81 11       	cpse	r24, r1
     3dfe:	70 cf       	rjmp	.-288    	; 0x3ce0 <prvProcessReceivedCommands+0x26>
-                        /* Don't expect to get here. */
-                        break;
-                }
-            }
-        }
-    }
     3e00:	28 96       	adiw	r28, 0x08	; 8
     3e02:	0f b6       	in	r0, 0x3f	; 63
     3e04:	f8 94       	cli
@@ -8876,49 +7746,24 @@ size_t xStreamBufferReceive( StreamBufferHandle_t xStreamBuffer,
     3e20:	08 95       	ret
 
 00003e22 <vApplicationIdleHook>:
- *
- */
-void vApplicationIdleHook( void ) __attribute__((weak));
-
-void vApplicationIdleHook( void )
-{
     3e22:	08 95       	ret
 
 00003e24 <prvSetMainLedOn>:
- * Private function to enable board led to use it in application hooks
- */
-void prvSetMainLedOn( void ) 
-{
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega1281__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__) // Arduino Mega with 2560
-    DDRB  |= _BV(DDB7);
     3e24:	84 b1       	in	r24, 0x04	; 4
     3e26:	80 68       	ori	r24, 0x80	; 128
     3e28:	84 b9       	out	0x04, r24	; 4
-    PORTB |= _BV(PORTB7);       // Main (red PB7) LED on. Main LED on.
     3e2a:	85 b1       	in	r24, 0x05	; 5
     3e2c:	80 68       	ori	r24, 0x80	; 128
     3e2e:	85 b9       	out	0x05, r24	; 5
     3e30:	08 95       	ret
 
 00003e32 <prvBlinkMainLed>:
- */
-void prvBlinkMainLed( void ) 
-{
-
-#if defined(__AVR_ATmega640__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega1281__) || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega2561__)  // Mega with 2560
-        PINB  |= _BV(PINB7);       // Main (red PB7) LED toggle.
     3e32:	83 b1       	in	r24, 0x03	; 3
     3e34:	80 68       	ori	r24, 0x80	; 128
     3e36:	83 b9       	out	0x03, r24	; 3
     3e38:	08 95       	ret
 
 00003e3a <vApplicationMallocFailedHook>:
-\*---------------------------------------------------------------------------*/
-void vApplicationMallocFailedHook( void ) __attribute__((weak));
-
-void vApplicationMallocFailedHook( void )
-{
-    prvSetMainLedOn(); // Main LED on.
     3e3a:	f4 df       	rcall	.-24     	; 0x3e24 <prvSetMainLedOn>
 	#else
 		//round up by default
@@ -8934,22 +7779,11 @@ void vApplicationMallocFailedHook( void )
     3e46:	90 40       	sbci	r25, 0x00	; 0
     3e48:	e1 f7       	brne	.-8      	; 0x3e42 <vApplicationMallocFailedHook+0x8>
     3e4a:	00 c0       	rjmp	.+0      	; 0x3e4c <vApplicationMallocFailedHook+0x12>
-    
-    for(;;)
-    {
-        _delay_ms(50);
-        prvBlinkMainLed(); // Main LED fast blink.
     3e4c:	00 00       	nop
     3e4e:	f1 df       	rcall	.-30     	; 0x3e32 <prvBlinkMainLed>
     3e50:	f5 cf       	rjmp	.-22     	; 0x3e3c <vApplicationMallocFailedHook+0x2>
 
 00003e52 <vApplicationStackOverflowHook>:
-
-void vApplicationStackOverflowHook( TaskHandle_t xTask __attribute__((unused)),
-                                    char * pcTaskName __attribute__((unused)) )
-{
-
-    prvSetMainLedOn(); // Main LED on.
     3e52:	e8 df       	rcall	.-48     	; 0x3e24 <prvSetMainLedOn>
     3e54:	2f ef       	ldi	r18, 0xFF	; 255
     3e56:	87 ea       	ldi	r24, 0xA7	; 167
@@ -8959,11 +7793,6 @@ void vApplicationStackOverflowHook( TaskHandle_t xTask __attribute__((unused)),
     3e5e:	90 40       	sbci	r25, 0x00	; 0
     3e60:	e1 f7       	brne	.-8      	; 0x3e5a <vApplicationStackOverflowHook+0x8>
     3e62:	00 c0       	rjmp	.+0      	; 0x3e64 <vApplicationStackOverflowHook+0x12>
-
-    for(;;)
-    {
-        _delay_ms(2000);
-        prvBlinkMainLed();  // Main LED slow blink.
     3e64:	00 00       	nop
     3e66:	e5 df       	rcall	.-54     	; 0x3e32 <prvBlinkMainLed>
     3e68:	f5 cf       	rjmp	.-22     	; 0x3e54 <vApplicationStackOverflowHook+0x2>
@@ -9043,48 +7872,23 @@ lora_driver_payload_t get_lora_package(uint8_t port){
     3ec2:	08 95       	ret
 
 00003ec4 <myCo2CallBack>:
-
-
-void myCo2CallBack(uint16_t ppm_parameter)
-{
-	// Here you can use the CO2 ppm value
-	lastCO2ppm = ppm_parameter;
     3ec4:	90 93 f8 17 	sts	0x17F8, r25	; 0x8017f8 <lastCO2ppm+0x1>
     3ec8:	80 93 f7 17 	sts	0x17F7, r24	; 0x8017f7 <lastCO2ppm>
     3ecc:	08 95       	ret
 
 00003ece <CO2_createSensor>:
-	//Note
-	//If FreeRTOS is used then the initialise function Initialise the driver must be called before
-	//	vTaskStartScheduler()
-	//is called.
-
-	mh_z19_initialise(ser_USART3);
     3ece:	83 e0       	ldi	r24, 0x03	; 3
     3ed0:	0e 94 77 27 	call	0x4eee	; 0x4eee <mh_z19_initialise>
-
-	//If it is wanted to inject a call-back function, then it must be done like this
-	mh_z19_injectCallBack(myCo2CallBack);
     3ed4:	82 e6       	ldi	r24, 0x62	; 98
     3ed6:	9f e1       	ldi	r25, 0x1F	; 31
     3ed8:	0c 94 9c 27 	jmp	0x4f38	; 0x4f38 <mh_z19_injectCallBack>
     3edc:	08 95       	ret
 
 00003ede <CO2_measure>:
-}
-
-void CO2_measure() {
-	//Driver must be initialized before
-
-	rc = mh_z19_takeMeassuring();
     3ede:	0e 94 a1 27 	call	0x4f42	; 0x4f42 <mh_z19_takeMeassuring>
     3ee2:	80 93 42 19 	sts	0x1942, r24	; 0x801942 <rc>
-	if (rc != MHZ19_OK)
     3ee6:	88 23       	and	r24, r24
     3ee8:	41 f0       	breq	.+16     	; 0x3efa <CO2_measure+0x1c>
-	{
-		// Something went wrong
-		printf("  SOmething went wrong while measuring CO2!!!  ");
     3eea:	8d e7       	ldi	r24, 0x7D	; 125
     3eec:	93 e0       	ldi	r25, 0x03	; 3
     3eee:	9f 93       	push	r25
@@ -9092,9 +7896,6 @@ void CO2_measure() {
     3ef2:	0e 94 ee 37 	call	0x6fdc	; 0x6fdc <printf>
     3ef6:	0f 90       	pop	r0
     3ef8:	0f 90       	pop	r0
-
-	}
-	lastCO2ppm = mh_z19_getCo2Ppm(&lastCO2ppm);
     3efa:	87 ef       	ldi	r24, 0xF7	; 247
     3efc:	97 e1       	ldi	r25, 0x17	; 23
     3efe:	0e 94 d0 27 	call	0x4fa0	; 0x4fa0 <mh_z19_getCo2Ppm>
@@ -9104,12 +7905,6 @@ void CO2_measure() {
     3f0c:	08 95       	ret
 
 00003f0e <MeasureCo2Task>:
-	while(1){
-		
-		
-		//Usage of Event group Wait fun until co2 measure bit is set to 1 
-		
-		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,CO2_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
     3f0e:	cc 24       	eor	r12, r12
     3f10:	ca 94       	dec	r12
     3f12:	dc 2c       	mov	r13, r12
@@ -9123,24 +7918,14 @@ void CO2_measure() {
     3f22:	80 91 47 19 	lds	r24, 0x1947	; 0x801947 <measureEventGroup>
     3f26:	90 91 48 19 	lds	r25, 0x1948	; 0x801948 <measureEventGroup+0x1>
     3f2a:	0e 94 9f 04 	call	0x93e	; 0x93e <xEventGroupWaitBits>
-		
-			if ((uxBits & (CO2_MEASURE_BIT)) == CO2_MEASURE_BIT)
     3f2e:	60 ff       	sbrs	r22, 0
     3f30:	ee cf       	rjmp	.-36     	; 0x3f0e <MeasureCo2Task>
-			{
-				//printf("Measure bit and event bit was successfully checked ");
-				
-				CO2_measure();
     3f32:	d5 df       	rcall	.-86     	; 0x3ede <CO2_measure>
-				
-				//printf("Measurement successful , now time to set ready bit of c02 ");
-				vTaskDelay(pdMS_TO_TICKS(100));
     3f34:	66 e0       	ldi	r22, 0x06	; 6
     3f36:	70 e0       	ldi	r23, 0x00	; 0
     3f38:	80 e0       	ldi	r24, 0x00	; 0
     3f3a:	90 e0       	ldi	r25, 0x00	; 0
     3f3c:	0e 94 a1 14 	call	0x2942	; 0x2942 <vTaskDelay>
-				xEventGroupSetBits(dataReadyEventGroup,CO2_READY_BIT);
     3f40:	42 e0       	ldi	r20, 0x02	; 2
     3f42:	50 e0       	ldi	r21, 0x00	; 0
     3f44:	60 e0       	ldi	r22, 0x00	; 0
@@ -9151,33 +7936,16 @@ void CO2_measure() {
     3f54:	dc cf       	rjmp	.-72     	; 0x3f0e <MeasureCo2Task>
 
 00003f56 <CO2_getPPM>:
-	lastCO2ppm = mh_z19_getCo2Ppm(&lastCO2ppm);
-}
-
-uint16_t CO2_getPPM() {
-	return lastCO2ppm;
-}
     3f56:	80 91 f7 17 	lds	r24, 0x17F7	; 0x8017f7 <lastCO2ppm>
     3f5a:	90 91 f8 17 	lds	r25, 0x17F8	; 0x8017f8 <lastCO2ppm+0x1>
     3f5e:	08 95       	ret
 
 00003f60 <create_CO2_sensor_task>:
-
-
-
-//To start the task and get measurement , calling it from Application and need to initialize c02 before starting task
-void create_CO2_sensor_task(UBaseType_t priority){
     3f60:	ef 92       	push	r14
     3f62:	ff 92       	push	r15
     3f64:	0f 93       	push	r16
     3f66:	08 2f       	mov	r16, r24
-	
-	//Initializing 
-		CO2_createSensor();
     3f68:	b2 df       	rcall	.-156    	; 0x3ece <CO2_createSensor>
-	
-	//Starting task
-		xTaskCreate(
     3f6a:	e1 2c       	mov	r14, r1
     3f6c:	f1 2c       	mov	r15, r1
     3f6e:	20 e0       	ldi	r18, 0x00	; 0
@@ -9189,33 +7957,15 @@ void create_CO2_sensor_task(UBaseType_t priority){
     3f7a:	87 e8       	ldi	r24, 0x87	; 135
     3f7c:	9f e1       	ldi	r25, 0x1F	; 31
     3f7e:	0e 94 9c 11 	call	0x2338	; 0x2338 <xTaskCreate>
-		"MeasuringCO2_Task",
-		configMINIMAL_STACK_SIZE,
-		NULL,
-		tskIDLE_PRIORITY + priority,
-		NULL);
-}
     3f82:	0f 91       	pop	r16
     3f84:	ff 90       	pop	r15
     3f86:	ef 90       	pop	r14
     3f88:	08 95       	ret
 
 00003f8a <initialise_TempHumSensor>:
-void Temp_Hum_Main_Task(void *pvParameters);
-void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc);
-
-void initialise_TempHumSensor()
-{
-	if ( HIH8120_OK == hih8120_initialise() )
     3f8a:	67 d2       	rcall	.+1230   	; 0x445a <hih8120_initialise>
     3f8c:	88 23       	and	r24, r24
     3f8e:	41 f0       	breq	.+16     	; 0x3fa0 <initialise_TempHumSensor+0x16>
-		// Always check what hih8120_initialise() returns
-		
-	}
-	else 
-	{
-		printf("Something went wrong while initialising tempHum sensor");
     3f90:	8f eb       	ldi	r24, 0xBF	; 191
     3f92:	93 e0       	ldi	r25, 0x03	; 3
     3f94:	9f 93       	push	r25
@@ -9226,19 +7976,11 @@ void initialise_TempHumSensor()
     3fa0:	08 95       	ret
 
 00003fa2 <create_TempHum_sensor_task>:
-	}
-}
-
-
-void create_TempHum_sensor_task(UBaseType_t priority){
     3fa2:	ef 92       	push	r14
     3fa4:	ff 92       	push	r15
     3fa6:	0f 93       	push	r16
     3fa8:	08 2f       	mov	r16, r24
-	initialise_TempHumSensor();
     3faa:	ef df       	rcall	.-34     	; 0x3f8a <initialise_TempHumSensor>
-	
-	xTaskCreate(Temp_Hum_Main_Task,
     3fac:	e1 2c       	mov	r14, r1
     3fae:	f1 2c       	mov	r15, r1
     3fb0:	20 e0       	ldi	r18, 0x00	; 0
@@ -9250,24 +7992,12 @@ void create_TempHum_sensor_task(UBaseType_t priority){
     3fbc:	86 e1       	ldi	r24, 0x16	; 22
     3fbe:	90 e2       	ldi	r25, 0x20	; 32
     3fc0:	0e 94 9c 11 	call	0x2338	; 0x2338 <xTaskCreate>
-	configMINIMAL_STACK_SIZE,
-	NULL,
-	tskIDLE_PRIORITY + priority,
-	NULL);
-	
-}
     3fc4:	0f 91       	pop	r16
     3fc6:	ff 90       	pop	r15
     3fc8:	ef 90       	pop	r14
     3fca:	08 95       	ret
 
 00003fcc <tempHumSensor_printReturnCode>:
-		case HIH8120_OK: returnCodeString = "HIH8120_OK";
-		case HIH8120_OUT_OF_HEAP: returnCodeString = "HIH8120_OUT_OF_HEAP";
-		case HIH8120_DRIVER_NOT_INITIALISED: returnCodeString = "HIH8120_DRIVER_NOT_INITIALISED";
-		case HIH8120_TWI_BUSY: returnCodeString = "HIH8120_TWI_BUSY";
-	}
-	printf("RETURNCODE: %s \n", returnCodeString);
     3fcc:	82 e0       	ldi	r24, 0x02	; 2
     3fce:	94 e0       	ldi	r25, 0x04	; 4
     3fd0:	9f 93       	push	r25
@@ -9277,7 +8007,6 @@ void create_TempHum_sensor_task(UBaseType_t priority){
     3fd8:	9f 93       	push	r25
     3fda:	8f 93       	push	r24
     3fdc:	0e 94 ee 37 	call	0x6fdc	; 0x6fdc <printf>
-}
     3fe0:	0f 90       	pop	r0
     3fe2:	0f 90       	pop	r0
     3fe4:	0f 90       	pop	r0
@@ -9285,63 +8014,34 @@ void create_TempHum_sensor_task(UBaseType_t priority){
     3fe8:	08 95       	ret
 
 00003fea <measure_Temp_Hum>:
-	
-}
-
-void measure_Temp_Hum(){
-	
-	if ( HIH8120_OK != hih8120_wakeup() )
     3fea:	4f d2       	rcall	.+1182   	; 0x448a <hih8120_wakeup>
     3fec:	88 23       	and	r24, r24
     3fee:	21 f0       	breq	.+8      	; 0x3ff8 <measure_Temp_Hum+0xe>
-	{
-		printf("Could not wake up temp hum sensor \n");
     3ff0:	84 e2       	ldi	r24, 0x24	; 36
     3ff2:	94 e0       	ldi	r25, 0x04	; 4
     3ff4:	0e 94 02 38 	call	0x7004	; 0x7004 <puts>
-		// Something went wrong
-		// Investigate the return code further
-	}
-
-	vTaskDelay(pdMS_TO_TICKS(60));
     3ff8:	63 e0       	ldi	r22, 0x03	; 3
     3ffa:	70 e0       	ldi	r23, 0x00	; 0
     3ffc:	80 e0       	ldi	r24, 0x00	; 0
     3ffe:	90 e0       	ldi	r25, 0x00	; 0
     4000:	0e 94 a1 14 	call	0x2942	; 0x2942 <vTaskDelay>
-	
-	hih8120_driverReturnCode_t measure_rc = hih8120_measure();
-	if (measure_rc != HIH8120_OK)
     4004:	57 d2       	rcall	.+1198   	; 0x44b4 <hih8120_measure>
-	{
-		tempHumSensor_printReturnCode(measure_rc);
     4006:	81 11       	cpse	r24, r1
     4008:	e1 df       	rcall	.-62     	; 0x3fcc <tempHumSensor_printReturnCode>
-	}
-	vTaskDelay(pdMS_TO_TICKS(50));
     400a:	63 e0       	ldi	r22, 0x03	; 3
     400c:	70 e0       	ldi	r23, 0x00	; 0
     400e:	80 e0       	ldi	r24, 0x00	; 0
     4010:	90 e0       	ldi	r25, 0x00	; 0
     4012:	0e 94 a1 14 	call	0x2942	; 0x2942 <vTaskDelay>
-	
-	humidity = hih8120_getHumidityPercent_x10();
     4016:	74 d2       	rcall	.+1256   	; 0x4500 <hih8120_getHumidityPercent_x10>
     4018:	90 93 fc 17 	sts	0x17FC, r25	; 0x8017fc <humidity+0x1>
     401c:	80 93 fb 17 	sts	0x17FB, r24	; 0x8017fb <humidity>
-	temperature = hih8120_getTemperature_x10();	
     4020:	95 d2       	rcall	.+1322   	; 0x454c <hih8120_getTemperature_x10>
     4022:	90 93 fa 17 	sts	0x17FA, r25	; 0x8017fa <temperature+0x1>
     4026:	80 93 f9 17 	sts	0x17F9, r24	; 0x8017f9 <temperature>
     402a:	08 95       	ret
 
 0000402c <Temp_Hum_Main_Task>:
-
-
-void Temp_Hum_Main_Task(void *pvParameters){
-	
-	while(1){
-		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,TEMP_HUM_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
     402c:	cc 24       	eor	r12, r12
     402e:	ca 94       	dec	r12
     4030:	dc 2c       	mov	r13, r12
@@ -9355,15 +8055,9 @@ void Temp_Hum_Main_Task(void *pvParameters){
     4040:	80 91 47 19 	lds	r24, 0x1947	; 0x801947 <measureEventGroup>
     4044:	90 91 48 19 	lds	r25, 0x1948	; 0x801948 <measureEventGroup+0x1>
     4048:	0e 94 9f 04 	call	0x93e	; 0x93e <xEventGroupWaitBits>
-		
-		if (uxBits &(TEMP_HUM_MEASURE_BIT))
     404c:	62 ff       	sbrs	r22, 2
     404e:	ee cf       	rjmp	.-36     	; 0x402c <Temp_Hum_Main_Task>
-		{
-			measure_Temp_Hum();			
     4050:	cc df       	rcall	.-104    	; 0x3fea <measure_Temp_Hum>
-			//After everything is done just setting 1 to ready bit so its now unblocked 
-			xEventGroupSetBits(dataReadyEventGroup,TEMP_HUM_READY_BIT);
     4052:	48 e0       	ldi	r20, 0x08	; 8
     4054:	50 e0       	ldi	r21, 0x00	; 0
     4056:	60 e0       	ldi	r22, 0x00	; 0
@@ -9374,21 +8068,11 @@ void Temp_Hum_Main_Task(void *pvParameters){
     4066:	e2 cf       	rjmp	.-60     	; 0x402c <Temp_Hum_Main_Task>
 
 00004068 <TempHumSensor_getTemp>:
-	printf("RETURNCODE: %s \n", returnCodeString);
-}
-	
-int16_t TempHumSensor_getTemp(){
-	return temperature;
-}
     4068:	80 91 f9 17 	lds	r24, 0x17F9	; 0x8017f9 <temperature>
     406c:	90 91 fa 17 	lds	r25, 0x17FA	; 0x8017fa <temperature+0x1>
     4070:	08 95       	ret
 
 00004072 <TempHumSensor_getHum>:
-	
-uint16_t TempHumSensor_getHum(){
-	return humidity;
-}
     4072:	80 91 fb 17 	lds	r24, 0x17FB	; 0x8017fb <humidity>
     4076:	90 91 fc 17 	lds	r25, 0x17FC	; 0x8017fc <humidity+0x1>
     407a:	08 95       	ret
