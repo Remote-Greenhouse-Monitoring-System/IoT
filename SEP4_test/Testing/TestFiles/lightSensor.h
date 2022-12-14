@@ -15,7 +15,8 @@
 #include "../Testing/event_groups.h"
 #include "initialize.h"
 
-
+void tsl2591Callback(tsl2591_returnCode_t returnCode);
 void initialize_light_sensor();
 void create_light_sensor_task(UBaseType_t priority);
+void measure_light_task_inline();
 float light_sensor_get_lux();

@@ -80,13 +80,17 @@ void create_light_sensor_task(UBaseType_t priority){
 
 void measure_light_task(void *pvParameters){
 	for(;;){
-		
-		EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup,LIGHT_MEASURE_BIT,pdTRUE,pdTRUE,portMAX_DELAY);
-		
-		if((uxBits & (LIGHT_MEASURE_BIT)) == LIGHT_MEASURE_BIT){
-			light_sensor_measure();
-			vTaskDelay(pdMS_TO_TICKS(100));
-			xEventGroupSetBits(dataReadyEventGroup, LIGHT_READY_BIT);
-		}
+		measure_light_task_inline();
+	}
+}
+
+inline void measure_light_task_inline() {
+
+	EventBits_t uxBits = xEventGroupWaitBits(measureEventGroup, LIGHT_MEASURE_BIT, pdTRUE, pdTRUE, portMAX_DELAY);
+
+	if ((uxBits & (LIGHT_MEASURE_BIT)) == LIGHT_MEASURE_BIT) {
+		light_sensor_measure();
+		vTaskDelay(pdMS_TO_TICKS(100));
+		xEventGroupSetBits(dataReadyEventGroup, LIGHT_READY_BIT);
 	}
 }
