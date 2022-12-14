@@ -8,6 +8,8 @@
 #include "../TestFiles/lora_driver.h"
 
 #include "../TestFiles/CO2Sensor.h"
+#include "../TestFiles/lightSensor.h"
+
 #include "../TestFiles/TempHumSensor.h"
 #include "../TestFiles/packageHandler.h"
 #include "../TestFiles/initialize.h"

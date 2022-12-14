@@ -54,6 +54,8 @@ xTaskDelayUntil( &xLastWakeTime, xFrequency1 );
 			set_temperature_percent(TempHumSensor_getTemp());
 			set_humidity_percent(TempHumSensor_getHum());
 			set_CO2_ppm(CO2_getPPM());
+		//	set_light_lux(light_sensor_get_lux());
+
 			
 			if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
 				set_status(get_system_status());

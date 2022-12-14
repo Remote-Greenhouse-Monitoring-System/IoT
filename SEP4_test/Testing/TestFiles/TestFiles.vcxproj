@@ -75,7 +75,8 @@
     <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\Testing;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\Testing;$(IncludePath)</IncludePath>
+    <IncludePath>
+    </IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,6 +150,7 @@
     <ClInclude Include="downlinkHandler.h" />
     <ClInclude Include="hih8120.h" />
     <ClInclude Include="initialize.h" />
+    <ClInclude Include="lightSensor.h" />
     <ClInclude Include="lora_driver.h" />
     <ClInclude Include="mh_z19.h" />
     <ClInclude Include="packageHandler.h" />
@@ -158,6 +160,7 @@
     <ClInclude Include="status_leds.h" />
     <ClInclude Include="stdio_driver.h" />
     <ClInclude Include="tempHumSensor.h" />
+    <ClInclude Include="tsl2591.h" />
     <ClInclude Include="uplinkHandler.h" />
   </ItemGroup>
   <ItemGroup>
@@ -167,6 +170,7 @@
     <ClCompile Include="configuration.c" />
     <ClCompile Include="downlinkHandler.c" />
     <ClCompile Include="initialize.c" />
+    <ClCompile Include="lightSensor.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="packageHandler.c" />
     <ClCompile Include="servoController.c" />

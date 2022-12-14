@@ -105,6 +105,12 @@
     <ClInclude Include="status_leds.h">
       <Filter>Header Files\Drivers</Filter>
     </ClInclude>
+    <ClInclude Include="tsl2591.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lightSensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="initialize.c">
@@ -138,6 +144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="actionsController.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lightSensor.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

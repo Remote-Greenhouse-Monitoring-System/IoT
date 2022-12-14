@@ -4,8 +4,9 @@
 DEFINE_FFF_GLOBALS
 
 extern "C" {
-#include "CO2Sensor.h"
 #include "FreeRTOS.h"
+
+#include "CO2Sensor.h"
 #include "message_buffer.h"
 #include "event_groups.h"
 #include "task.h"

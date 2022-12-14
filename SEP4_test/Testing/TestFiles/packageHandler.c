@@ -3,6 +3,7 @@
 static int16_t temperaturePercent = 0;
 static uint16_t humidityPercent = 0;
 static uint16_t CO2_PPM = 0;
+static float lux = 0;
 static uint8_t status = 0;
 
 void set_temperature_percent(int16_t temperature){
@@ -16,7 +17,9 @@ void set_humidity_percent(uint16_t humidity){
 void set_CO2_ppm(uint16_t co2ppm){
 	CO2_PPM = co2ppm;
 }
-
+void set_light_lux(float lux_measurement) {
+	lux = lux_measurement;
+}
 void set_status(uint8_t stat){
 	status = stat;
 }
