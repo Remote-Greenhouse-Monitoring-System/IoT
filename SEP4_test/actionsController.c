@@ -47,7 +47,6 @@ void actions_controller_task(void *pvParameters) {
 	for(;;)
 	{
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
-		
 
 		if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
 			thresholdTemperature = get_max_temperature();
