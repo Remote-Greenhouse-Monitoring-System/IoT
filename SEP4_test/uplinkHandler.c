@@ -165,7 +165,7 @@ void lora_uplink_handler_task( void *pvParameters )
 			//---------------------------------------------
 			
 			
-//  			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
+ 			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
 			
 		}
 	}
