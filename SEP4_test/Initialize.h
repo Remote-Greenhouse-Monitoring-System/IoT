@@ -19,9 +19,11 @@
 #define CO2_READY_BIT (1<<1)
 #define TEMP_HUM_MEASURE_BIT (1<<2)
 #define TEMP_HUM_READY_BIT (1<<3)
+#define LIGHT_MEASURE_BIT (1<<4)
+#define LIGHT_READY_BIT (1<<5)
 
-#define ALL_READY_BITS (CO2_READY_BIT | TEMP_HUM_READY_BIT)
-#define ALL_MEASURE_BITS ( CO2_MEASURE_BIT | TEMP_HUM_MEASURE_BIT  )
+#define ALL_READY_BITS (CO2_READY_BIT | TEMP_HUM_READY_BIT | LIGHT_READY_BIT)
+#define ALL_MEASURE_BITS ( CO2_MEASURE_BIT | TEMP_HUM_MEASURE_BIT | LIGHT_MEASURE_BIT)
 
 extern EventGroupHandle_t measureEventGroup;
 extern EventGroupHandle_t dataReadyEventGroup;

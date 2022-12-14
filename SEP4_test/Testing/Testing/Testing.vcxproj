@@ -36,7 +36,7 @@
     <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\himal\Desktop\IoT\SEP4_test\Testing\TestFiles;C:\Users\Christopher\source\IoT\SEP4_test\Testing\TestFiles;C:\Users\jurin\Documents\Atmel Studio\7.0\IoT\SEP4_test\Testing\TestFiles;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup>
     <ClInclude Include="event_groups.h" />
@@ -56,6 +56,7 @@
     <ClCompile Include="..\TestFiles\configuration.c" />
     <ClCompile Include="..\TestFiles\downlinkHandler.c" />
     <ClCompile Include="..\TestFiles\initialize.c" />
+    <ClCompile Include="..\TestFiles\lightSensor.c" />
     <ClCompile Include="..\TestFiles\packageHandler.c" />
     <ClCompile Include="..\TestFiles\servoController.c" />
     <ClCompile Include="..\TestFiles\tempHumSensor.c" />
@@ -64,6 +65,7 @@
     <ClCompile Include="FreeRTOS_FFF_MocksDefinitions.cpp" />
     <ClCompile Include="co2SensorTest.cpp" />
     <ClCompile Include="actionsControllerTest.cpp" />
+    <ClCompile Include="lightSensorTest.cpp" />
     <ClCompile Include="tempHumSensorTest.cpp" />
     <ClCompile Include="uplinkeHandlerTest.cpp" />
   </ItemGroup>

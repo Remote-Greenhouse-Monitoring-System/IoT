@@ -45,7 +45,7 @@ void CO2_measure() {
 	if (rc != MHZ19_OK)
 	{
 		// Something went wrong
-		printf("  SOmething went wrong while measuring CO2!!!  ");
+		printf("Something went wrong while measuring CO2!");
 
 	}
 	lastCO2ppm = mh_z19_getCo2Ppm(&lastCO2ppm);

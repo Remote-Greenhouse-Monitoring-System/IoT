@@ -49,6 +49,12 @@
     <ClCompile Include="uplinkeHandlerTest.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
+    <ClCompile Include="lightSensorTest.cpp">
+      <Filter>Tests\Sensors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\TestFiles\lightSensor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="event_groups.h">

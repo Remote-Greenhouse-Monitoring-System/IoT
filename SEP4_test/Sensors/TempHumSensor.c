@@ -8,8 +8,8 @@
 #include "tempHumSensor.h"
 
 
-uint16_t humidity = 0;
-int16_t temperature = 0;
+static uint16_t humidity = 0;
+static int16_t temperature = 0;
 
 void Temp_Hum_Main_Task(void *pvParameters);
 void tempHumSensor_printReturnCode(hih8120_driverReturnCode_t rc);
