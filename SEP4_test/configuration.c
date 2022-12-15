@@ -1,9 +1,8 @@
 /*
  * ConfigurationImpl.c
- *
- * Created: 06/12/2022 18.45.41
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 
 #include "configuration.h"

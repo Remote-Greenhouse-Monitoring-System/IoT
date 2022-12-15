@@ -1,8 +1,7 @@
 /*
- * DownlinkHandlerImpl.c
- *
- * Created: 07/12/2022 22.49.01
- *  Author: jurin
+ *  downlinkHandlerImpl.c
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
  */ 
 
 #include "downlinkHandler.h"

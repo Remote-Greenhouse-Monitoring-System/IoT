@@ -1,9 +1,7 @@
 /*
- * ServoControllerImpl.c
- *
- * Created: 08/12/2022 22.35.11
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "servoController.h"
 

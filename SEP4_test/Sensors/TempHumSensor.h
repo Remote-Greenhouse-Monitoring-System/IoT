@@ -1,9 +1,9 @@
 /*
  * TempHumSensor.h
  *
- * Created: 11/20/2022 3:18:53 PM
- *  Author: himal
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 #pragma once
 
 #include <ATMEGA_FreeRTOS.h>

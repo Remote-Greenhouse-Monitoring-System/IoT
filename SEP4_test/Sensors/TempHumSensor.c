@@ -1,9 +1,9 @@
 /*
  * TempHumSensor.c
  *
- * Created: 11/20/2022 3:19:03 PM
- *  Author: himal
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "tempHumSensor.h"
 

@@ -1,9 +1,8 @@
 /*
  * SystemSetupImpl.c
- *
- * Created: 07/12/2022 19.26.39
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "initialize.h"
 

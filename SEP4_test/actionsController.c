@@ -1,9 +1,9 @@
 /*
- * FanController.c
+ * actionsController.c
  *
- * Created: 06/12/2022 21.18.14
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "actionsController.h"
 

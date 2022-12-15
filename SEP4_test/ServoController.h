@@ -1,9 +1,9 @@
 /*
  * ServoController.h
  *
- * Created: 08/12/2022 22.33.05
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #pragma once
 

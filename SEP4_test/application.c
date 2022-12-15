@@ -1,10 +1,9 @@
 /*
  * Application.c
  *
- * Created: 11/20/2022 2:27:49 PM
- *  Author: himal
- 
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "application.h"
 

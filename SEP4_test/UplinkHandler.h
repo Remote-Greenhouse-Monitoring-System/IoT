@@ -1,9 +1,8 @@
 /*
  * UplinkHandler.h
- *
- * Created: 07/12/2022 21.36.18
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #pragma once
 
