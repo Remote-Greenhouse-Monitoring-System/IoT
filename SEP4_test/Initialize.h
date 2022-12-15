@@ -1,9 +1,9 @@
 /*
  * SystemSetup.h
  *
- * Created: 07/12/2022 19.18.36
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #pragma once
 

@@ -1,9 +1,9 @@
 /*
  * lightSensor.h
  *
- * Created: 12/12/2022 17.57.47
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #pragma once
 

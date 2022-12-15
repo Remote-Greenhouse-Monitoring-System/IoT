@@ -1,9 +1,8 @@
 /*
  * Configuration.h
- *
- * Created: 06/12/2022 18.42.11
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #pragma once
 

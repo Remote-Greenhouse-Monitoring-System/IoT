@@ -1,9 +1,9 @@
 /*
  * PackageHandler.c
  *
- * Created: 16/11/2022 09.49.13
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "packageHandler.h"
 

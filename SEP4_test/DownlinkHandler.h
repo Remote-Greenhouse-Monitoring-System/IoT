@@ -1,9 +1,9 @@
 /*
  * DownlinkHandler.h
  *
- * Created: 07/12/2022 22.34.23
- *  Author: jurin
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #pragma once
 #include <ATMEGA_FreeRTOS.h>

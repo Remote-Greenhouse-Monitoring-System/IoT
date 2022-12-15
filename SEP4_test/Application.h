@@ -1,3 +1,8 @@
+ /*
+ * application.h
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 #pragma once
 
 #include <ATMEGA_FreeRTOS.h>

@@ -1,9 +1,9 @@
 /*
  * CO2Sensor.c
  *
- * Created: 11/20/2022 2:43:52 PM
- *  Author: Himal
- */ 
+ *  Github: https://github.com/Remote-Greenhouse-Monitoring-System/IoT
+ *  Author: Christopher, Himal, Juraj
+ */
 
 #include "co2Sensor.h"
 
