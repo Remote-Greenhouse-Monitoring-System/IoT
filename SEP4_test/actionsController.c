@@ -40,15 +40,14 @@ void actions_controller_task(void *pvParameters) {
 	
 	TickType_t xLastWakeTime;
 	const TickType_t xFrequency = pdMS_TO_TICKS(60000); 
-// 	const TickType_t xFrequency = pdMS_TO_TICKS(5000);
-
 	xLastWakeTime = xTaskGetTickCount();
-	
+
 	for(;;)
 	{
+		//wait one minute 
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		
-
+		//take mutex and fetch current configuration 
 		if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
 			thresholdTemperature = get_max_temperature();
 			thresholdHumidity = get_max_humidity();
@@ -56,17 +55,22 @@ void actions_controller_task(void *pvParameters) {
 			xSemaphoreGive(configSemaphore);
 			}
 			
+		//set event group bits to measure
 		xEventGroupSetBits(measureEventGroup, ALL_MEASURE_BITS);		
 		EventBits_t uxBits = xEventGroupWaitBits(dataReadyEventGroup,ALL_READY_BITS,pdTRUE,pdTRUE,portMAX_DELAY);
-				
+		
+		//when the measurements are ready, fetch them from the sensors to get current values 
 		if (uxBits&(ALL_READY_BITS)){
 			currentTemperature = TempHumSensor_getTemp();
 			currentHumidity = TempHumSensor_getHum();
 			currentCO2 = CO2_getPPM();
 			currentLight = light_sensor_get_lux();
+		//print the current measurements compared to the max values for easy overview 
 			printf("CURR/THRS: tmp %d/%dC, hum %d/%d%%, co2 %d/%dppm, (light %5.2flux)\n", 
 			currentTemperature/10, thresholdTemperature, currentHumidity/10, thresholdHumidity, currentCO2, thresholdCO2, currentLight);
 			
+		//if there is a configuration, pass the current measurements and thresholds to the methods that control the actions
+		//since the status is accessed, it is protected by mutex 
 			if(!(thresholdTemperature == 0 && thresholdHumidity == 0 && thresholdCO2 == 0)){
 				if(xSemaphoreTake(configSemaphore, (TickType_t) 10 ) == pdTRUE){
 					temperature_action(currentTemperature, thresholdTemperature);
@@ -76,6 +80,7 @@ void actions_controller_task(void *pvParameters) {
 					xSemaphoreGive(configSemaphore);
 				}
 			}
+		//if all thresholds are 0, it means no config was received from downlink yet, so no actions should be taken
 			else{
 				printf("No config yet.\n");
 			}	

@@ -19,9 +19,7 @@ typedef enum system_status_codes{
 	HUMIDITY_ACTION_ON = 0x02,
 	HUMIDITY_ACTION_OFF = 0xFD,
 	CO2_ACTION_ON = 0x04,
-	CO2_ACTION_OFF = 0xFB,
-	LIGHT_ACTION_ON = 0x08,
-	LIGHT_ACTION_OFF = 0xF7
+	CO2_ACTION_OFF = 0xFB
 } system_status_code_t;
 
 

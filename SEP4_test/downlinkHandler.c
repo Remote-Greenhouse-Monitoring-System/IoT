@@ -27,7 +27,6 @@ void lora_downlink_handler_task(void *pvParameters){
 	
 	for(;;){
 		
-		
 		xReceivedBytes =  xMessageBufferReceive(downlinkMessageBufferHandle, 
 		&_downlink_payload, 
 		sizeof(lora_driver_payload_t), 

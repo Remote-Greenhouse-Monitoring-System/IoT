@@ -26,7 +26,6 @@ void create_main_application_task(UBaseType_t priority){
 }
 
 
-// Main task For application to get result when every measurnment is done
 
 void main_application_task(void *pvParameters) {
 	
@@ -34,18 +33,17 @@ void main_application_task(void *pvParameters) {
 	//5 minute timer
 	TickType_t xLastWakeTime;
 	const TickType_t xFrequency = pdMS_TO_TICKS(300000UL); // Upload message every 5 minutes (300000 ms)
-// 	const TickType_t xFrequency = pdMS_TO_TICKS(20000); 
 	xLastWakeTime = xTaskGetTickCount();
 	
 	for (;;)
 	{
+		//Run every 5 minutes 
 		xTaskDelayUntil( &xLastWakeTime, xFrequency );
 		
 		//First trying to measure everything
 		xEventGroupSetBits(measureEventGroup, ALL_MEASURE_BITS);
 		
-		//printf("Measuring from sensor is done now ready bit are done ");
-		
+		//Wait for measurements to be done 		
 		EventBits_t uxBits = xEventGroupWaitBits(dataReadyEventGroup,ALL_READY_BITS,pdTRUE,pdTRUE,portMAX_DELAY);
 		
 		//If everything is done now we need to set the measurement and it's done

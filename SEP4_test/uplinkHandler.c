@@ -110,7 +110,6 @@ void lora_uplink_handler_task( void *pvParameters )
 	
 	for(;;)
 	{
-
 		int16_t tem = 0;
 		uint16_t hum = 0;
 		uint16_t co2 = 0;
@@ -121,7 +120,6 @@ void lora_uplink_handler_task( void *pvParameters )
 			float temp;
 			uint8_t bytes[sizeof(float)];
 		} holder;
-		
 		
 		xReceivedBytes = xMessageBufferReceive (uplinkMessageBufferHandle,
 		&_uplink_payload,
@@ -138,32 +136,10 @@ void lora_uplink_handler_task( void *pvParameters )
 			holder.bytes[3] = _uplink_payload.bytes[9];
 			status = _uplink_payload.bytes[10];
 			
-// 			printf("Temperature sent: %d\n", tem);
-// 			printf("Humidity sent: %d\n", hum);
-// 			printf("CO2 sent: %d\n", co2);
-// 			printf("Light sent: %f\n", holder.temp);
-// 			printf("Status sent: %d\n", status);
+
 			printf("UPLINK SENT: temp %dC, hum %d%%, CO2 %dppm, light %5.2flux, status %d\n", tem/10, hum/10, co2, holder.temp, status);
 			
 			status_leds_shortPuls(led_ST4);  // OPTIONAL
-			
-			// TEMPORARY SETUP 	
-			//----------------------------------------
-			//00FA 0096 0320 00C8 07D0 01F4
-// 			uint8_t fakePayloadBytes[] = {0x00, 0xFA, 0x00, 0x96, 0x03, 0x20, 0x00, 0xC8, 0x07, 0xD0, 0x01,0xF4};
-// 			lora_driver_payload_t fakePayload;
-// 			fakePayload.portNo = 2;
-// 			fakePayload.len = sizeof(fakePayloadBytes);
-// 			for(uint8_t i = 0; i < sizeof(fakePayloadBytes); i++){
-// 				fakePayload.bytes[i] = fakePayloadBytes[i];
-// 			}
-// 			
-// 			xMessageBufferSend(downlinkMessageBufferHandle,
-// 			&fakePayload,
-// 			sizeof(fakePayload),
-// 			portMAX_DELAY);
-			//---------------------------------------------
-			
 			
  			printf("Upload Message >%s<\n", lora_driver_mapReturnCodeToText(lora_driver_sendUploadMessage(false, &_uplink_payload)));
 			
@@ -171,13 +147,20 @@ void lora_uplink_handler_task( void *pvParameters )
 	}
 }
 
-// lora_driver_returnCode_t rc;
-// 
-// if ((rc = lora_driver_sendUploadMessage(false, &_uplinkPayload)) == LORA_MAC_TX_OK )
-// {
-// 	// The uplink message is sent and there is no downlink message received
-// }
-// else if (rc == LORA_MAC_RX_OK)
-// {
-// 	// The uplink message is sent and a downlink message is received
-// }
+
+			// TEMPORARY SETUP FOR FAKE DOWNLINK 
+			//----------------------------------------
+			//00FA 0096 0320 00C8 07D0 01F4
+			// 			uint8_t fakePayloadBytes[] = {0x00, 0xFA, 0x00, 0x96, 0x03, 0x20, 0x00, 0xC8, 0x07, 0xD0, 0x01,0xF4};
+			// 			lora_driver_payload_t fakePayload;
+			// 			fakePayload.portNo = 2;
+			// 			fakePayload.len = sizeof(fakePayloadBytes);
+			// 			for(uint8_t i = 0; i < sizeof(fakePayloadBytes); i++){
+			// 				fakePayload.bytes[i] = fakePayloadBytes[i];
+			// 			}
+			//
+			// 			xMessageBufferSend(downlinkMessageBufferHandle,
+			// 			&fakePayload,
+			// 			sizeof(fakePayload),
+			// 			portMAX_DELAY);
+			//---------------------------------------------

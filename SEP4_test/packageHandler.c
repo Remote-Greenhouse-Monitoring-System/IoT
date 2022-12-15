@@ -42,7 +42,6 @@ lora_driver_payload_t get_lora_package(uint8_t port){
 		
 		holder.temp = lux;
 		
-	
 	lora_driver_payload_t payload;
 	payload.portNo = port;
 	payload.len = PAYLOAD_SIZE;
@@ -60,3 +59,5 @@ lora_driver_payload_t get_lora_package(uint8_t port){
 	
 	return payload;
 }
+
+

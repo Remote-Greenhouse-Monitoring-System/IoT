@@ -16,7 +16,6 @@
 #include "Sensors/tempHumSensor.h"
 #include "Sensors/lightSensor.h"
 #include "Sensors/co2Sensor.h"
-#include "application.h"
 #include "configuration.h"
 #include "servoController.h"
 

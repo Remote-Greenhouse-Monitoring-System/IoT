@@ -39,7 +39,8 @@ void setConfiguration(lora_driver_payload_t payload){
 	set_max_co2(newMaxCO2);
 	set_min_co2(newMinCO2);
 	
-	printf("DOWNLINK CONF MIN/MAX, tmp: %d/%dC, hum: %d/%d%%, co2: %d/%dppm\n", newMaxTemp/10, newMinTemp/10, newMaxHum/10, newMinHum/10, newMaxCO2, newMinCO2);
+	printf("DOWNLINK CONF MIN/MAX, tmp: %d/%dC, hum: %d/%d%%, co2: %d/%dppm\n", 
+	newMaxTemp/10, newMinTemp/10, newMaxHum/10, newMinHum/10, newMaxCO2, newMinCO2);
 }
 
 void set_system_status(system_status_code_t statusCode){

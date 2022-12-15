@@ -40,7 +40,6 @@ void initializeSystem()
 	stdio_initialise(ser_USART0);
 	// Status Leds driver
 	status_leds_initialise(5); // Priority 5 for internal task
-
 	initialize_event_groups();
 	initialize_message_buffers();
 	initialize_semaphore();
